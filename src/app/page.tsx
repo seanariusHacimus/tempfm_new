@@ -98,48 +98,52 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-accent)]" />
                   </span>
-                  <span className="text-white/70 text-sm">
-                    Efirdamiz — Temp FM 88.4
+                  <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-wider">
+                    Jonli Efirda
                   </span>
                 </div>
               </AnimateIn>
 
               <AnimateIn delay={0.2}>
-                <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.7)]">
-                  O&apos;zbekistonning
-                  <br />
-                  <span className="text-[var(--color-accent)]">Birinchi</span>
-                  <br />
-                  Audiovizual Radiosi
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tight mb-8 font-[family-name:var(--font-display)]">
+                  TOSHKENT <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-orange-400">
+                    OVOZI.
+                  </span>
                 </h1>
               </AnimateIn>
 
-              <AnimateIn delay={0.35}>
-                <p className="text-white/70 text-lg md:text-xl max-w-lg leading-relaxed mb-10 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
-                  Temp FM 88.4 — jonli musiqa ruhini targ&apos;ib qiluvchi
-                  birinchi audiovizual radioto&apos;lqin bo&apos;lib, odatiy
-                  radio tasavvurlarini kengaytiradi va u haqida mavjud
-                  stereotiplarni yangicha yondashuv bilan o&apos;zgartiradi.
+              <AnimateIn delay={0.3}>
+                <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl leading-relaxed mb-10">
+                  Temp FM 88.4 — jonli musiqa ruhini targ‘ib qiluvchi birinchi audiovizual radioto‘lqin. Biz odatiy radio tasavvurlarini kengaytirib, yangicha yondashuv bilan stereotiplarni o‘zgartiramiz.
                 </p>
               </AnimateIn>
 
-              <AnimateIn delay={0.5}>
-                <div className="flex flex-col sm:flex-row gap-4">
+              <AnimateIn delay={0.4}>
+                <div className="flex flex-wrap items-center gap-4">
                   <a
                     href="#listen"
-                    className="inline-flex items-center justify-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors shadow-lg shadow-[var(--color-accent)]/30"
+                    className="flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
                   >
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
-                    </span>
-                    Jonli Efirni Tinglang
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Jonli Efir
                   </a>
                   <Link
                     href="/schedule"
-                    className="inline-flex items-center justify-center gap-2 bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/10 text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors"
+                    className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-bold uppercase tracking-wider hover:bg-white/10 transition-colors"
                   >
-                    Dasturlar Jadvali
+                    Dasturlar
                   </Link>
                 </div>
               </AnimateIn>

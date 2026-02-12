@@ -5,27 +5,27 @@ import AnimateIn from "@/components/AnimateIn";
 
 const values = [
   {
-    title: "Authentic Voice",
+    title: "Haqiqiy Ovoz",
     description:
-      "We don't follow templates. Every show, every playlist, every conversation is rooted in real stories from real people in Tashkent.",
+      "Biz qoliplarga ergashmaymiz. Har bir ko‘rsatuv, har bir pleylist, har bir suhbat Toshkentliklarning haqiqiy hayotiy hikoyalariga asoslangan.",
     icon: "\u{1F3A4}",
   },
   {
-    title: "Youth First",
+    title: "Yoshlar Uchun",
     description:
-      "Built by young people, for young people. We amplify the ideas, energy, and creativity of Uzbekistan's next generation.",
+      "Yoshlar tomonidan, yoshlar uchun yaratilgan. Biz O‘zbekistonning kelajak avlodi g‘oyalari, energiyasi va ijodini qo‘llab-quvvatlaymiz.",
     icon: "\u26A1",
   },
   {
-    title: "Local Culture",
+    title: "Mahalliy Madaniyat",
     description:
-      "From Navoiy to hip-hop, from plov to street art \u2014 we celebrate the culture that makes Tashkent unlike anywhere else on earth.",
+      "Navoiydan hip-hopgacha, palovdan ko‘cha san’atigacha — biz Toshkentni dunyoda yagona qiladigan madaniyatni tarannum etamiz.",
     icon: "\u{1F30D}",
   },
   {
-    title: "Innovation",
+    title: "Innovatsiya",
     description:
-      "Radio reimagined. We push boundaries with new formats, digital-first thinking, and a refusal to do things the old way.",
+      "Radio qayta kashf etildi. Biz yangi formatlar va raqamli yondashuvlar bilan chegaralarni kengaytiramiz.",
     icon: "\u{1F680}",
   },
 ];
@@ -33,53 +33,53 @@ const values = [
 const team = [
   {
     name: "Jasur Karimov",
-    role: "Station Director",
-    bio: "Former journalist turned radio visionary. Jasur left a career in print media to build the station he wished existed when he was 20.",
+    role: "Stansiya Direktori",
+    bio: "Sobiq jurnalist, radio visioneri. Jasur 20 yoshida orzu qilgan radiostansiyani yaratish uchun bosma nashriyotni tark etdi.",
     initials: "JK",
     color: "bg-[var(--color-accent)]",
   },
   {
     name: "Dilnoza Rashidova",
-    role: "Program Director",
-    bio: "Dilnoza shapes every hour of airtime. With a background in cultural programming, she ensures every show has purpose and punch.",
+    role: "Dasturlar Direktori",
+    bio: "Dilnoza har bir efir soatini shakllantiradi. Madaniy dasturlar bo'yicha tajribasi bilan har bir shou maqsadli bo'lishini ta'minlaydi.",
     initials: "DR",
     color: "bg-emerald-600",
   },
   {
     name: "Sherzod Alimov",
-    role: "Head of Music",
-    bio: "A walking encyclopedia of sound \u2014 from Uzbek folk to global electronica. Sherzod curates the sonic identity of TempFM.",
+    role: "Musiqa Muharriri",
+    bio: "Ovozlar qomusi — o'zbek xalq kuy-qo'shiqlariyu jahon elektronikasigacha. Sherzod TempFM ning musiqiy qiyofasini yaratadi.",
     initials: "SA",
     color: "bg-violet-600",
   },
   {
     name: "Kamila Usmanova",
-    role: "Head DJ",
-    bio: "Kamila has been spinning since she was 16. Her mixes have become the unofficial soundtrack of Tashkent's nightlife scene.",
+    role: "Bosh DJ",
+    bio: "Kamila 16 yoshidan beri DJlik qiladi. Uning mikslari Toshkent tungi hayotining norasmiy saundtrekiga aylangan.",
     initials: "KU",
     color: "bg-amber-600",
   },
   {
     name: "Bobur Nazarov",
-    role: "News Editor",
-    bio: "Sharp, fast, and fair. Bobur leads our news desk with a commitment to stories that matter to young Uzbeks.",
+    role: "Yangiliklar Muharriri",
+    bio: "O'tkir, tezkor va xolis. Bobur yosh o'zbekistonliklar uchun muhim bo'lgan mavzularni yoritishga mas'ul.",
     initials: "BN",
     color: "bg-sky-600",
   },
   {
     name: "Madina Yuldasheva",
-    role: "Marketing Lead",
-    bio: "Madina connects TempFM with the city. From campus events to viral campaigns, she keeps the brand alive everywhere.",
+    role: "Marketing Rahbari",
+    bio: "Madina TempFM ni shahar bilan bog'laydi. Talabalar tadbirlaridan virusli kampaniyalargacha brendni jonli saqlaydi.",
     initials: "MY",
     color: "bg-pink-600",
   },
 ];
 
 const stats = [
-  { value: "5+", label: "Years on Air" },
-  { value: "50+", label: "Shows Per Week" },
-  { value: "200K+", label: "Monthly Listeners" },
-  { value: "30+", label: "Team Members" },
+  { value: "5+", label: "Yil Efirda" },
+  { value: "50+", label: "Haftalik Dasturlar" },
+  { value: "200K+", label: "Oylik Tinglovchilar" },
+  { value: "30+", label: "Jamoa A'zolari" },
 ];
 
 const socials = [
@@ -100,24 +100,20 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 w-full">
           <AnimateIn delay={0.1}>
             <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-4">
-              Who We Are
+              Biz Haqimizda
             </p>
           </AnimateIn>
 
           <AnimateIn delay={0.2}>
             <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-8">
-              About
-              <br />
-              <span className="text-[var(--color-accent)]">TempFM</span>
+              BIZ SHUNCHAKI <br />
+              RADIO <span className="text-[var(--color-accent)]">EMASMIZ.</span>
             </h1>
           </AnimateIn>
 
           <AnimateIn delay={0.35}>
             <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl leading-relaxed">
-              We&apos;re the frequency that Tashkent&apos;s youth didn&apos;t
-              know it needed &mdash; and now can&apos;t live without. 88.4 FM is
-              where music, culture, and conversation collide to create something
-              that sounds like home.
+              TempFM 88.4 — Toshkentning yurak urishi. Biz shahar madaniyatining ovozi, yangi musiqalar maskani va ijodkor yoshlar uyimiz.
             </p>
           </AnimateIn>
         </div>
@@ -143,26 +139,13 @@ export default function AboutPage() {
             <AnimateIn direction="right" delay={0.15}>
               <div className="space-y-6">
                 <p className="text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed">
-                  In 2021, a small group of young media professionals in
-                  Tashkent looked at the radio dial and saw nothing that
-                  reflected their world. The music was outdated. The
-                  conversations felt disconnected. The energy was missing. So
-                  they decided to build something from scratch.
+                  2021-yilda Toshkentdagi bir guruh yosh media mutaxassislari radio to'lqinlariga qarab, ularning dunyosini aks ettiruvchi hech narsa ko'rmadilar. Musiqa eskirgan, suhbatlar zerikarli, energiya yetishmas edi. Shuning uchun ular noldan yangi narsa yaratishga qaror qilishdi.
                 </p>
                 <p className="text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed">
-                  TempFM 88.4 launched from a converted apartment studio in the
-                  Chilanzar district with three hosts, a borrowed mixing board,
-                  and one belief: that young Uzbeks deserved a radio station
-                  that actually spoke their language &mdash; not just Uzbek and
-                  Russian, but the language of their generation.
+                  TempFM 88.4 Chilonzordagi xonadonlardan birida tashkil etilgan kichik studiyada ish boshladi. Uchta boshlovchi, bitta pult va bitta ishonch: o'zbek yoshlari o'z tilida gapiradigan — nafaqat o'zbek yoki rus tilida, balki ularning avlodi tilida so'zlaydigan radioga loyiq ekanligi.
                 </p>
                 <p className="text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed">
-                  Today, we broadcast 24/7 from a purpose-built studio in
-                  central Tashkent, reaching over 200,000 monthly listeners
-                  across Uzbekistan and beyond. Our team has grown from 3 to
-                  over 30 &mdash; but the mission hasn&apos;t changed. We&apos;re still
-                  here to give Tashkent&apos;s youth a voice that&apos;s loud,
-                  honest, and unmistakably theirs.
+                  Bugungi kunda biz Toshkent markazidagi zamonaviy studiyadan 24/7 rejimida efirga uzatamiz va har oy 200,000 dan ortiq tinglovchilarni qamrab olamiz. Jamoamiz 3 kishidan 30 dan ortiq kishiga yetdi — ammo maqsadimiz o'zgarmadi. Biz hali ham Toshkent yoshlariga baland, samimiy va haqiqiy ovoz berish uchun shu yerdamiz.
                 </p>
               </div>
             </AnimateIn>
@@ -173,21 +156,21 @@ export default function AboutPage() {
             {[
               {
                 year: "2021",
-                event: "TempFM goes live from a Chilanzar apartment studio",
+                event: "TempFM Chilonzordagi kichik studiyadan ilk bor efirga chiqdi",
               },
               {
                 year: "2022",
                 event:
-                  "Hit 50K monthly listeners; launched first podcast series",
+                  "50 ming oylik tinglovchiga erishildi; birinchi podkastlar ishga tushirildi",
               },
               {
                 year: "2023",
                 event:
-                  "Moved to new studio; partnered with Tashkent music festivals",
+                  "Yangi studiyaga ko'chib o'tildi; Toshkent musiqa festivallari bilan hamkorlik",
               },
               {
                 year: "2024",
-                event: "200K+ listeners; expanded to 50+ weekly shows",
+                event: "200 mingdan ortiq tinglovchi; 50 dan ortiq haftalik shoular",
               },
             ].map((item, i) => (
               <AnimateIn key={item.year} delay={i * 0.1}>
@@ -211,15 +194,13 @@ export default function AboutPage() {
           <AnimateIn>
             <div className="text-center mb-16">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                What Drives Us
+                Bizning Maqsadimiz
               </p>
               <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Mission & Values
+                Missiya va Qadriyatlar
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Everything we do is guided by four principles. They shape our
-                programming, our culture, and the way we show up for our
-                listeners every single day.
+                Bizning har bir qadamimiz to'rtta tamoyilga asoslanadi. Ular bizning dasturlarimizni, madaniyatimizni va tinglovchilarimizga bo'lgan munosabatimizni belgilaydi.
               </p>
             </div>
           </AnimateIn>
@@ -252,11 +233,10 @@ export default function AboutPage() {
             {stats.map((stat, i) => (
               <AnimateIn key={stat.label} delay={i * 0.1}>
                 <div
-                  className={`py-10 md:py-14 text-center ${
-                    i < stats.length - 1
-                      ? "border-r border-[var(--color-border)]"
-                      : ""
-                  }`}
+                  className={`py-10 md:py-14 text-center ${i < stats.length - 1
+                    ? "border-r border-[var(--color-border)]"
+                    : ""
+                    }`}
                 >
                   <div className="font-[family-name:var(--font-display)] text-3xl md:text-5xl font-black text-white tracking-tight">
                     {stat.value}
@@ -277,14 +257,13 @@ export default function AboutPage() {
           <AnimateIn>
             <div className="text-center mb-16">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                The People
+                Jamoa
               </p>
               <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Meet the Team
+                Jamoa Bilan Tanishish
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                The voices, minds, and hands behind TempFM 88.4. A crew of
-                passionate creatives who live and breathe Tashkent culture.
+                TempFM 88.4 ortidagi ovozlar, g'oyalar va insonlar. Toshkent madaniyati bilan yashaydigan ijodkorlar jamoasi.
               </p>
             </div>
           </AnimateIn>
@@ -328,24 +307,23 @@ export default function AboutPage() {
             <AnimateIn direction="left">
               <div>
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                  Get in Touch
+                  Aloqa
                 </p>
                 <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-6">
-                  Let&apos;s Talk
+                  Bog'lanish
                 </h2>
                 <p className="text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed max-w-md mb-10">
-                  Got a story idea? Want to collaborate? Looking for airtime?
-                  We&apos;re always open to conversations that move the culture
-                  forward.
+                  G'oyangiz bormi? Hamkorlik qilmoqchimisiz? Efir vaqti kerakmi?
+                  Biz har doim madaniyatni rivojlantiruvchi suhbatlarga ochiqmiz.
                 </p>
 
                 <div className="space-y-6">
                   <div>
                     <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-widest mb-1">
-                      Address
+                      Manzil
                     </p>
                     <p className="text-white text-base">
-                      Tashkent City, Uzbekistan
+                      Toshkent City, O'zbekiston
                     </p>
                   </div>
                   <div>
@@ -361,7 +339,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-widest mb-1">
-                      Phone
+                      Telefon
                     </p>
                     <a
                       href="tel:+998712000884"
@@ -377,11 +355,11 @@ export default function AboutPage() {
             <AnimateIn direction="right" delay={0.15}>
               <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-[12px] p-8 md:p-10">
                 <h3 className="font-[family-name:var(--font-display)] text-2xl font-black uppercase tracking-tight text-white mb-6">
-                  Follow Us
+                  Bizni Kuzating
                 </h3>
                 <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mb-8">
-                  Stay connected with TempFM across all platforms.
-                  Behind-the-scenes content, live updates, playlists, and more.
+                  TempFM bilan barcha platformalarda aloqada bo'ling.
+                  Efir ortidagi jarayonlar, jonli yangiliklar, pleylistlar va boshqalar.
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {socials.map((social) => (
@@ -398,7 +376,7 @@ export default function AboutPage() {
 
                 <div className="mt-8 pt-8 border-t border-[var(--color-border)]">
                   <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-widest mb-3">
-                    Listen Live
+                    Jonli Efir
                   </p>
                   <div className="font-[family-name:var(--font-display)] text-5xl font-black text-[var(--color-accent)] tracking-tighter">
                     88.4 FM

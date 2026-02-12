@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import AudioProvider from "@/components/AudioProvider";
 import ThreeBackground from "@/components/ThreeBackground";
 import RadioPlayer from "@/components/RadioPlayer";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,7 +39,6 @@ export default function RootLayout({
           <main className="flex-1 pt-16 relative z-10">{children}</main>
           <Footer />
           <RadioPlayer />
-          <LanguageSwitcher />
         </AudioProvider>
 
         {/* SVG Distortion Filter for Liquid Glass effect */}

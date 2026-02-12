@@ -4,14 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import LanguageSwitcher from "./LanguageSwitcher";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/schedule", label: "Schedule" },
-  { href: "/news", label: "News" },
-  { href: "/advertising", label: "Advertising" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Bosh sahifa" },
+  { href: "/schedule", label: "Dasturlar" },
+  { href: "/news", label: "Yangiliklar" },
+  { href: "/advertising", label: "Reklama" },
+  { href: "/about", label: "Biz haqimizda" },
 ];
 
 export default function Navigation() {
@@ -51,10 +50,6 @@ export default function Navigation() {
             </Link>
           ))}
 
-          {/* Language Switcher (Desktop) */}
-          <div className="ml-2">
-            <LanguageSwitcher position="static" direction="down" />
-          </div>
         </div>
 
         {/* Live Button */}
@@ -66,7 +61,7 @@ export default function Navigation() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
           </span>
-          Listen Live
+          Jonli Efir
         </a>
 
         {/* Mobile Toggle */}
@@ -124,13 +119,9 @@ export default function Navigation() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
                 </span>
-                Listen Live
+                Jonli Efir
               </a>
 
-              {/* Language Switcher (Mobile) */}
-              <div className="mt-4 flex justify-center">
-                <LanguageSwitcher position="static" direction="up" />
-              </div>
             </div>
           </motion.div>
         )}

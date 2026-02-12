@@ -1,22 +1,22 @@
 import Link from "next/link";
 
 const footerLinks = {
-  Station: [
-    { href: "/schedule", label: "Schedule" },
-    { href: "/news", label: "News" },
-    { href: "/about", label: "About Us" },
-    { href: "/advertising", label: "Advertising" },
+  Stansiya: [
+    { href: "/schedule", label: "Dasturlar" },
+    { href: "/news", label: "Yangiliklar" },
+    { href: "/about", label: "Biz haqimizda" },
+    { href: "/advertising", label: "Reklama" },
   ],
-  Connect: [
+  "Bog'lanish": [
     { href: "https://instagram.com", label: "Instagram" },
     { href: "https://t.me", label: "Telegram" },
     { href: "https://youtube.com", label: "YouTube" },
     { href: "https://twitter.com", label: "X / Twitter" },
   ],
-  Legal: [
-    { href: "#", label: "Privacy Policy" },
-    { href: "#", label: "Terms of Use" },
-    { href: "#", label: "Cookie Policy" },
+  Qoidalar: [
+    { href: "#", label: "Maxfiylik siyosati" },
+    { href: "#", label: "Foydalanish shartlari" },
+    { href: "#", label: "Cookie siyosati" },
   ],
 };
 
@@ -42,7 +42,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed max-w-xs">
-              The sound of Tashkent. Podcasts, shows, and music that move with the rhythm of the city.
+              Toshkentning ovozi. Shahar ritmiga mos podkastlar, shoular va musiqa.
             </p>
           </div>
 
@@ -71,10 +71,10 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-[var(--color-border)] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[var(--color-text-muted)] text-xs">
-            &copy; {new Date().getFullYear()} TempFM 88.4. All rights reserved.
+            &copy; {new Date().getFullYear()} TempFM 88.4. Barcha huquqlar himoyalangan.
           </p>
           <p className="text-[var(--color-text-muted)] text-xs">
-            Tashkent, Uzbekistan
+            Toshkent, O&apos;zbekiston
           </p>
         </div>
       </div>

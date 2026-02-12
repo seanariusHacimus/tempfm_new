@@ -6,130 +6,126 @@ import AnimateIn from "@/components/AnimateIn";
 const benefits = [
   {
     value: "200K+",
-    label: "Monthly Listeners",
+    label: "Oylik Tinglovchilar",
     description:
-      "Reach over 200,000 active listeners across Tashkent and beyond every month through FM broadcast and digital streams.",
+      "Toshkentda va butun dunyo bo'ylab har oy 200,000 dan ortiq faol tinglovchilarga FM va raqamli oqimlar orqali yetib boring.",
   },
   {
     value: "18–30",
-    label: "Core Demographic",
+    label: "Asosiy Auditoriya",
     description:
-      "Our audience is Tashkent's most active consumer group — university students, young professionals, and creatives.",
+      "Bizning auditoriyamiz Toshkentning eng faol qatlami — talabalar, yosh mutaxassislar va ijodkorlardir.",
   },
   {
     value: "4.2M",
-    label: "Monthly Impressions",
+    label: "Oylik Ko'rishlar",
     description:
-      "Combined on-air and digital impressions across FM broadcast, website, social media, and streaming platforms.",
+      "FM eshittirish, veb-sayt, ijtimoiy tarmoqlar va striming platformalaridagi umumiy qamrov.",
   },
   {
     value: "12+",
-    label: "Ad Formats",
+    label: "Reklama Formatlari",
     description:
-      "From classic radio spots to branded podcast segments, social media takeovers, and live event integrations.",
+      "Klassik radio roliklaridan tortib brendlashtirilgan podkastlar, ijtimoiy tarmoqlar va jonli tadbirlargacha.",
   },
 ];
 
 const adFormats = [
   {
-    title: "Spot Ads",
-    duration: "15 / 30 / 60 sec",
+    title: "Reklama Roliklari",
+    duration: "15 / 30 / 60 soniya",
     description:
-      "Classic radio advertising at its finest. Your message delivered during peak listening hours with professional voice-over production included. Run during Morning Pulse, Night Drive, or across our full broadcast schedule.",
+      "Klassik radio reklama. Sizning xabaringiz eng ko'p tinglanadigan vaqtlarda professional ovoz bilan yetkaziladi. 'Tonggi Puls', 'Tungi Driv' yoki to'liq jadval bo'yicha.",
     features: [
-      "Professional production included",
-      "Peak & off-peak scheduling",
-      "Frequency discounts available",
-      "A/B creative testing",
+      "Professional ishlab chiqarish",
+      "Prime-time va oddiy vaqt",
+      "Tez-tez joylashtirish uchun chegirmalar",
+      "A/B test sinovlari",
     ],
   },
   {
-    title: "Show Sponsorship",
-    duration: "Weekly / Monthly",
+    title: "Dastur Homiyligi",
+    duration: "Haftalik / Oylik",
     description:
-      "Become the presenting sponsor of TempFM's most popular shows. Your brand woven into the fabric of programs that Tashkent's youth tune into daily — from Morning Pulse to The Underground.",
+      "TempFM ning eng mashhur shoulariga homiylik qiling. Brendingizni Toshkent yoshlari har kuni tinglaydigan dasturlarga integratsiya qiling.",
     features: [
-      "Branded show intros & outros",
-      "Host-read endorsements",
-      "Exclusive category ownership",
-      "Social media cross-promotion",
+      "Brendlashtirilgan intro va outro",
+      "Boshlovchi tomonidan aytiladigan matn",
+      "Eksklyuziv toifa homiyligi",
+      "Ijtimoiy tarmoqlarda reklama",
     ],
   },
   {
-    title: "Digital Campaigns",
-    duration: "Flexible",
+    title: "Raqamli Kampaniyalar",
+    duration: "Moslashuvchan",
     description:
-      "Extend your reach beyond FM. Targeted campaigns across our website, mobile app, social channels, and streaming platform — with detailed analytics and audience insights.",
+      "FM dan tashqariga chiqing. Veb-sayt, mobil ilova va ijtimoiy tarmoqlarda maqsadli reklama kampaniyalari — batafsil statistika bilan.",
     features: [
-      "Website banner & pre-roll ads",
-      "Social media integration",
-      "Newsletter sponsorship",
-      "Real-time performance dashboards",
+      "Veb-sayt bannerlari va pre-roll",
+      "Ijtimoiy tarmoq integratsiyasi",
+      "Axborotnoma homiyligi",
+      "Real vaqt rejimidagi statistika",
     ],
   },
   {
-    title: "Event Partnerships",
-    duration: "Per Event",
+    title: "Tadbirlar Hamkorligi",
+    duration: "Tadbir davomida",
     description:
-      "TempFM hosts and sponsors Tashkent's biggest youth events — concerts, festivals, and cultural gatherings. Put your brand in front of thousands of engaged young consumers face-to-face.",
+      "TempFM yoshlarning eng yirik tadbirlariga mezbonlik qiladi. Minglab yoshlar bilan yuzma-yuz muloqotda brendingizni namoyish eting.",
     features: [
-      "On-site brand activation",
-      "Stage naming rights",
-      "VIP experience branding",
-      "Live broadcast mentions",
+      "Tadbir joyida brending",
+      "Sahnani nomlash huquqi",
+      "VIP zona brendingi",
+      "Jonli efirda eslatmalar",
     ],
   },
 ];
 
 const pricingTiers = [
   {
-    name: "Starter",
+    name: "Boshlang'ich",
     price: "2 500 000",
-    period: "/ month",
+    period: "/ oy",
     description:
-      "Perfect for local businesses looking to reach Tashkent's youth audience with consistent on-air presence.",
+      "Toshkent yoshlari auditoriyasiga chiqishni istagan mahalliy bizneslar uchun mukammal boshlanish.",
     features: [
-      "10 spot ads per week (15 sec)",
-      "Off-peak scheduling",
-      "Basic production included",
-      "Monthly performance report",
-      "1 social media mention",
+      "Haftasiga 10 ta rolik (15 soniya)",
+      "Oddiy vaqtda joylashtirish",
+      "Bazaviy ishlab chiqarish",
+      "Oylik hisobot",
+      "1 ta ijtimoiy tarmoq posti",
     ],
     highlighted: false,
   },
   {
-    name: "Growth",
-    price: "7 500 000",
-    period: "/ month",
+    name: "Professional",
+    price: "7 000 000",
+    period: "/ oy",
     description:
-      "For brands ready to own a bigger share of voice across TempFM's on-air and digital platforms.",
+      "Tez o'sayotgan brendlar uchun. Har tomonlama qamrov va yuqori chastotali eshittirishlar.",
     features: [
-      "25 spot ads per week (30 sec)",
-      "Peak & off-peak scheduling",
-      "Premium production with music",
-      "Show sponsorship (1 show)",
-      "Weekly social media posts",
-      "Website banner placement",
-      "Bi-weekly performance reports",
+      "Haftasiga 30 ta rolik (30 soniya)",
+      "Prime-time vaqtlar",
+      "Professional audio rolik",
+      "Haftalik hisobotlar",
+      "Ijtimoiy tarmoq + Sayt",
+      "Shou homiyligi (1 ta)",
     ],
     highlighted: true,
   },
   {
-    name: "Premium",
-    price: "15 000 000",
-    period: "/ month",
+    name: "Korporativ",
+    price: "Shartnoma asosida",
+    period: "",
     description:
-      "Full-scale partnership for brands that want to become synonymous with Tashkent's youth culture.",
+      "Yirik kompaniyalar uchun to'liq paket. Radio, dijital va tadbirlarni qamrab oluvchi 360 darajali yechim.",
     features: [
-      "Unlimited spot ads (60 sec)",
-      "Priority peak scheduling",
-      "Full creative production suite",
-      "Show sponsorship (up to 3 shows)",
-      "Daily social media presence",
-      "Dedicated digital campaign",
-      "Event partnership access",
-      "Dedicated account manager",
-      "Real-time analytics dashboard",
+      "Cheksiz roliklar",
+      "Barcha vaqtlar prioriteti",
+      "To'liq prodakshn xizmati",
+      "Eksklyuziv homiylik",
+      "Tadbirlar integratsiyasi",
+      "Shaxsiy menejer",
     ],
     highlighted: false,
   },
@@ -139,29 +135,22 @@ export default function AdvertisingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-accent)]/5 via-transparent to-transparent" />
-        <div className="absolute top-1/3 -left-32 w-96 h-96 bg-[var(--color-accent)]/8 rounded-full blur-[128px]" />
-        <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-[var(--color-accent)]/5 rounded-full blur-[100px]" />
-
-        <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 w-full">
-          <AnimateIn delay={0.1}>
-            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-4">
-              Advertise with TempFM
+      <section className="pt-32 pb-16 md:pt-40 md:pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <AnimateIn>
+            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
+              Kengayishingiz Uchun
             </p>
           </AnimateIn>
-
-          <AnimateIn delay={0.2}>
-            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-6">
-              Your Brand.
-              <br />
-              <span className="text-[var(--color-accent)]">Their Frequency.</span>
+          <AnimateIn delay={0.1}>
+            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-8">
+              TEMP FM BILAN <br />
+              <span className="text-[var(--color-accent)]">HAMKORLIK.</span>
             </h1>
           </AnimateIn>
-
-          <AnimateIn delay={0.35}>
-            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-xl leading-relaxed mb-10">
-              TempFM 88.4 is where Tashkent&apos;s youth lives. Over 200,000 monthly listeners, aged 18 to 30, tuned in and engaged. Put your brand at the center of the conversation.
+          <AnimateIn delay={0.2}>
+            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+              O'zbekistonning eng faol va zamonaviy auditoriyasiga o'z brendingizni taniting. Biz shunchaki efir vaqti sotmaymiz — biz madaniyat yaratamiz.
             </p>
           </AnimateIn>
 
@@ -171,13 +160,13 @@ export default function AdvertisingPage() {
                 href="#pricing"
                 className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors"
               >
-                View Packages
+                Paketlarni Ko'rish
               </a>
               <a
                 href="#contact"
                 className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors"
               >
-                Get in Touch
+                Biz Bilan Bog'lanish
               </a>
             </div>
           </AnimateIn>
@@ -190,10 +179,10 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Why TempFM
+                Nega Aynan TempFM
               </p>
               <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
-                Numbers That Move
+                O'sish Raqamlarda
               </h2>
             </div>
           </AnimateIn>
@@ -227,13 +216,13 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Ad Formats
+                Reklama Formatlari
               </p>
               <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Every Channel. One Audience.
+                Har Bir Kanalda. Bitta Auditoriya.
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-2xl leading-relaxed">
-                Whether it&apos;s a 15-second spot or a full event partnership, we&apos;ll craft the right format to connect your brand with Tashkent&apos;s most engaged demographic.
+                15 soniyalik rolik bo'ladimi yoki to'liq hamkorlikmi, biz brendingizni Toshkentning eng faol auditoriyasi bilan bog'lash uchun to'g'ri formatni yaratamiz.
               </p>
             </div>
           </AnimateIn>
@@ -283,13 +272,13 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="text-center mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Pricing
+                Narxlar
               </p>
               <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Packages That Scale
+                Moslashuvchan Paketlar
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                Transparent pricing built for every stage of growth. All packages include production support and dedicated account coordination.
+                Biznes o'sishining har bir bosqichi uchun shaffof narxlar. Barcha paketlar prodakshn xizmati va shaxsiy menejer yordamini o'z ichiga oladi.
               </p>
             </div>
           </AnimateIn>
@@ -299,15 +288,14 @@ export default function AdvertisingPage() {
               <AnimateIn key={tier.name} delay={i * 0.15}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className={`relative bg-[var(--color-bg-card)] border rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col ${
-                    tier.highlighted
-                      ? "border-[var(--color-accent)]"
-                      : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
-                  }`}
+                  className={`relative bg-[var(--color-bg-card)] border rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col ${tier.highlighted
+                    ? "border-[var(--color-accent)]"
+                    : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
+                    }`}
                 >
                   {tier.highlighted && (
                     <div className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">
-                      Most Popular
+                      Eng Mashhur
                     </div>
                   )}
 
@@ -342,13 +330,12 @@ export default function AdvertisingPage() {
                     </ul>
                     <a
                       href="#contact"
-                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors ${
-                        tier.highlighted
-                          ? "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
-                          : "bg-[var(--color-bg-card-hover)] hover:bg-[var(--color-accent)] border border-[var(--color-border)] hover:border-transparent text-white"
-                      }`}
+                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors ${tier.highlighted
+                        ? "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
+                        : "bg-[var(--color-bg-card-hover)] hover:bg-[var(--color-accent)] border border-[var(--color-border)] hover:border-transparent text-white"
+                        }`}
                     >
-                      Get Started
+                      Boshlash
                     </a>
                   </div>
                 </motion.div>
@@ -358,7 +345,7 @@ export default function AdvertisingPage() {
 
           <AnimateIn delay={0.3}>
             <p className="text-center text-[var(--color-text-muted)] text-sm mt-8">
-              All prices in Uzbekistani Sum (UZS). Custom packages available. Contact us for enterprise and long-term partnership rates.
+              Barcha narxlar so'mda (UZS) ko'rsatilgan. Korporativ va uzoq muddatli hamkorlik uchun biz bilan bog'laning.
             </p>
           </AnimateIn>
         </div>
@@ -372,15 +359,15 @@ export default function AdvertisingPage() {
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimateIn>
             <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Let&apos;s Talk
+              Bog'lanish
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white mb-6">
-              Ready to Reach
+              Auditoriyangizni
               <br />
-              <span className="text-[var(--color-accent)]">Tashkent&apos;s Youth?</span>
+              <span className="text-[var(--color-accent)]">Kengaytiring</span>
             </h2>
             <p className="text-[var(--color-text-secondary)] text-lg max-w-lg mx-auto mb-10">
-              Get in touch with our advertising team. We&apos;ll build a custom campaign that puts your brand where it matters — on the frequency Tashkent&apos;s next generation is already tuned into.
+              Bizning reklama bo'limimiz bilan bog'laning. Biz sizning brendingizni Toshkent yoshlari allaqachon tinglayotgan to'lqinga olib chiqamiz.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
