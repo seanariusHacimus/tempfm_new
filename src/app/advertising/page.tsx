@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
+import PageHeader from "@/components/PageHeader";
 
 const benefits = [
   {
@@ -134,44 +135,27 @@ const pricingTiers = [
 export default function AdvertisingPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <AnimateIn>
-            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Kengayishingiz Uchun
-            </p>
-          </AnimateIn>
-          <AnimateIn delay={0.1}>
-            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-8">
-              TEMP FM BILAN <br />
-              <span className="text-[var(--color-accent)]">HAMKORLIK.</span>
-            </h1>
-          </AnimateIn>
-          <AnimateIn delay={0.2}>
-            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
-              O'zbekistonning eng faol va zamonaviy auditoriyasiga o'z brendingizni taniting. Biz shunchaki efir vaqti sotmaymiz — biz madaniyat yaratamiz.
-            </p>
-          </AnimateIn>
-
-          <AnimateIn delay={0.5}>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#pricing"
-                className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors"
-              >
-                Paketlarni Ko'rish
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-bold uppercase tracking-wider transition-colors"
-              >
-                Biz Bilan Bog'lanish
-              </a>
-            </div>
-          </AnimateIn>
+      <PageHeader
+        label="Kengayishingiz Uchun"
+        title="TEMP FM BILAN"
+        titleAccent="HAMKORLIK."
+        description="O'zbekistonning eng faol va zamonaviy auditoriyasiga o'z brendingizni taniting. Biz shunchaki efir vaqti sotmaymiz — biz madaniyat yaratamiz."
+      >
+        <div className="flex flex-col sm:flex-row gap-4">
+          <a
+            href="#pricing"
+            className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
+          >
+            Paketlarni Ko&apos;rish
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
+          >
+            Biz Bilan Bog&apos;lanish
+          </a>
         </div>
-      </section>
+      </PageHeader>
 
       {/* Why Advertise */}
       <section className="py-24 md:py-32 border-t border-[var(--color-border)]">
@@ -197,7 +181,7 @@ export default function AdvertisingPage() {
                   <div className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-black text-[var(--color-accent)] tracking-tight mb-2">
                     {benefit.value}
                   </div>
-                  <div className="text-white text-sm font-bold uppercase tracking-wider mb-3">
+                  <div className="text-white text-sm font-display font-bold uppercase tracking-wider mb-3">
                     {benefit.label}
                   </div>
                   <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">
@@ -330,7 +314,7 @@ export default function AdvertisingPage() {
                     </ul>
                     <a
                       href="#contact"
-                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors ${tier.highlighted
+                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-display font-bold uppercase tracking-wider transition-colors ${tier.highlighted
                         ? "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
                         : "bg-[var(--color-bg-card-hover)] hover:bg-[var(--color-accent)] border border-[var(--color-border)] hover:border-transparent text-white"
                         }`}
@@ -372,13 +356,13 @@ export default function AdvertisingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="mailto:ads@tempfm.uz"
-                className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-10 py-5 rounded-[12px] text-lg font-bold uppercase tracking-wider transition-colors"
+                className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-10 py-5 rounded-[12px] text-lg font-display font-bold uppercase tracking-wider transition-colors"
               >
                 ads@tempfm.uz
               </a>
               <a
                 href="tel:+998712000088"
-                className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-10 py-5 rounded-[12px] text-lg font-bold uppercase tracking-wider transition-colors"
+                className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-10 py-5 rounded-[12px] text-lg font-display font-bold uppercase tracking-wider transition-colors"
               >
                 +998 71 200 00 88
               </a>

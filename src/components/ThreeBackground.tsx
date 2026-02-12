@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useAudio } from "./AudioProvider";
 
-export default function ThreeBackground() {
+interface ThreeBackgroundProps {
+    className?: string;
+    style?: React.CSSProperties;
+}
+
+export default function ThreeBackground({ className, style }: ThreeBackgroundProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const { analyserRef, isPlaying } = useAudio();
     const isPlayingRef = useRef(isPlaying);
@@ -21,10 +26,14 @@ export default function ThreeBackground() {
         const scene = new THREE.Scene();
         scene.fog = new THREE.Fog(0x000000, 2, 12);
 
+        // === Dimensions (use container if sized, else window) ===
+        const getWidth = () => container.clientWidth || window.innerWidth;
+        const getHeight = () => container.clientHeight || window.innerHeight;
+
         // === Camera ===
         const camera = new THREE.PerspectiveCamera(
             70,
-            window.innerWidth / window.innerHeight,
+            getWidth() / getHeight(),
             0.1,
             100
         );
@@ -36,7 +45,7 @@ export default function ThreeBackground() {
             antialias: true,
             powerPreference: "high-performance",
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(getWidth(), getHeight());
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x000000);
         container.appendChild(renderer.domElement);
@@ -61,7 +70,7 @@ export default function ThreeBackground() {
         const fovRad = (camera.fov * Math.PI) / 180;
 
         function createGeometry() {
-            const aspect = window.innerWidth / window.innerHeight;
+            const aspect = getWidth() / getHeight();
             const frustumHeight = 2 * Math.tan(fovRad / 2) * 5;
             const frustumWidth = frustumHeight * aspect;
             return new THREE.PlaneGeometry(frustumWidth * 2, frustumHeight * 2, 128, 128);
@@ -167,9 +176,9 @@ export default function ThreeBackground() {
 
         // === Resize ===
         function onResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.aspect = getWidth() / getHeight();
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(getWidth(), getHeight());
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
             geometry.dispose();
@@ -196,15 +205,17 @@ export default function ThreeBackground() {
     return (
         <div
             ref={containerRef}
+            className={className}
             style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
                 width: "100%",
-                height: "100vh",
-                zIndex: 0,
+                height: "100%",
+                zIndex: -1,
                 pointerEvents: "none",
                 overflow: "hidden",
+                ...style,
             }}
         />
     );

@@ -12,8 +12,8 @@
   --color-border: #222222;
   --color-border-hover: #333333;
 
-  --font-display: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-petrov), "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: var(--font-roboto), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 html {
@@ -26,6 +26,17 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.font-display {
+  letter-spacing: 0.025em;
 }
 
 ::selection {
@@ -80,14 +91,19 @@ body {
   animation: play-pulse-ring 2s infinite;
 }
 
-/* ━━━ Section Backgrounds — semi‑transparent for Three.js bleed ━━━ */
-footer,
-nav {
+/* ━━━ Section Backgrounds ━━━ */
+footer {
   position: relative;
   z-index: 20;
 }
 
 section {
-  position: relative;
   z-index: 10;
+}
+
+/* Ensure main content sections have opaque bg so Three.js doesn't bleed through */
+main>section+section,
+main>section+div,
+main>div+section {
+  background-color: var(--color-bg);
 }

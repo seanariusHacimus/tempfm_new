@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
+import PageHeader from "@/components/PageHeader";
 
 interface Show {
   time: string;
@@ -321,28 +322,12 @@ export default function SchedulePage() {
 
   return (
     <>
-      {/* Header */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <AnimateIn>
-            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Efirdan Boxabar Bo&apos;ling
-            </p>
-          </AnimateIn>
-          <AnimateIn delay={0.1}>
-            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter text-white mb-4">
-              Haftalik
-              <br />
-              <span className="text-[var(--color-accent)]">Jadval</span>
-            </h1>
-          </AnimateIn>
-          <AnimateIn delay={0.2}>
-            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-lg leading-relaxed">
-              24 soat, haftada 7 kun. Har bir shou, har bir boshlovchi va har bir musiqa — maxsus siz uchun tanlangan.
-            </p>
-          </AnimateIn>
-        </div>
-      </section>
+      <PageHeader
+        label="Efirdan Boxabar Bo'ling"
+        title="Haftalik"
+        titleAccent="Jadval"
+        description="24 soat, haftada 7 kun. Har bir shou, har bir boshlovchi va har bir musiqa — maxsus siz uchun tanlangan."
+      />
 
       {/* Day Selector */}
       <section className="sticky top-16 z-30 bg-[var(--color-bg)]/80 backdrop-blur-xl border-y border-[var(--color-border)]">

@@ -22,7 +22,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <div className="relative w-[134px] h-[134px] flex items-center justify-center">
+          <div className="relative w-[120px] h-10 flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" alt="TempFM Logo" className="w-full h-full object-contain" />
           </div>

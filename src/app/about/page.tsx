@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
+import PageHeader from "@/components/PageHeader";
 
 const values = [
   {
@@ -92,32 +93,12 @@ const socials = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-accent)]/5 via-transparent to-transparent" />
-        <div className="absolute top-1/3 -left-32 w-96 h-96 bg-[var(--color-accent)]/10 rounded-full blur-[128px]" />
-
-        <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 w-full">
-          <AnimateIn delay={0.1}>
-            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-4">
-              Biz Haqimizda
-            </p>
-          </AnimateIn>
-
-          <AnimateIn delay={0.2}>
-            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.85] tracking-tighter text-white mb-8">
-              BIZ SHUNCHAKI <br />
-              RADIO <span className="text-[var(--color-accent)]">EMASMIZ.</span>
-            </h1>
-          </AnimateIn>
-
-          <AnimateIn delay={0.35}>
-            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl leading-relaxed">
-              TempFM 88.4 — Toshkentning yurak urishi. Biz shahar madaniyatining ovozi, yangi musiqalar maskani va ijodkor yoshlar uyimiz.
-            </p>
-          </AnimateIn>
-        </div>
-      </section>
+      <PageHeader
+        label="Biz Haqimizda"
+        title="BIZ SHUNCHAKI RADIO"
+        titleAccent="EMASMIZ."
+        description="TempFM 88.4 — Toshkentning yurak urishi. Biz shahar madaniyatining ovozi, yangi musiqalar maskani va ijodkor yoshlar uyimiz."
+      />
 
       {/* Story / History */}
       <section className="py-24 md:py-32 border-t border-[var(--color-border)]">

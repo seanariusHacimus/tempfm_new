@@ -53,7 +53,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — transparent to reveal Three.js background */}
-      <section className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
+      <section className="relative h-screen flex items-center overflow-hidden">
         <AnimatePresence mode="wait">
           {isPlaying ? (
             /* ── Playing: centered swinging logo ── */
@@ -63,7 +63,7 @@ export default function HomePage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-              className="absolute inset-0 flex items-center justify-center pb-36"
+              className="absolute inset-0 flex items-center justify-center"
             >
               <motion.div
                 animate={{ y: [0, -15, 0, 15, 0] }}
@@ -105,7 +105,7 @@ export default function HomePage() {
               </AnimateIn>
 
               <AnimateIn delay={0.2}>
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tight mb-8 font-[family-name:var(--font-display)]">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-wide mb-8 font-display">
                   TOSHKENT <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-orange-400">
                     OVOZI.
@@ -164,7 +164,7 @@ export default function HomePage() {
                     : ""
                     }`}
                 >
-                  <div className="font-[family-name:var(--font-display)] text-3xl md:text-5xl font-black text-white tracking-tight">
+                  <div className="font-display text-3xl md:text-5xl font-black text-white tracking-wide">
                     {stat.value}
                   </div>
                   <div className="text-[var(--color-text-secondary)] text-sm mt-2 uppercase tracking-wider">
@@ -186,7 +186,7 @@ export default function HomePage() {
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
                   Efirda
                 </p>
-                <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
+                <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-wide text-white">
                   Mashhur Dasturlar
                 </h2>
               </div>
@@ -214,7 +214,7 @@ export default function HomePage() {
                       {show.time}
                     </span>
                   </div>
-                  <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-2 group-hover:text-[var(--color-accent)] transition-colors">
+                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-wide text-white mb-2 group-hover:text-[var(--color-accent)] transition-colors">
                     {show.title}
                   </h3>
                   <p className="text-[var(--color-text-secondary)] text-sm mb-4">
@@ -248,7 +248,7 @@ export default function HomePage() {
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
                   Biz Haqimizda
                 </p>
-                <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-6">
+                <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-wide text-white mb-6">
                   Jonli Musiqa
                   <br />
                   <span className="text-[var(--color-accent)]">Ruhi</span>
@@ -272,7 +272,7 @@ export default function HomePage() {
             <AnimateIn direction="right" delay={0.2}>
               <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-[12px] aspect-square flex items-center justify-center">
                 <div className="text-center p-8">
-                  <div className="font-[family-name:var(--font-display)] text-8xl md:text-9xl font-black text-[var(--color-accent)] tracking-tighter leading-none">
+                  <div className="font-display text-8xl md:text-9xl font-black text-[var(--color-accent)] tracking-wideer leading-none">
                     88.4
                   </div>
                   <div className="text-[var(--color-text-muted)] text-sm uppercase tracking-[0.3em] mt-4">
@@ -295,7 +295,7 @@ export default function HomePage() {
             <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
               Hoziroq Tinglang
             </p>
-            <h2 className="font-[family-name:var(--font-display)] text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white mb-6">
+            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wide text-white mb-6">
               Shunchaki varaqlamang.
               <br />
               <span className="text-[var(--color-accent)]">Tinglang.</span>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
+import PageHeader from "@/components/PageHeader";
 
 interface NewsArticle {
   id: number;
@@ -76,27 +77,12 @@ const articles: NewsArticle[] = [
 export default function NewsPage() {
   return (
     <>
-      {/* Page Header */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <AnimateIn>
-            <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Kuzatib Boring
-            </p>
-          </AnimateIn>
-          <AnimateIn delay={0.1}>
-            <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-white">
-              YANGILIKLAR &<br />
-              <span className="text-[var(--color-accent)]">O'ZGARISHLAR</span>
-            </h1>
-          </AnimateIn>
-          <AnimateIn delay={0.2}>
-            <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-lg leading-relaxed mt-6">
-              TempFM 88.4 da sodir bo'layotgan barcha voqealar — yangi shoular, tadbirlar, san'atkorlar va stansiya yangiliklari to'g'ridan-to'g'ri Toshkentdan.
-            </p>
-          </AnimateIn>
-        </div>
-      </section>
+      <PageHeader
+        label="Kuzatib Boring"
+        title="YANGILIKLAR &"
+        titleAccent="O'ZGARISHLAR"
+        description="TempFM 88.4 da sodir bo'layotgan barcha voqealar — yangi shoular, tadbirlar, san'atkorlar va stansiya yangiliklari to'g'ridan-to'g'ri Toshkentdan."
+      />
 
       {/* Featured Article */}
       <section className="pb-8">

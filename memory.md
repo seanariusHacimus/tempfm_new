@@ -22,6 +22,13 @@
 - A backup exists at `src/app/advertising/page_old.tsx.bak`.
 - **Current status:** Builds successfully as of latest build.
 
+### UI Polishing (Feb 12, 2026)
+- **Standardized Headers:** Created `PageHeader.tsx` and applied to `about`, `news`, `schedule`, `advertising`.
+- **Fixed Z-Index:** Set `ThreeBackground` to `z-[-1]` to prevent it from blocking interactions.
+- **Centered Logo:** Removed padding offset in Hero section for perfect centering.
+- **RadioPlayer:** Responsive improvements and better mobile layout.
+- **Custom Font:** Integrated `PetrovSans` as the new display font for all titles. Moved font files to `src/app/fonts` and configured via `next/font/local`.
+
 ---
 
 ## Architecture Decisions

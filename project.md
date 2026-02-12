@@ -47,6 +47,7 @@ tempfm_website/
 │   │   ├── AudioProvider.tsx # Audio context provider (play/pause/mute, Web Audio API analyser)
 │   │   ├── Footer.tsx       # Site footer
 │   │   ├── Navigation.tsx   # Top nav with mobile menu, active link highlight
+│   │   ├── PageHeader.tsx   # Standardized page header (title, accent, description)
 │   │   ├── RadioPlayer.tsx  # Floating radio player bar (stream controls, now-playing)
 │   │   └── ThreeBackground.tsx # Three.js animated liquid surface (reacts to audio)
 │   └── hooks/
