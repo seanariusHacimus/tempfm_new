@@ -170,25 +170,35 @@ export default function HomePage() {
 
       {/* Stats */}
       <section className="border-y border-[var(--color-border)]">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4">
-            {stats.map((stat, i) => (
-              <AnimateIn key={stat.label} delay={i * 0.1}>
-                <div
-                  className={`py-10 md:py-14 text-center ${i < stats.length - 1
-                    ? "border-r border-[var(--color-border)]"
-                    : ""
-                    }`}
-                >
-                  <div className="font-display text-3xl md:text-5xl font-black text-white tracking-wide">
-                    {stat.value}
+            {stats.map((stat, i) => {
+              // Mobile (2-col): left col = index 0,2; top row = index 0,1
+              const isLeftCol = i % 2 === 0;
+              const isTopRow = i < 2;
+              const borderClasses = [
+                // Right border: left-col items on mobile, all but last on desktop
+                isLeftCol ? "border-r border-[var(--color-border)]" : "",
+                !isLeftCol && i < stats.length - 1 ? "md:border-r md:border-[var(--color-border)]" : "",
+                // Bottom border on mobile between rows
+                isTopRow ? "border-b border-[var(--color-border)] md:border-b-0" : "",
+              ].filter(Boolean).join(" ");
+
+              return (
+                <AnimateIn key={stat.label} delay={i * 0.1}>
+                  <div
+                    className={`py-10 md:py-14 text-center ${borderClasses}`}
+                  >
+                    <div className="font-display text-3xl md:text-5xl font-black text-white tracking-wide">
+                      {stat.value}
+                    </div>
+                    <div className="text-[var(--color-text-secondary)] text-sm mt-2 uppercase tracking-wider">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="text-[var(--color-text-secondary)] text-sm mt-2 uppercase tracking-wider">
-                    {stat.label}
-                  </div>
-                </div>
-              </AnimateIn>
-            ))}
+                </AnimateIn>
+              );
+            })}
           </div>
         </div>
       </section>

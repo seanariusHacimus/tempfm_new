@@ -46,7 +46,7 @@ tempfm_website/
 │   │   ├── AnimateIn.tsx     # Scroll-triggered animation wrapper
 │   │   ├── AudioProvider.tsx # Audio context provider (play/pause/mute, Web Audio API analyser)
 │   │   ├── Footer.tsx       # Site footer
-│   │   ├── Navigation.tsx   # Top nav with mobile menu, active link highlight
+│   │   ├── Navigation.tsx   # Top nav with full-page mobile overlay, staggered animations, active link indicator
 │   │   ├── PageHeader.tsx   # Standardized page header (title, accent, description)
 │   │   ├── RadioPlayer.tsx  # Floating radio player bar (stream controls, now-playing)
 │   │   └── ThreeBackground.tsx # Three.js animated liquid surface (reacts to audio)
@@ -81,7 +81,7 @@ tempfm_website/
 - **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `streamError`, `audioRef`, `analyserRef`. Destroys and recreates the audio source on every play/pause to ensure fresh live stream (no cached audio). Includes automatic reconnection with exponential backoff (up to 5 retries).
 - **ThreeBackground** — Full-viewport Three.js liquid surface that reacts to audio frequency data (bass/mids). Falls back to simulated animation when no audio is playing.
 - **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts).
-- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Mobile hamburger menu with AnimatePresence.
+- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss.
 - **useStreamData** — Hook that polls external XML every 5s, parses XML, returns current/next track info with artwork.
 
 ---

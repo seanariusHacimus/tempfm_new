@@ -112,10 +112,8 @@ const stats = [
 ];
 
 const socials = [
-  { name: "Instagram", href: "#" },
-  { name: "Telegram", href: "#" },
-  { name: "YouTube", href: "#" },
-  { name: "X / Twitter", href: "#" },
+  { name: "Instagram", href: "https://instagram.com/radiotempfm" },
+  { name: "Telegram", href: "https://t.me/radiotempfm" },
 ];
 
 export default function AboutPage() {
@@ -332,7 +330,7 @@ export default function AboutPage() {
                       Manzil
                     </p>
                     <p className="text-white text-base">
-                      Toshkent City, O'zbekiston
+                      Sariksuv Street, BHH Tower, Tashkent, Uzbekistan
                     </p>
                   </div>
                   <div>
@@ -340,10 +338,10 @@ export default function AboutPage() {
                       Email
                     </p>
                     <a
-                      href="mailto:hello@tempfm.uz"
+                      href="mailto:info@temp.fm"
                       className="text-white text-base hover:text-[var(--color-accent)] transition-colors"
                     >
-                      hello@tempfm.uz
+                      info@temp.fm
                     </a>
                   </div>
                   <div>
@@ -351,10 +349,10 @@ export default function AboutPage() {
                       Telefon
                     </p>
                     <a
-                      href="tel:+998712000884"
+                      href="tel:+998555158840"
                       className="text-white text-base hover:text-[var(--color-accent)] transition-colors"
                     >
-                      +998 71 200 08 84
+                      +998 55 515 88 40
                     </a>
                   </div>
                 </div>

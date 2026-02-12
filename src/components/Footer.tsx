@@ -8,10 +8,8 @@ const footerLinks = {
     { href: "/advertising", label: "Reklama" },
   ],
   "Bog'lanish": [
-    { href: "https://instagram.com", label: "Instagram" },
-    { href: "https://t.me", label: "Telegram" },
-    { href: "https://youtube.com", label: "YouTube" },
-    { href: "https://twitter.com", label: "X / Twitter" },
+    { href: "https://instagram.com/radiotempfm", label: "Instagram" },
+    { href: "https://t.me/radiotempfm", label: "Telegram" },
   ],
   Qoidalar: [
     { href: "#", label: "Maxfiylik siyosati" },
@@ -27,20 +25,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="relative w-10 h-10 flex items-center justify-center">
+            <Link href="/" className="flex items-center mb-6">
+              <div className="relative w-[120px] h-10 flex items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.svg" alt="TempFM Logo" className="w-full h-full object-contain" />
+                <img
+                  src="/logo.svg"
+                  alt="TempFM Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <div className="flex flex-col">
-                <span className="text-white font-black text-lg leading-none tracking-tight font-[family-name:var(--font-display)]">
-                  TEMP FM
-                </span>
-                <span className="text-[var(--color-text-muted)] text-[10px] tracking-[0.2em] uppercase">
-                  88.4 Toshkent
-                </span>
-              </div>
-            </div>
+            </Link>
             <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed max-w-xs">
               Toshkentning ovozi. Shahar ritmiga mos podkastlar, shoular va musiqa.
             </p>
@@ -74,7 +68,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TempFM 88.4. Barcha huquqlar himoyalangan.
           </p>
           <p className="text-[var(--color-text-muted)] text-xs">
-            Toshkent, O&apos;zbekiston
+            Sariksuv Street, BHH Tower, Tashkent, Uzbekistan
           </p>
         </div>
       </div>

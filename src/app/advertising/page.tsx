@@ -355,17 +355,25 @@ export default function AdvertisingPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="mailto:ads@tempfm.uz"
+                href="mailto:info@temp.fm"
                 className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-10 py-5 rounded-[12px] text-lg font-display font-bold uppercase tracking-wider transition-colors"
               >
-                ads@tempfm.uz
+                info@temp.fm
               </a>
-              <a
-                href="tel:+998712000088"
-                className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-10 py-5 rounded-[12px] text-lg font-display font-bold uppercase tracking-wider transition-colors"
-              >
-                +998 71 200 00 88
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="tel:+998955602222"
+                  className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
+                >
+                  +998 95 560 22 22
+                </a>
+                <a
+                  href="tel:+998901160075"
+                  className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
+                >
+                  +998 90 116 00 75
+                </a>
+              </div>
             </div>
           </AnimateIn>
         </div>

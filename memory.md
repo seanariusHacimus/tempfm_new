@@ -41,6 +41,8 @@
 - **RadioPlayer:** Responsive improvements and better mobile layout.
 - **Custom Font:** Integrated `PetrovSans` (Display) and `Roboto` (Body). Standardized all titles and buttons to use the brand font with improved letter-spacing.
 - **Standardized Headers:** Created reusable `PageHeader` component for consistent spacing across subpages.
+- **Full-Page Mobile Menu (Feb 12-13, 2026):** Redesigned the mobile menu from a dropdown to a full-viewport overlay. Added staggered Framer Motion animations for links, body scroll lock, and Escape key support.
+- **Burger Icon Fix:** Refactored the hamburger toggle with absolute positioning to ensure a perfect "X" transformation without any skew.
 
 ---
 
@@ -106,4 +108,4 @@ npm run lint   # ESLint
 ---
 
 ## Last Updated
-**2026-02-12** (streaming robustness improvements)
+**2026-02-13** (full-page mobile menu implementation & burger icon fix)
