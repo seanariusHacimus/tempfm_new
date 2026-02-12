@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0a;
+  --color-bg-card: #111111;
+  --color-bg-card-hover: #1a1a1a;
+  --color-accent: #ff3d00;
+  --color-accent-hover: #ff5722;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666666;
+  --color-border: #222222;
+  --color-border-hover: #333333;
+
+  --font-display: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ━━━ Player Bar ━━━ */
+.player-bar-box {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+
+/* ━━━ Language Switcher — Liquid Glass ━━━ */
+.lang-switcher-btn {
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(var(--glass-frost-blur));
+  -webkit-backdrop-filter: blur(var(--glass-frost-blur));
+}
+
+.lang-switcher-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 var(--glass-shadow-blur) var(--glass-shadow-spread) var(--glass-shadow-color);
+  background-color: rgba(var(--glass-tint-color), var(--glass-tint-opacity));
+  pointer-events: none;
+}
+
+.lang-switcher-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 16px;
+  filter: url(#glass-distortion);
+  -webkit-filter: url(#glass-distortion);
+  pointer-events: none;
+}
+
+.lang-switcher-btn>* {
+  position: relative;
+  z-index: 1;
+}
+
+.lang-switcher-dropdown {
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  backdrop-filter: blur(var(--glass-frost-blur));
+  -webkit-backdrop-filter: blur(var(--glass-frost-blur));
+}
+
+.lang-switcher-dropdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 var(--glass-shadow-blur) var(--glass-shadow-spread) var(--glass-shadow-color);
+  background-color: rgba(var(--glass-tint-color), 0.08);
+  pointer-events: none;
+}
+
+.lang-switcher-dropdown::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 16px;
+  filter: url(#glass-distortion);
+  -webkit-filter: url(#glass-distortion);
+  pointer-events: none;
+}
+
+@keyframes play-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.25);
+  }
+
+  70% {
+    box-shadow: 0 0 0 12px rgba(255, 61, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 61, 0, 0);
+  }
+}
+
+.play-pulse {
+  animation: play-pulse-ring 2s infinite;
+}
+
+/* ━━━ Section Backgrounds — semi‑transparent for Three.js bleed ━━━ */
+footer,
+nav {
+  position: relative;
+  z-index: 20;
+}
+
+section {
+  position: relative;
+  z-index: 10;
+}

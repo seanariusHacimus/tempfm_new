@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Playing - TempFM</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+        .track-info {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="track-info">
+        <div class="current-track">
+            <img class="track-cover" src="nowonair/images/artwork.png" alt="Current Track Cover">
+            <div class="track-details">
+                <div class="track-title">Loading...</div>
+                <div class="track-artist">Loading...</div>
+            </div>
+        </div>
+        <div class="next-track">
+            <div class="next-label">Next:</div>
+            <div class="next-title">Loading...</div>
+            <div class="next-artist">Loading...</div>
+        </div>
+    </div>
+
+    <script src="nowplaying.js"></script>
+</body>
+</html> 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempFM | 88.4</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="track-info">
+        <div class="current-track">
+            <img class="track-cover" src="nowonair/images/artwork.png" alt="Current Track Cover">
+            <div class="track-details">
+                <div class="track-title">Loading...</div>
+                <div class="track-artist">Loading...</div>
+            </div>
+        </div>
+        <div class="next-track">
+            <div class="next-label">Next:</div>
+            <div class="next-title">Loading...</div>
+            <div class="next-artist">Loading...</div>
+        </div>
+    </div>
+
+    <main id="playButton">
+        <button class="play-button">
+            <svg class="play-icon" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="pause-icon" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+        <img class="logo" src="logo.svg" alt="tempfm88.4">
+    </main>
+
+    <div class="contact-information">
+        <div class="contact-row">
+            <div class="contact-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                </svg>
+                <span>Instagram:</span>
+                <a href="https://www.instagram.com/radiotempfm?igsh=cTZ2cnMzaHI1bGlt&utm_source=qr">@radiotempfm</a>
+            </div>
+            <div class="contact-item">
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                </div>
+                <span>LIVE :</span>
+                <a href="tel:+998555158840">+998 55 515 88 40</a>
+            </div>
+            <div class="contact-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                </svg>
+                <span>Reklama:</span>
+                <a href="tel:+998901160075">+998 90 116 00 75</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="contacts-info">
+        <span>По вопросам реламы:</span>
+        <a href="tel:+998935706913">+998 93 570-69-13</a>
+    </div> -->
+
+    <div id="visualizer" class="visualizer"></div>
+
+    <audio id="audioPlayer" crossorigin="anonymous">
+        <source src="https://tempradio-live.uz/live" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

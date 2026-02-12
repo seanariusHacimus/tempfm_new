@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempRadio - Live Stream</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Three.js for 3D Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Glassmorphism for Bottom Bar */
+        .glass-bar {
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Glassmorphism for Widget */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Play Button Pulse */
+        @keyframes pulse-orange {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 80, 0, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 80, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 80, 0, 0);
+            }
+        }
+
+        .play-pulse {
+            animation: pulse-orange 2s infinite;
+        }
+
+        /* Logo Float Animation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        #visualizer-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Custom Color Input */
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        /* Smooth text transitions */
+        .meta-text {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Contact link hover effect */
+        .contact-link {
+            position: relative;
+        }
+
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #f97316;
+            transition: width 0.3s;
+        }
+
+        .contact-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="audio-stream" src="https://tempradio-live.uz/live" crossOrigin="anonymous" preload="none"></audio>
+
+    <!-- Container for Three.js Canvas -->
+    <div id="visualizer-container"></div>
+
+    <!-- UI Overlay Wrapper -->
+    <div class="relative w-full h-full flex flex-col justify-between z-10 pointer-events-none">
+
+        <!-- Draggable Color Widget -->
+        <div id="theme-widget"
+            class="absolute top-24 right-6 w-40 glass-panel rounded-xl p-3 cursor-move z-50 pointer-events-auto transition-opacity duration-300">
+            <div class="flex justify-between items-center mb-3 border-b border-white/10 pb-2 handle">
+                <span
+                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5 select-none">
+                    <i data-lucide="palette" class="w-3 h-3"></i> Theme
+                </span>
+                <i data-lucide="grip-horizontal" class="w-3 h-3 text-gray-600"></i>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="text-[10px] text-gray-300 font-medium select-none">Base</label>
+                    <input type="color" id="color-base" value="#1a0500" title="Change Liquid Color">
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="text-[10px] text-gray-300 font-medium select-none">Highlight</label>
+                    <input type="color" id="color-highlight" value="#ff5500" title="Change Reflections">
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="text-[10px] text-gray-300 font-medium select-none">Glow</label>
+                    <input type="color" id="color-glow" value="#ff4400" title="Change Center Glow">
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Header with Contacts -->
+        <header
+            class="w-full flex flex-col md:flex-row justify-between items-center p-6 md:px-10 bg-gradient-to-b from-black/90 to-transparent pointer-events-auto">
+            <!-- Header Brand -->
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <!-- Small version of logo for header -->
+                <div
+                    class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/5">
+                    <img src="https://temp.fm/logo.svg" alt="TempRadio Icon" class="w-6 h-6">
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white leading-none">Temp<span
+                            class="text-orange-500">Radio</span></h1>
+                    <div class="flex items-center gap-1.5 mt-1">
+                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] text-red-400 font-bold uppercase tracking-wider">Live Stream</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts & Actions -->
+            <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                <!-- Info Links -->
+                <div class="flex gap-4 text-xs md:text-sm text-gray-300 font-medium">
+                    <a href="tel:+998901234567"
+                        class="hover:text-white transition flex items-center gap-2 contact-link">
+                        <i data-lucide="phone" class="w-3 h-3 text-orange-500"></i> <span
+                            class="hidden sm:inline">Ads:</span> +998 90 123 45 67
+                    </a>
+                    <a href="mailto:sales@tempradio.uz"
+                        class="hover:text-white transition flex items-center gap-2 contact-link">
+                        <i data-lucide="mail" class="w-3 h-3 text-orange-500"></i> sales@tempradio.uz
+                    </a>
+                </div>
+
+                <!-- Call On Air Button -->
+                <a href="tel:+998711112233"
+                    class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition-all shadow-lg shadow-red-600/20 hover:scale-105 active:scale-95 group">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    <span class="text-xs font-bold uppercase tracking-wide">+998 71 111 22 33</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- CENTER STAGE: Main Logo -->
+        <div class="flex-1 flex items-center justify-center pointer-events-none">
+            <div class="relative flex items-center justify-center logo-float">
+                <!-- Glow Effect behind logo -->
+                <div class="absolute w-64 h-64 bg-orange-600/20 blur-[100px] rounded-full animate-pulse"></div>
+                <!-- Main Logo Image -->
+                <img src="https://temp.fm/logo.svg" alt="TempRadio Logo"
+                    class="w-48 md:w-64 h-auto object-contain drop-shadow-2xl opacity-90 relative z-10">
+            </div>
+        </div>
+
+        <!-- Bottom Player Bar (100% Width) -->
+        <div class="glass-bar w-full px-4 md:px-10 py-3 md:py-4 pointer-events-auto">
+            <div class="max-w-screen-2xl mx-auto flex items-center justify-between gap-4">
+
+                <!-- LEFT: Album Art & Song Info -->
+                <div class="flex items-center gap-4 flex-1 min-w-0">
+                    <div class="relative group shrink-0">
+                        <img id="album-art"
+                            src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=200&auto=format&fit=crop"
+                            alt="Album Art"
+                            class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover shadow-lg border border-white/5 transition-transform duration-500 group-hover:scale-105">
+                        <!-- Playing Indicator Overlay -->
+                        <div
+                            class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+                            <div class="flex gap-0.5 items-end h-3">
+                                <div class="w-0.5 bg-white h-full animate-pulse"></div>
+                                <div class="w-0.5 bg-white h-2/3 animate-pulse" style="animation-delay: 0.1s"></div>
+                                <div class="w-0.5 bg-white h-1/2 animate-pulse" style="animation-delay: 0.2s"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="min-w-0 flex flex-col justify-center">
+                        <h2 id="song-title"
+                            class="text-sm md:text-lg font-bold text-white truncate meta-text leading-tight">Tempradio
+                            Mix</h2>
+                        <p id="artist-name"
+                            class="text-orange-500 text-[10px] md:text-xs font-semibold uppercase tracking-wider truncate meta-text mt-0.5">
+                            Live DJ Set</p>
+                    </div>
+                </div>
+
+                <!-- CENTER: Playback Controls -->
+                <div class="flex items-center justify-center gap-5 md:gap-10 flex-shrink-0">
+
+                    <!-- Pulsating Red Dot -->
+                    <div class="flex items-center gap-2 group cursor-default" title="Live">
+                        <span class="relative flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                        </span>
+                        <span
+                            class="hidden md:block text-[10px] text-red-500 font-bold uppercase tracking-widest group-hover:text-red-400 transition-colors">On
+                            Air</span>
+                    </div>
+
+                    <!-- Play Button -->
+                    <button id="play-btn"
+                        class="w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center text-black hover:scale-105 hover:bg-orange-50 transition-all duration-300 shadow-lg shadow-orange-500/20 active:scale-95">
+                        <i data-lucide="play" class="w-5 h-5 md:w-6 md:h-6 fill-current ml-0.5" id="play-icon"></i>
+                    </button>
+
+                    <!-- Mute Button -->
+                    <button id="mute-btn"
+                        class="text-gray-300 hover:text-white transition p-2 hover:bg-white/5 rounded-full"
+                        title="Mute/Unmute">
+                        <i data-lucide="volume-2" class="w-5 h-5" id="mute-icon-svg"></i>
+                    </button>
+                </div>
+
+                <!-- RIGHT: Next Up / Volume (Desktop Only) -->
+                <div class="hidden md:flex flex-col items-end justify-center flex-1 text-right min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                        <i data-lucide="list-music" class="w-3 h-3 text-gray-400"></i>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Up Next</span>
+                    </div>
+                    <span id="next-song"
+                        class="text-xs text-gray-300 font-medium truncate max-w-[200px] meta-text">Loading
+                        schedule...</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // --- DOM Elements ---
+        const audio = document.getElementById('audio-stream');
+        const playBtn = document.getElementById('play-btn');
+        const muteBtn = document.getElementById('mute-btn');
+        const songTitleEl = document.getElementById('song-title');
+        const artistNameEl = document.getElementById('artist-name');
+        const nextSongEl = document.getElementById('next-song');
+        const albumArtEl = document.getElementById('album-art');
+
+        // Color Inputs
+        const colorBaseInput = document.getElementById('color-base');
+        const colorHighlightInput = document.getElementById('color-highlight');
+        const colorGlowInput = document.getElementById('color-glow');
+
+        // --- Audio State ---
+        let isPlaying = false;
+        let isMuted = false;
+        let previousVolume = 1.0;
+        let audioCtx, analyser, dataArray, source;
+        let useSimulation = true;
+
+        // --- Three.js Variables ---
+        let scene, camera, renderer;
+        let liquidSurface;
+        // Lights that need updating
+        let ambientLight, dirLightMain, dirLightRim, pointLightCenter;
+
+        let time = 0;
+        let currentBass = 20;
+        let currentMids = 10;
+
+        // --- Initialization ---
+
+        function initThreeJS() {
+            const container = document.getElementById('visualizer-container');
+
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x000000, 2, 12);
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 5;
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({
+                alpha: false,
+                antialias: true,
+                powerPreference: "high-performance",
+                precision: "highp"
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000);
+            container.appendChild(renderer.domElement);
+
+            // --- Lighting ---
+            ambientLight = new THREE.AmbientLight(0x110500);
+            scene.add(ambientLight);
+
+            dirLightMain = new THREE.DirectionalLight(0xff6600, 1.2);
+            dirLightMain.position.set(5, 5, 5);
+            scene.add(dirLightMain);
+
+            dirLightRim = new THREE.DirectionalLight(0xcc2200, 0.8);
+            dirLightRim.position.set(-5, -5, 2);
+            scene.add(dirLightRim);
+
+            pointLightCenter = new THREE.PointLight(0xff4400, 1.5, 25);
+            pointLightCenter.position.set(0, 0, 4);
+            scene.add(pointLightCenter);
+
+            // --- The Liquid Surface ---
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumHeight = 2 * Math.tan(THREE.Math.degToRad(camera.fov) / 2) * 5;
+            const frustumWidth = frustumHeight * aspect;
+
+            const geometry = new THREE.PlaneGeometry(frustumWidth * 2, frustumHeight * 2, 128, 128);
+
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x1a0500,      // Base
+                emissive: 0x110200,   // Subtle self-glow
+                specular: 0xff5500,   // Highlights
+                shininess: 80,
+                side: THREE.DoubleSide,
+                flatShading: false
+            });
+
+            liquidSurface = new THREE.Mesh(geometry, material);
+            scene.add(liquidSurface);
+
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        // --- Color Widget Logic ---
+
+        // Helper to darken hex for ambient light logic
+        function adjustColor(hex, factor) {
+            // Very basic simulation of darkening a color for ambient/emissive
+            return hex; // For simplicity in this widget, we just map 1:1 or rely on light intensity
+        }
+
+        colorBaseInput.addEventListener('input', (e) => {
+            const hex = e.target.value;
+            liquidSurface.material.color.set(hex);
+            // Also adjust ambient slightly to match tone
+            ambientLight.color.set(hex);
+        });
+
+        colorHighlightInput.addEventListener('input', (e) => {
+            const hex = e.target.value;
+            liquidSurface.material.specular.set(hex);
+            dirLightMain.color.set(hex);
+        });
+
+        colorGlowInput.addEventListener('input', (e) => {
+            const hex = e.target.value;
+            pointLightCenter.color.set(hex);
+            // Emissive usually needs to be darker than the main light, but we can tint it
+            // We'll set a subtle version of the glow color
+            const c = new THREE.Color(hex);
+            c.multiplyScalar(0.2); // Dim it down for emissive
+            liquidSurface.material.emissive.set(c);
+        });
+
+        // --- Draggable Widget Logic ---
+        const widget = document.getElementById('theme-widget');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        widget.addEventListener("mousedown", dragStart);
+        document.addEventListener("mouseup", dragEnd);
+        document.addEventListener("mousemove", drag);
+
+        function dragStart(e) {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            if (e.target === widget || e.target.closest('.handle')) {
+                isDragging = true;
+            }
+        }
+
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, widget);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
+
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumHeight = 2 * Math.tan(THREE.Math.degToRad(camera.fov) / 2) * 5;
+            const frustumWidth = frustumHeight * aspect;
+            liquidSurface.geometry.dispose();
+            liquidSurface.geometry = new THREE.PlaneGeometry(frustumWidth * 2, frustumHeight * 2, 128, 128);
+        }
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContext();
+                    analyser = audioCtx.createAnalyser();
+                    analyser.fftSize = 512;
+
+                    source = audioCtx.createMediaElementSource(audio);
+                    source.connect(analyser);
+                    source.connect(audioCtx.destination);
+
+                    dataArray = new Uint8Array(analyser.frequencyBinCount);
+                    useSimulation = false;
+                } catch (e) {
+                    useSimulation = true;
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.003;
+
+            // 1. Calculate Target Audio Values
+            let targetBass = 0;
+            let targetMids = 0;
+
+            if (!useSimulation && analyser && isPlaying) {
+                analyser.getByteFrequencyData(dataArray);
+                let bSum = 0;
+                let mSum = 0;
+                for (let i = 0; i < 15; i++) bSum += dataArray[i];
+                for (let i = 15; i < 60; i++) mSum += dataArray[i];
+                targetBass = bSum / 15;
+                targetMids = mSum / 45;
+
+                if (targetBass === 0) {
+                    targetBass = getSimulatedBass();
+                    targetMids = targetBass * 0.6;
+                }
+            } else if (isPlaying) {
+                targetBass = getSimulatedBass();
+                targetMids = targetBass * 0.6;
+            } else {
+                targetBass = Math.sin(time * 2) * 10 + 20;
+                targetMids = 10;
+            }
+
+            // 2. Smooth Transition
+            const lerpFactor = 0.05;
+            currentBass += (targetBass - currentBass) * lerpFactor;
+            currentMids += (targetMids - currentMids) * lerpFactor;
+
+            const bNorm = currentBass / 255;
+            const mNorm = currentMids / 255;
+
+            // 3. Animate Liquid Surface
+            animateSurface(liquidSurface, bNorm, mNorm, time);
+
+            renderer.render(scene, camera);
+        }
+
+        function animateSurface(mesh, intensityBass, intensityMids, t) {
+            const posAttribute = mesh.geometry.attributes.position;
+            const vertex = new THREE.Vector3();
+
+            for (let i = 0; i < posAttribute.count; i++) {
+                vertex.fromBufferAttribute(posAttribute, i);
+
+                const swell = Math.sin(vertex.x * 0.4 + t) * Math.cos(vertex.y * 0.4 + t * 0.6);
+                const ripple = Math.sin(vertex.x * 1.5 + t) * Math.sin(vertex.y * 1.5 + t * 1.2);
+
+                const dist = Math.sqrt(vertex.x * vertex.x + vertex.y * vertex.y);
+                const centerFade = Math.max(0, 1 - dist * 0.1);
+
+                let z = 0;
+                z += swell * 0.6;
+                z += ripple * (intensityMids * 0.8) * centerFade;
+                z += (intensityBass * 1.2) * centerFade * Math.cos(dist * 1.5 - t * 3);
+
+                posAttribute.setZ(i, z);
+            }
+            posAttribute.needsUpdate = true;
+            mesh.geometry.computeVertexNormals();
+        }
+
+        function getSimulatedBass() {
+            return Math.pow(Math.sin(time * 6), 4) * 100 + 40;
+        }
+
+        // --- UI Logic ---
+        const iconPlay = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play ml-0.5"><polygon points="6 3 20 12 6 21 6 3"/></svg>`;
+        const iconPause = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>`;
+        const iconVolHigh = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 w-5 h-5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+        const iconMute = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x w-5 h-5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" x2="17" y1="9" y2="15"/><line x1="17" x2="23" y1="9" y2="15"/></svg>`;
+
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.classList.remove('play-pulse');
+                playBtn.innerHTML = iconPlay;
+                isPlaying = false;
+            } else {
+                initAudioContext();
+                const playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        playBtn.classList.add('play-pulse');
+                        playBtn.innerHTML = iconPause;
+                        isPlaying = true;
+                    })
+                        .catch(error => {
+                            console.error("Stream error", error);
+                            isPlaying = false;
+                            alert("Unable to play stream. Please check your connection.");
+                        });
+                }
+            }
+        });
+
+        // Toggle Mute
+        muteBtn.addEventListener('click', () => {
+            if (isMuted) {
+                audio.volume = previousVolume;
+                isMuted = false;
+                muteBtn.innerHTML = iconVolHigh;
+                muteBtn.classList.remove('text-red-500');
+                muteBtn.classList.add('text-gray-300');
+            } else {
+                previousVolume = audio.volume > 0 ? audio.volume : 1.0;
+                audio.volume = 0;
+                isMuted = true;
+                muteBtn.innerHTML = iconMute;
+                muteBtn.classList.remove('text-gray-300');
+                muteBtn.classList.add('text-red-500');
+            }
+        });
+
+        const playlist = [
+            { artist: "Otabek Muhammadzahid", title: "Majnun", img: "https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&q=80&w=200" },
+            { artist: "Yulduz Usmonova", title: "Xasta Bo'lma", img: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=200" },
+            { artist: "Sevara Nazarkhan", title: "Vatanim", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=200" },
+            { artist: "Tohir Sodiqov", title: "Kerak Emas", img: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&q=80&w=200" }
+        ];
+
+        let currentTrackIndex = 0;
+
+        function updateMetadata() {
+            const current = playlist[currentTrackIndex];
+            const nextIndex = (currentTrackIndex + 1) % playlist.length;
+            const next = playlist[nextIndex];
+
+            songTitleEl.style.opacity = 0;
+            artistNameEl.style.opacity = 0;
+
+            setTimeout(() => {
+                songTitleEl.innerText = current.title;
+                artistNameEl.innerText = current.artist;
+                albumArtEl.src = current.img;
+                nextSongEl.innerText = `${next.artist} - ${next.title}`;
+
+                songTitleEl.style.opacity = 1;
+                artistNameEl.style.opacity = 1;
+            }, 300);
+
+            currentTrackIndex = nextIndex;
+        }
+
+        // Init
+        initThreeJS();
+        updateMetadata();
+        setInterval(updateMetadata, 30000);
+
+    </script>
+</body>
+
+</html>
