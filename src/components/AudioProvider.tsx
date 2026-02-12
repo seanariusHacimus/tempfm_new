@@ -14,6 +14,7 @@ interface AudioContextValue {
     audioRef: React.RefObject<HTMLAudioElement | null>;
     analyserRef: React.RefObject<AnalyserNode | null>;
     isPlaying: boolean;
+    isBuffering: boolean;
     isMuted: boolean;
     streamError: string | null;
     togglePlay: () => void;
@@ -39,8 +40,16 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
     const streamUrlRef = useRef<string>("");
 
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isBuffering, setIsBuffering] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [streamError, setStreamError] = useState<string | null>(null);
+
+    const isAppleRef = useRef(false);
+
+    // Detect Apple device once on mount
+    useEffect(() => {
+        isAppleRef.current = /iphone|ipad|ipod|mac/i.test(navigator.userAgent);
+    }, []);
 
     const previousVolumeRef = useRef(1.0);
     const retryCountRef = useRef(0);
@@ -118,6 +127,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
         if (retryCountRef.current >= MAX_RETRIES) {
             setStreamError("Oqim uzildi. Qayta tinglash uchun ▶ tugmasini bosing.");
             setIsPlaying(false);
+            setIsBuffering(false);
             isPlayingRef.current = false;
             retryCountRef.current = 0;
             return;
@@ -135,6 +145,8 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
             const audio = audioRef.current;
             if (!audio || !isPlayingRef.current) return;
 
+            if (isAppleRef.current) setIsBuffering(true);
+
             // Fresh connection
             audio.src = streamUrlRef.current + "?t=" + Date.now();
             audio
@@ -143,9 +155,11 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
                     retryCountRef.current = 0;
                     setStreamError(null);
                     setIsPlaying(true);
+                    setIsBuffering(false);
                     isPlayingRef.current = true;
                 })
                 .catch(() => {
+                    setIsBuffering(false);
                     attemptReconnect();
                 });
         }, delay);
@@ -201,6 +215,9 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
         const audio = audioRef.current;
         if (!audio) return;
 
+        // Ignore taps while buffering
+        if (isBuffering) return;
+
         // Cancel any pending retry
         if (retryTimerRef.current) {
             clearTimeout(retryTimerRef.current);
@@ -213,17 +230,21 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
             audio.removeAttribute("src");
             audio.load(); // resets internal state
             setIsPlaying(false);
+            setIsBuffering(false);
             isPlayingRef.current = false;
             setStreamError(null);
             retryCountRef.current = 0;
         } else {
             // ── PLAY: assign a fresh URL to force a new HTTP connection ──
+            if (isAppleRef.current) setIsBuffering(true);
+
             audio.src = streamUrlRef.current + "?t=" + Date.now();
             initAudioContext();
             audio
                 .play()
                 .then(() => {
                     setIsPlaying(true);
+                    setIsBuffering(false);
                     isPlayingRef.current = true;
                     setStreamError(null);
                     retryCountRef.current = 0;
@@ -231,11 +252,12 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
                 .catch((err) => {
                     console.error("Stream play error:", err);
                     setIsPlaying(false);
+                    setIsBuffering(false);
                     isPlayingRef.current = false;
                     setStreamError("Oqimni boshlashda xatolik yuz berdi.");
                 });
         }
-    }, [isPlaying, initAudioContext]);
+    }, [isPlaying, isBuffering, initAudioContext]);
 
     // ─── Mute / Unmute ───
     const toggleMute = useCallback(() => {
@@ -258,6 +280,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
                 audioRef,
                 analyserRef,
                 isPlaying,
+                isBuffering,
                 isMuted,
                 streamError,
                 togglePlay,

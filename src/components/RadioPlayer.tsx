@@ -38,6 +38,14 @@ const MuteIcon = () => (
     </svg>
 );
 
+const SpinnerIcon = () => (
+    <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+        viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity="0.25" />
+        <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+);
+
 const NextTrackIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
         viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
@@ -51,7 +59,7 @@ const NextTrackIcon = () => (
 );
 
 export default function RadioPlayer() {
-    const { isPlaying, isMuted, streamError, togglePlay, toggleMute } = useAudio();
+    const { isPlaying, isBuffering, isMuted, streamError, togglePlay, toggleMute } = useAudio();
     const { current, next } = useStreamData(5000);
     const [mounted, setMounted] = useState(false);
 
@@ -74,9 +82,9 @@ export default function RadioPlayer() {
                     {/* Play Button */}
                     <button
                         onClick={togglePlay}
-                        className={`w-11 h-11 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-black hover:scale-105 hover:bg-orange-50 transition-all duration-200 shadow-lg shadow-[var(--color-accent)]/20 active:scale-95 shrink-0 ${isPlaying ? "play-pulse" : ""}`}
+                        className={`w-11 h-11 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-black hover:scale-105 hover:bg-orange-50 transition-all duration-200 shadow-lg shadow-[var(--color-accent)]/20 active:scale-95 shrink-0 ${isPlaying ? "play-pulse" : ""} ${isBuffering ? "opacity-80 pointer-events-none" : ""}`}
                     >
-                        {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                        {isBuffering ? <SpinnerIcon /> : isPlaying ? <PauseIcon /> : <PlayIcon />}
                     </button>
 
                     {/* Album Art */}
