@@ -33,46 +33,74 @@ const values = [
 
 const team = [
   {
-    name: "Jasur Karimov",
-    role: "Stansiya Direktori",
-    bio: "Sobiq jurnalist, radio visioneri. Jasur 20 yoshida orzu qilgan radiostansiyani yaratish uchun bosma nashriyotni tark etdi.",
-    initials: "JK",
+    name: "Go'zal Karimova",
+    role: "Yangiliklar Boshlovchisi",
+    bio: "O'zbek tilidagi yangiliklar dasturi boshlovchisi. Siyosat, iqtisodiyot va madaniyat sohasidagi eng so'nggi xabarlarni yetkazadi.",
+    initials: "GK",
+    color: "bg-blue-600",
+  },
+  {
+    name: "Anna Axperjan'yans",
+    role: "Yangiliklar Boshlovchisi",
+    bio: "Rus tilidagi yangiliklar va tahliliy dasturlar boshlovchisi. Kunning asosiy voqealarini xolis va tezkor yoritadi.",
+    initials: "AA",
+    color: "bg-red-600",
+  },
+  {
+    name: "Otabek Tojiboyev",
+    role: "Radio Boshlovchi",
+    bio: "Tonggi 'Wake up shou' boshlovchisi. Har tongni yuqori kayfiyat va foydali ma'lumotlar bilan boshlashingizga yordam beradi.",
+    initials: "OT",
     color: "bg-[var(--color-accent)]",
   },
   {
-    name: "Dilnoza Rashidova",
-    role: "Dasturlar Direktori",
-    bio: "Dilnoza har bir efir soatini shakllantiradi. Madaniy dasturlar bo'yicha tajribasi bilan har bir shou maqsadli bo'lishini ta'minlaydi.",
-    initials: "DR",
+    name: "Jasmin Isroilova",
+    role: "Radio Boshlovchi",
+    bio: "'Kunduzgi ritm' shousi boshlovchisi. Tinglovchilar bilan samimiy muloqot va yoqimli musiqa orqali kunni mazmunli o'tkazadi.",
+    initials: "JI",
     color: "bg-emerald-600",
   },
   {
-    name: "Sherzod Alimov",
-    role: "Musiqa Muharriri",
-    bio: "Ovozlar qomusi — o'zbek xalq kuy-qo'shiqlariyu jahon elektronikasigacha. Sherzod TempFM ning musiqiy qiyofasini yaratadi.",
-    initials: "SA",
+    name: "Roksana Abidova",
+    role: "Radio Boshlovchi",
+    bio: "'Oqshom tempida' kechki shousi boshlovchisi. Ish kunining yakunida hordiq onlarini va yo'l harakati haqidagi ma'lumotlarni ulashadi.",
+    initials: "RA",
     color: "bg-violet-600",
   },
   {
-    name: "Kamila Usmanova",
-    role: "Bosh DJ",
-    bio: "Kamila 16 yoshidan beri DJlik qiladi. Uning mikslari Toshkent tungi hayotining norasmiy saundtrekiga aylangan.",
-    initials: "KU",
+    name: "Toni Lorenso",
+    role: "Radio Boshlovchi",
+    bio: "'Oqshom jo'shqin ritmda' dasturi boshlovchisi. Kundalik tashvishlarni unutishga yordam beruvchi samimiy muhit yaratadi.",
+    initials: "TL",
     color: "bg-amber-600",
   },
   {
-    name: "Bobur Nazarov",
-    role: "Yangiliklar Muharriri",
-    bio: "O'tkir, tezkor va xolis. Bobur yosh o'zbekistonliklar uchun muhim bo'lgan mavzularni yoritishga mas'ul.",
-    initials: "BN",
+    name: "Mixail Subeyev",
+    role: "Radio Boshlovchi",
+    bio: "Interaktiv dasturlar va musiqiy xit-paradlar muallifi. Tinglovchilarni efir jarayoniga faol jalb qiluvchi kreativ boshlovchi.",
+    initials: "MS",
     color: "bg-sky-600",
   },
   {
-    name: "Madina Yuldasheva",
-    role: "Marketing Rahbari",
-    bio: "Madina TempFM ni shahar bilan bog'laydi. Talabalar tadbirlaridan virusli kampaniyalargacha brendni jonli saqlaydi.",
-    initials: "MY",
+    name: "Violetta Tadjibayeva",
+    role: "Radio Boshlovchi",
+    bio: "Madaniyat va tarixga oid dasturlar boshlovchisi. 'V uzatma' va 'Ta'm tarixi' loyihalari orqali yangi bilimlarni ulashadi.",
+    initials: "VT",
     color: "bg-pink-600",
+  },
+  {
+    name: "Danata Davronova",
+    role: "Jurnalist / Boshlovchi",
+    bio: "'Korotkiye vstrechi' loyihasi muallifi. Turli soha vakillari bilan ijtimoiy va shaxsiy mavzularda chuqur suhbatlar o'tkazadi.",
+    initials: "DD",
+    color: "bg-indigo-600",
+  },
+  {
+    name: "Kamilla Mo'minova",
+    role: "Marketolog / Boshlovchi",
+    bio: "'Prosto o vajnom' loyihasi boshlovchisi. Shaxsiy rivojlanish, mablag' va texnologiyalar haqida hayotiy tavsiyalar beradi.",
+    initials: "KM",
+    color: "bg-orange-600",
   },
 ];
 
@@ -107,12 +135,12 @@ export default function AboutPage() {
             <AnimateIn direction="left">
               <div>
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                  Our Story
+                  Bizning Tariximiz
                 </p>
                 <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-6">
-                  Started with
+                  Oddiy G&apos;oyadan
                   <br />
-                  a Simple Idea
+                  Boshlangan Yo&apos;l
                 </h2>
               </div>
             </AnimateIn>

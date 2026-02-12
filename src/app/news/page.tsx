@@ -15,62 +15,62 @@ interface NewsArticle {
 
 const featuredArticle: NewsArticle = {
   id: 0,
-  category: "E'lon",
-  date: "10-Fevral, 2026",
-  title: "TempFM 88.4 2026-yilni Yangi Studiya va Kengaytirilgan Dastur bilan Boshlamoqda",
+  category: "Yangiliklar",
+  date: "Har kuni",
+  title: "O‘zbekistonda va butun dunyoda sodir bo‘lgan eng so‘nggi voqealar TempFM da!",
   excerpt:
-    "Bir necha oylik ta'mirlash ishlaridan so'ng, TempFM Toshkent markazida o'zining zamonaviy studiyasini taqdim etdi. Yangi makonda jonli ijro zali, ochiq osmon ostidagi tom qismi va ovoz sifatini butunlay yangi darajaga olib chiquvchi uskunalar mavjud. Shuningdek, bahorda 12 ta yangi shou ishga tushiriladi — o'zbek indi musiqasidan tortib texnologiya va tungi she'riyatgacha. Bu TempFM tarixidagi eng katta yangilanish.",
+    "Siyosat, iqtisodiyot, madaniyat, sport va boshqa jabhalardagi eng muhim xabarlarni bizning yangiliklar dasturimizda kuzatib boring. Har kuni 5 daqiqa ichida dunyo nigohingizda! Bizning boshlovchilarimiz Go‘zal Karimova va Anna Axperjan'yans sizni eng so'nggi voqealar bilan tanishtirib borishadi.",
   featured: true,
 };
 
 const articles: NewsArticle[] = [
   {
     id: 1,
-    category: "Yangi Shou",
-    date: "8-Fevral, 2026",
-    title: "\"Ipak Yo'li Sadolari\" — Markaziy Osiyo Musiqasi Haqida Yangi Haftalik Shou",
+    category: "Maxsus format",
+    date: "Oyda bir marotaba",
+    title: "Live - konsertlar: Sevimli yulduzlaringiz bilan jonli muloqot",
     excerpt:
-      "Har payshanba soat 20:00 da boshlovchi Aziza Karimova sizni Toshkent, Olmaota, Bishkek va boshqa shaharlar musiqa sahnasi bo'ylab sayohatga taklif qiladi. Jonli DJ setlar, san'atkorlar bilan suhbatlar va mintaqadagi eng yangi taronalar premyerasi.",
+      "Temp fm radiosining jonli efirida o‘zbek estrada yulduzlari, xonanda va sozandalar ishtirokida mo‘jaz sahnamizdagi eksklyuziv konsertdan bahramand bo‘ling. Yangi qo‘shiqlar taqdimoti va xit taronalar — hammasi jonli va shaffof!",
   },
   {
     id: 2,
-    category: "Intervyu",
-    date: "5-Fevral, 2026",
-    title: "Sevara Nazarxon Yangi Albomi va O'zbek Pop Musiqasi Kelajagi Haqida",
+    category: "Loyiha",
+    date: "Har shanba, 16:30",
+    title: "Afisha – Madaniy xordiq chiqarish uchun eng yaxshi tanlov",
     excerpt:
-      "TempFM 'Morning Pulse' dasturidagi eksklyuziv suhbatda Sevara milliy kuylarni zamonaviy aranjorovka bilan uyg'unlashtirish, bo'lajak konsert safari va nega aynan Toshkent yoshlari Markaziy Osiyo musiqasining kelajagi ekanligi haqida so'zlab berdi.",
+      "Ko'ngilochar dasturlar, ko'rgazmalar va shahrimizdagi eng qiziqarli tadbirlar haqida har shanba “Afisha” loyihasi orqali bilib olishingiz mumkin. Madaniy xordiq uchun tanlov o'zingizga havola!",
   },
   {
     id: 3,
-    category: "Mahalliy Tadbir",
-    date: "30-Yanvar, 2026",
-    title: "TempFM va Tashkent City Mall Jonli Musiqa Haftaliklarini Yo'lga Qo'ymoqda",
+    category: "Intervyu",
+    date: "Haftalik",
+    title: "Danata Davronova bilan “Korotkiye vstrechi”",
     excerpt:
-      "Fevral oyidan boshlab har shanba Tashkent City Mall markaziy atriumida mahalliy san'atkorlarning jonli chiqishlari bo'lib o'tadi. TempFM DJ'lari tadbirga mezbonlik qiladi. Kirish bepul.",
+      "Shifokorlar, olimlar, artistlar va jamoat arboblari bilan iliq va samimiy suhbatlar. Hayotiy voqealar, salomatlik, ta'lim va qadriyatlar haqida kutilmagan kashfiyotlar.",
   },
   {
     id: 4,
-    category: "Ilova Yangilanishi",
-    date: "25-Yanvar, 2026",
-    title: "Ilova 3.0: TempFM Endi Tarmog'siz Ham Siz Bilan",
+    category: "Tahlil",
+    date: "Shanba, 12:00",
+    title: "Hafta yangiliklari: Muhim voqealar sharhi",
     excerpt:
-      "TempFM ilovasining eng so'nggi versiyasi chiqdi. 3.0 versiyasida podkastlarni yuklab olish, yangilangan pleyer interfeysi, shaxsiy tavsiyalar va jonli efir vaqtida chat imkoniyati mavjud. iOS va Android uchun yuklab oling.",
+      "Hafta davomida sodir bo‘lgan eng muhim voqealarning yakuniy soni va tahliliy mushoxada. Dunyoda va O'zbekistonda ro'y bergan yangiliklarning tahlili va sharhi.",
   },
   {
     id: 5,
-    category: "Reyting",
-    date: "20-Yanvar, 2026",
-    title: "TempFM Top 20: Yanvar Oyining Eng Ko'p Tinglangan Taronalari",
+    category: "Loyiha",
+    date: "Haftalik",
+    title: "Kamilla Mo‘minova bilan “Prosto o vajnom”",
     excerpt:
-      "Mahalliy xitlardan tortib jahon yulduzlarigacha — Toshkent bu oy nimalarni tingladi? Spoiler: tarixda ilk bor uchta o'zbek ijrochisi kuchli beshlikdan joy oldi.",
+      "Mablag‘, kasb, oila, shaxsiy rivojlanish va texnologiyalar haqida hayotiy misollar va manfaatli tavsiyalar. Mutaxassislar bilan dolzarb savollarga javob topamiz.",
   },
   {
     id: 6,
-    category: "Hamjamiyat",
-    date: "15-Yanvar, 2026",
-    title: "Ochiq Mikrofon Kechalari Qaytmoqda — Ro'yxatdan O'ting",
+    category: "Efir pallasida",
+    date: "Dushanba - Juma",
+    title: "Kunduzgi ritm – Kuningizni yuqori kayfiyatda o'tkazing",
     excerpt:
-      "Bizning oylik ochiq mikrofon loyihamiz 2026-yilda yana qaytmoqda. Rep, vokal, she'riyat yoki cholg'u ijrosi — TempFM sahnasi siz uchun ochiq. Keyingi sessiya: 22-fevral. Joylar cheklangan.",
+      "Tabriklar, o‘yinlar, hikoyalar va dilga yaqin taronalar. Jasmin Isroilova bilan ishdagi murakkab topshiriqlar oson yechim topadi, yo‘ldagi vaqt esa maroqli o‘tadi.",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function NewsPage() {
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span className="bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-[12px]">
-                    Tanlangan
+                    Asosiy
                   </span>
                   <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest">
                     {featuredArticle.category}
@@ -117,7 +117,7 @@ export default function NewsPage() {
                 </p>
 
                 <span className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
-                  To'liq O'qish
+                  To'liq o'qish
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -149,7 +149,7 @@ export default function NewsPage() {
                 So'nggi Yangiliklar
               </h2>
               <span className="hidden md:inline-flex text-[var(--color-text-muted)] text-sm uppercase tracking-wider">
-                {articles.length} Maqola
+                {articles.length} Maqolalar
               </span>
             </div>
           </AnimateIn>
@@ -212,7 +212,7 @@ export default function NewsPage() {
               whileTap={{ scale: 0.98 }}
               className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] text-white px-10 py-4 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors"
             >
-              Ko'proq Yuklash
+              Ko'proq yuklash
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

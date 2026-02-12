@@ -1,7 +1,7 @@
 # TempFM 88.4 — Website
 
 ## Overview
-Official website for **Temp FM 88.4**, a live audiovisual radio station based in Tashkent, Uzbekistan. The station streams live music, news, shows, and interactive programs targeting Uzbekistan's youth audience. Content is in **Uzbek** (latin script) with some Russian elements.
+Official website for **Temp FM 88.4**, a live audiovisual radio station based in Toshkent, Uzbekistan. The station streams live music, news, shows, and interactive programs targeting Uzbekistan's youth audience. Content is fully in **Uzbek** (latin script), populated from `content.txt`.
 
 **Live stream URL:** `https://tempradio-live.uz/live`  
 **AAC stream (Apple):** `https://tempradio-live.uz/streamaac`
@@ -78,7 +78,7 @@ tempfm_website/
 
 ## Key Components
 
-- **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `audioRef`, `analyserRef`.
+- **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `streamError`, `audioRef`, `analyserRef`. Destroys and recreates the audio source on every play/pause to ensure fresh live stream (no cached audio). Includes automatic reconnection with exponential backoff (up to 5 retries).
 - **ThreeBackground** — Full-viewport Three.js liquid surface that reacts to audio frequency data (bass/mids). Falls back to simulated animation when no audio is playing.
 - **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts).
 - **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Mobile hamburger menu with AnimatePresence.
@@ -89,7 +89,7 @@ tempfm_website/
 ## Design System
 
 - **Color scheme:** Dark theme (`#0a0a0a` bg) with orange/red accent (`#ff3d00`)
-- **Fonts:** Arial Black (display), Helvetica Neue (body)
+- **Fonts:** PetrovSans (display), Roboto (body) with custom letter-spacing tags.
 - **Cards:** `#111111` bg with `#222222` borders
 - **Glass effect:** SVG filter-based distortion for liquid glass look
 - **Animations:** Framer Motion for page transitions, scroll reveals, nav highlights

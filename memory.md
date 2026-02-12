@@ -1,8 +1,8 @@
 # Memory — TempFM 88.4 Website
 
 ## Project Context
-- **Type:** Radio station website for Temp FM 88.4 (Tashkent, Uzbekistan)
-- **Language:** Uzbek (latin script), some Russian elements
+- **Type:** Radio station website for Temp FM 88.4 (Toshkent, Uzbekistan)
+- **Language:** Fully in Uzbek (latin script)
 - **Status:** Active development, dev server running
 
 ---
@@ -14,8 +14,20 @@
 - **Updated `AudioProvider.tsx`** — added Apple device detection (`/streamaac` for Apple, `/live` for others), ported from legacy `update_track.js`.
 - **Enriched `RadioPlayer.tsx`** — now shows album name, track duration, genre badge, and next-track cover thumbnail.
 - Build verified ✅.
-- **Updated Source:** Switched to `https://test.tempfm.uz` for XML and artwork.
+- Switched to `https://test.tempfm.uz` for XML and artwork.
 - **CORS Fix:** Implemented Server Action `fetchStreamDataXml` to fetch XML server-side.
+
+### Streaming Robustness Improvements (Feb 12, 2026)
+- **Fixed cached audio on resume** — `AudioProvider` now destroys the audio source on pause (`removeAttribute('src')` + `load()`) and assigns a fresh URL with cache-busting `?t=` parameter on play. This forces the browser to open a new HTTP connection, eliminating stale buffered audio.
+- **Auto-reconnection** — Added exponential backoff retry logic (5 retries: 2s → 4s → 8s → 16s → 32s) for `error` and `ended` events on the audio element.
+- **`streamError` state** — `AudioProvider` now exposes a `streamError` string. `RadioPlayer` shows an amber "Qayta ulanmoqda..." indicator when reconnecting.
+- Build verified ✅.
+
+### Full Content Population (Feb 12, 2026)
+- **Updated All Pages:** Fully populated Home, About, News, and Schedule pages using `content.txt`.
+- **Real Team Members:** Replaced placeholder team with 10 actual hosts and anchors (Otabek Tojiboyev, Go'zal Karimova, etc.).
+- **Real Schedule:** Implemented the full weekly schedule including news segments and specific program details.
+- **Uzbek Translation:** Cleaned up remaining English UI text (aria-labels, headers, button text) to ensure a 100% Uzbek version.
 
 ### Advertising Page (`/advertising`)
 - Had **recurring JSX syntax errors** (unclosed tags) in earlier sessions (Feb 11-12, 2026).
@@ -27,16 +39,17 @@
 - **Fixed Z-Index:** Set `ThreeBackground` to `z-[-1]` to prevent it from blocking interactions.
 - **Centered Logo:** Removed padding offset in Hero section for perfect centering.
 - **RadioPlayer:** Responsive improvements and better mobile layout.
-- **Custom Font:** Integrated `PetrovSans` as the new display font for all titles. Moved font files to `src/app/fonts` and configured via `next/font/local`.
+- **Custom Font:** Integrated `PetrovSans` (Display) and `Roboto` (Body). Standardized all titles and buttons to use the brand font with improved letter-spacing.
+- **Standardized Headers:** Created reusable `PageHeader` component for consistent spacing across subpages.
 
 ---
 
 ## Architecture Decisions
 
-1. **Audio via Web Audio API** — `AudioProvider` creates a single `AudioContext` with `AnalyserNode` connected to the live stream `<audio>` element. This feeds frequency data to `ThreeBackground`.
+1. **Audio via Web Audio API** — `AudioProvider` creates a single `AudioContext` with `AnalyserNode` connected to the live stream `<audio>` element. On pause the source is destroyed; on play a fresh URL with cache-busting param is assigned to force a new connection. Auto-reconnects with exponential backoff on stream errors.
 2. **Three.js background** — A full-viewport animated liquid surface uses the audio analyser data for bass/mid reactive animation. Falls back to gentle simulated motion when idle.
 3. **Stream data polling** — `useStreamData` hook polls via Server Action (`fetchStreamDataXml`) to bypass CORS for XML. Images are fetched directly from external URL.
-4. **Apple device detection** — `update_track.js` handles Apple vs non-Apple stream URLs (`/live` vs `/streamaac`). The React `AudioProvider` currently only uses the `/live` URL.
+4. **Apple device detection** — `AudioProvider` detects Apple devices via user-agent and uses AAC stream (`/streamaac`), others get `/live`.
 5. **Tailwind CSS v4** — Uses `@theme` directive for CSS custom properties. No `tailwind.config.js` file.
 6. **SVG distortion filter** — Defined in `layout.tsx` for liquid glass visual effect.
 
@@ -93,4 +106,4 @@ npm run lint   # ESLint
 ---
 
 ## Last Updated
-**2026-02-12**
+**2026-02-12** (streaming robustness improvements)

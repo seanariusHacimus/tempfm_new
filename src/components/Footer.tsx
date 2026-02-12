@@ -37,7 +37,7 @@ export default function Footer() {
                   TEMP FM
                 </span>
                 <span className="text-[var(--color-text-muted)] text-[10px] tracking-[0.2em] uppercase">
-                  88.4 Tashkent
+                  88.4 Toshkent
                 </span>
               </div>
             </div>

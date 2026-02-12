@@ -51,7 +51,7 @@ const NextTrackIcon = () => (
 );
 
 export default function RadioPlayer() {
-    const { isPlaying, isMuted, togglePlay, toggleMute } = useAudio();
+    const { isPlaying, isMuted, streamError, togglePlay, toggleMute } = useAudio();
     const { current, next } = useStreamData(5000);
     const [mounted, setMounted] = useState(false);
 
@@ -104,17 +104,31 @@ export default function RadioPlayer() {
                     {/* Track Info */}
                     <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-0.5">
-                            <span className="relative flex h-2 w-2 shrink-0">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
-                            </span>
-                            <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest">
-                                On Air
-                            </span>
-                            {current.duration && (
-                                <span className="text-[10px] text-[var(--color-text-muted)] tabular-nums">
-                                    {current.duration}
-                                </span>
+                            {streamError ? (
+                                <>
+                                    <span className="relative flex h-2 w-2 shrink-0">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+                                    </span>
+                                    <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">
+                                        {streamError}
+                                    </span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="relative flex h-2 w-2 shrink-0">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                                    </span>
+                                    <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest">
+                                        Efirda
+                                    </span>
+                                    {current.duration && (
+                                        <span className="text-[10px] text-[var(--color-text-muted)] tabular-nums">
+                                            {current.duration}
+                                        </span>
+                                    )}
+                                </>
                             )}
                             {current.genre && (
                                 <span className="hidden sm:inline text-[9px] text-[var(--color-text-muted)] bg-white/5 border border-white/10 px-1.5 py-px rounded-full">
@@ -137,7 +151,7 @@ export default function RadioPlayer() {
                             ? "text-red-500 bg-red-500/10"
                             : "text-[var(--color-text-secondary)] hover:text-white hover:bg-white/5"
                             }`}
-                        title={isMuted ? "Unmute" : "Mute"}
+                        title={isMuted ? "Ovozni yoqish" : "Ovozni o'chirish"}
                     >
                         {isMuted ? <MuteIcon /> : <VolumeIcon />}
                     </button>
@@ -151,13 +165,13 @@ export default function RadioPlayer() {
                             <div className="flex items-center gap-1.5 mb-0.5">
                                 <NextTrackIcon />
                                 <span className="text-[10px] text-[var(--color-text-muted)] font-bold uppercase tracking-wider">
-                                    Up Next
+                                    Keyingi tarona
                                 </span>
                             </div>
                             <p className="text-xs text-[var(--color-text-secondary)] font-medium truncate">
                                 {next.artist && next.title
                                     ? `${next.artist} — ${next.title}`
-                                    : "Loading..."}
+                                    : "Yuklanmoqda..."}
                             </p>
                         </div>
                         {next.cover && (
@@ -179,7 +193,7 @@ export default function RadioPlayer() {
                     <div className="flex items-center gap-2 min-w-0 flex-1">
                         <NextTrackIcon />
                         <span className="text-[10px] text-[var(--color-text-muted)] font-bold uppercase tracking-wider shrink-0">
-                            Next
+                            Keyingi
                         </span>
                         {next.cover && (
                             // eslint-disable-next-line @next/next/no-img-element
@@ -211,7 +225,7 @@ export default function RadioPlayer() {
                             ? "text-red-500 bg-red-500/10"
                             : "text-[var(--color-text-secondary)] hover:text-white"
                             }`}
-                        title={isMuted ? "Unmute" : "Mute"}
+                        title={isMuted ? "Ovozni yoqish" : "Ovozni o'chirish"}
                     >
                         {isMuted ? <MuteIcon /> : <VolumeIcon />}
                     </button>

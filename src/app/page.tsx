@@ -11,7 +11,7 @@ const shows = [
     time: "08:00 — 10:00",
     host: "Otabek Tojiboyev",
     description:
-      "Uyg'onishga va tongni yuqori kayfiyatda boshlashga yordam beradi: foydali ma'lumotlar va sevimli musiqalar.",
+      "Uyg'onishga va tongni yuqori kayfiyatda boshlashga yordam beradi: foydali ma'lumotlar, samimiy suhbat va sevimli musiqalar.",
     tag: "Dushanba - Juma",
   },
   {
@@ -19,7 +19,7 @@ const shows = [
     time: "12:00 — 14:00",
     host: "Jasmin Isroilova",
     description:
-      "Kun davomida yuqori kayfiyat! Tabriklar, o'yinlar, hikoyalar va dilga yaqin taronalar.",
+      "Kun davomida yuqori kayfiyat! Tabriklar, o'yinlar, hikoyalar va dilga yaqin taronalar yangraydi.",
     tag: "Dushanba - Juma",
   },
   {
@@ -27,7 +27,7 @@ const shows = [
     time: "18:00 — 20:00",
     host: "Roksana Abidova",
     description:
-      "Ish kunining yakunida, sokin oqshom pallasida hordiq. Yo'ldagi vaziyatlar va dil tortar qo'shiqlar.",
+      "Ish kunining yakunida hordiq. Yo'ldagi vaziyatlar, foydali ma'lumotlar va dil tortar qo'shiqlar.",
     tag: "Dushanba - Juma",
   },
   {
@@ -37,6 +37,22 @@ const shows = [
     description:
       "Kundalik tashvishlarni unutib, yoqimli, samimiy va hayotga muhabbat uyg'otuvchi iliq muhit.",
     tag: "Dushanba - Juma",
+  },
+  {
+    title: "Korotkiye vstrechi",
+    time: "Hafta davomida",
+    host: "Danata Davronova",
+    description:
+      "Turli soha vakillari bilan samimiy suhbatlar: shifokorlar, olimlar, artistlar va jamoat arboblari.",
+    tag: "Maxsus Loyiha",
+  },
+  {
+    title: "Prosto o vajnom",
+    time: "Hafta davomida",
+    host: "Kamilla Mo'minova",
+    description:
+      "Hayotga ijobiy ta'sir etuvchi samimiy suhbatlar: mablag', kasb, oila va shaxsiy rivojlanish.",
+    tag: "Marketing / Hayot",
   },
 ];
 
@@ -115,7 +131,7 @@ export default function HomePage() {
 
               <AnimateIn delay={0.3}>
                 <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl leading-relaxed mb-10">
-                  Temp FM 88.4 — jonli musiqa ruhini targ‘ib qiluvchi birinchi audiovizual radioto‘lqin. Biz odatiy radio tasavvurlarini kengaytirib, yangicha yondashuv bilan stereotiplarni o‘zgartiramiz.
+                  Temp FM 88.4 — jonli musiqa ruhini targ‘ib qiluvchi birinchi audiovizual radioto‘lqin. Jonli videotasvirlar orqali radio, video va muloqotni birgina platformada uyg‘unlashtiramiz.
                 </p>
               </AnimateIn>
 
@@ -276,7 +292,7 @@ export default function HomePage() {
                     88.4
                   </div>
                   <div className="text-[var(--color-text-muted)] text-sm uppercase tracking-[0.3em] mt-4">
-                    FM Tashkent
+                    FM Toshkent
                   </div>
                 </div>
               </div>
