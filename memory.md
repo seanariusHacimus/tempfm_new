@@ -43,6 +43,10 @@
 - **Standardized Headers:** Created reusable `PageHeader` component for consistent spacing across subpages.
 - **Full-Page Mobile Menu (Feb 12-13, 2026):** Redesigned the mobile menu from a dropdown to a full-viewport overlay. Added staggered Framer Motion animations for links, body scroll lock, and Escape key support.
 - **Burger Icon Fix:** Refactored the hamburger toggle with absolute positioning to ensure a perfect "X" transformation without any skew.
+- **Horizontal Scroll Fixes (Feb 13, 2026):**
+  - **Global Fix:** Added `overflow-x: hidden` to `html` in `globals.css` to prevent any horizontal scroll globally.
+  - **Section Containment:** Added `overflow-hidden` to multiple sections across `page.tsx`, `about/page.tsx`, and `advertising/page.tsx` that use directional animations (`AnimateIn`) or oversized text.
+  - **Navigation Fix:** Added `overflow-x-hidden` to the `<nav>` element in `Navigation.tsx` to prevent header content from causing overflow on mobile.
 
 ---
 
@@ -108,4 +112,4 @@ npm run lint   # ESLint
 ---
 
 ## Last Updated
-**2026-02-13** (full-page mobile menu implementation & burger icon fix)
+**2026-02-13** (full-page mobile menu implementation, horizontal scroll fixes & header padding adjustment)

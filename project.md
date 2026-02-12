@@ -81,7 +81,7 @@ tempfm_website/
 - **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `streamError`, `audioRef`, `analyserRef`. Destroys and recreates the audio source on every play/pause to ensure fresh live stream (no cached audio). Includes automatic reconnection with exponential backoff (up to 5 retries).
 - **ThreeBackground** — Full-viewport Three.js liquid surface that reacts to audio frequency data (bass/mids). Falls back to simulated animation when no audio is playing.
 - **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts).
-- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss.
+- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss. Includes `overflow-x-hidden` to prevent horizontal overflow on mobile.
 - **useStreamData** — Hook that polls external XML every 5s, parses XML, returns current/next track info with artwork.
 
 ---

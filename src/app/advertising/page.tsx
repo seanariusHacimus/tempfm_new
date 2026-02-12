@@ -338,7 +338,7 @@ export default function AdvertisingPage() {
       {/* CTA */}
       <section
         id="contact"
-        className="py-24 md:py-32 border-t border-[var(--color-border)]"
+        className="py-24 md:py-32 border-t border-[var(--color-border)] overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimateIn>

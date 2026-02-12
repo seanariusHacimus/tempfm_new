@@ -266,7 +266,7 @@ export default function HomePage() {
       </section>
 
       {/* About Teaser */}
-      <section className="py-24 md:py-32 border-t border-[var(--color-border)]">
+      <section className="py-24 md:py-32 border-t border-[var(--color-border)] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimateIn direction="left">
@@ -314,7 +314,7 @@ export default function HomePage() {
       {/* CTA */}
       <section
         id="listen"
-        className="py-24 md:py-32 border-t border-[var(--color-border)]"
+        className="py-24 md:py-32 border-t border-[var(--color-border)] overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimateIn>
