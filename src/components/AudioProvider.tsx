@@ -93,9 +93,15 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
     }, [isMuted]);
 
     useEffect(() => {
+        // Apple device detection — Apple requires AAC stream
+        const isApple = /iphone|ipad|ipod|mac/i.test(navigator.userAgent);
+        const streamUrl = isApple
+            ? "https://tempradio-live.uz/streamaac"
+            : "https://tempradio-live.uz/live";
+
         // Create the audio element on mount
         const audio = new Audio();
-        audio.src = "https://tempradio-live.uz/live";
+        audio.src = streamUrl;
         audio.crossOrigin = "anonymous";
         audio.preload = "none";
         audioRef.current = audio;

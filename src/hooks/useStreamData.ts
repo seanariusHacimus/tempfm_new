@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { fetchStreamDataXml } from "@/app/actions";
 
 export interface TrackInfo {
     title: string;
     artist: string;
     cover: string;
+    album: string;
+    duration: string;
+    genre: string;
 }
 
 export interface StreamData {
@@ -13,76 +17,178 @@ export interface StreamData {
     error: string | null;
 }
 
-const DEFAULT_COVER = "/nowonair/images/no_cover.png"; // Fallback if artwork fails
+const STREAM_BASE = "https://test.tempfm.uz/nowonair";
+const DEFAULT_COVER = "/images/no_cover.png"; // local fallback (moved to /public/images to avoid proxy)
+const ARTWORK_CURRENT = `${STREAM_BASE}/images/artwork.png`;
+const ARTWORK_NEXT = `${STREAM_BASE}/images/artwork_next.png`;
+const PRELOAD_TIMEOUT_MS = 3000;
+
+/** Preload an image and resolve with the URL, or fall back on error/timeout. */
+function preloadImage(src: string, fallback: string): Promise<string> {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const timer = setTimeout(() => {
+            img.onload = null;
+            img.onerror = null;
+            resolve(fallback);
+        }, PRELOAD_TIMEOUT_MS);
+
+        img.onload = () => {
+            clearTimeout(timer);
+            resolve(src);
+        };
+        img.onerror = () => {
+            clearTimeout(timer);
+            resolve(fallback);
+        };
+        img.src = src;
+    });
+}
+
+/** Extract a TRACK element's attributes into a partial TrackInfo. */
+function parseTrackNode(node: Element | null): Omit<TrackInfo, "cover"> {
+    return {
+        title: node?.getAttribute("TITLE") || "Unknown Title",
+        artist: node?.getAttribute("ARTIST") || "Unknown Artist",
+        album: node?.getAttribute("ALBUM") || "",
+        duration: node?.getAttribute("DURATION") || "",
+        genre: node?.getAttribute("GENRE") || "",
+    };
+}
 
 export function useStreamData(pollInterval = 5000) {
     const [data, setData] = useState<StreamData>({
-        current: { title: "Loading...", artist: "TempFM", cover: DEFAULT_COVER },
-        next: { title: "", artist: "", cover: "" },
+        current: {
+            title: "Loading...",
+            artist: "TempFM",
+            cover: DEFAULT_COVER,
+            album: "",
+            duration: "",
+            genre: "",
+        },
+        next: {
+            title: "",
+            artist: "",
+            cover: "",
+            album: "",
+            duration: "",
+            genre: "",
+        },
         loading: true,
         error: null,
     });
 
-    useEffect(() => {
-        let isMounted = true;
+    // Refs to track previous values — avoids stale closure issues
+    const prevCurrentRef = useRef({ title: "", artist: "" });
+    const prevNextRef = useRef({ title: "", artist: "" });
 
-        const fetchStreamData = async () => {
-            try {
-                const response = await fetch("/nowonair/nowplaying.xml?t=" + Date.now());
-                if (!response.ok) throw new Error("Failed to fetch stream data");
+    const fetchStreamData = useCallback(async () => {
+        try {
+            console.log("[useStreamData] Fetching XML via Server Action...");
+            // Use Server Action to bypass CORS on the client
+            const xmlText = await fetchStreamDataXml();
 
-                const xmlText = await response.text();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            console.log("[useStreamData] XML received (len):", xmlText.length);
+            // console.log("[useStreamData] XML preview:", xmlText.substring(0, 100));
 
-                // Current Track
-                const trackNode = xmlDoc.querySelector("TRACK");
-                const title = trackNode?.getAttribute("TITLE") || "Unknown Title";
-                const artist = trackNode?.getAttribute("ARTIST") || "Unknown Artist";
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-                // Only update cover timestamp if track changed
-                let cover = data.current.cover;
-                if (title !== data.current.title || artist !== data.current.artist) {
-                    cover = `/nowonair/images/artwork.png?t=${Date.now()}`;
-                }
+            // Current track
+            const currentTrackNode = xmlDoc.querySelector("TRACK");
+            const current = parseTrackNode(currentTrackNode);
+            console.log("[useStreamData] Parsed current:", current);
 
-                // Next Track
-                const nextTrackNode = xmlDoc.querySelector("NEXTTRACK TRACK");
-                const nextTitle = nextTrackNode?.getAttribute("TITLE") || "Unknown Title";
-                const nextArtist = nextTrackNode?.getAttribute("ARTIST") || "Unknown Artist";
+            // Next track
+            const nextTrackNode = xmlDoc.querySelector("NEXTTRACK TRACK");
+            const next = parseTrackNode(nextTrackNode);
+            console.log("[useStreamData] Parsed next:", next);
 
-                if (isMounted) {
-                    // Deep check to avoid unnecessary re-renders if nothing changed
-                    if (title !== data.current.title || artist !== data.current.artist ||
-                        nextTitle !== data.next.title || nextArtist !== data.next.artist) {
+            const prev = prevCurrentRef.current;
+            const prevNext = prevNextRef.current;
 
-                        setData({
-                            current: { title, artist, cover },
-                            next: { title: nextTitle, artist: nextArtist, cover: "" },
-                            loading: false,
-                            error: null,
-                        });
-                    }
-                }
-            } catch (err) {
-                if (isMounted) {
-                    console.error("Stream data fetch error:", err);
-                    setData(prev => ({ ...prev, loading: false, error: "Failed to load stream data" }));
-                }
+            // Check if anything actually changed
+            const currentChanged =
+                current.title !== prev.title ||
+                current.artist !== prev.artist;
+            const nextChanged =
+                next.title !== prevNext.title ||
+                next.artist !== prevNext.artist;
+
+            if (!currentChanged && !nextChanged) {
+                // Nothing changed — just clear loading on first successful fetch
+                setData((d) =>
+                    d.loading ? { ...d, loading: false, error: null } : d
+                );
+                return;
             }
-        };
 
+            // Preload cover images when tracks change
+            let currentCover: string;
+            let nextCover: string;
+
+            if (currentChanged) {
+                currentCover = await preloadImage(
+                    `${ARTWORK_CURRENT}?t=${Date.now()}`,
+                    DEFAULT_COVER
+                );
+                prevCurrentRef.current = {
+                    title: current.title,
+                    artist: current.artist,
+                };
+            } else {
+                // Keep existing cover
+                currentCover = ""; // sentinel — will be replaced below
+            }
+
+            if (nextChanged) {
+                nextCover = await preloadImage(
+                    `${ARTWORK_NEXT}?t=${Date.now()}`,
+                    DEFAULT_COVER
+                );
+                prevNextRef.current = {
+                    title: next.title,
+                    artist: next.artist,
+                };
+            } else {
+                nextCover = "";
+            }
+
+            setData((prevData) => ({
+                current: {
+                    ...current,
+                    cover: currentChanged
+                        ? currentCover
+                        : prevData.current.cover,
+                },
+                next: {
+                    ...next,
+                    cover: nextChanged ? nextCover : prevData.next.cover,
+                },
+                loading: false,
+                error: null,
+            }));
+        } catch (err) {
+            console.error("Stream data fetch error:", err);
+            setData((prev) => ({
+                ...prev,
+                loading: false,
+                error: "Failed to load stream data",
+            }));
+        }
+    }, []);
+
+    useEffect(() => {
         // Initial fetch
         fetchStreamData();
 
-        // Poll every 5 seconds
+        // Poll
         const interval = setInterval(fetchStreamData, pollInterval);
 
         return () => {
-            isMounted = false;
             clearInterval(interval);
         };
-    }, [pollInterval]);
+    }, [pollInterval, fetchStreamData]);
 
     return data;
 }

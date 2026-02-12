@@ -46,7 +46,7 @@ playButton.addEventListener('click', async () => {
     if (!audioContext) {
         await setupAudioContext();
     }
-    
+
     if (isPlaying) {
         audioPlayer.pause();
         console.log('Audio player paused'); // Log for pause event
@@ -95,17 +95,17 @@ function animateVisualizer() {
         animationFrameId = requestAnimationFrame(animateVisualizer);
         return;
     }
-    
+
     analyser.getByteFrequencyData(dataArray);
-    
+
     const hasData = dataArray.some(value => value > 0);
     if (!hasData) {
         animationFrameId = requestAnimationFrame(animateVisualizer);
         return;
     }
-    
+
     const halfLength = Math.floor(dataArray.length / 2);
-    
+
     bars.forEach((bar, index) => {
         let dataIndex;
         if (index < barCount / 2) {
@@ -116,13 +116,13 @@ function animateVisualizer() {
         const barHeight = dataArray[dataIndex] / 255 * 100;
         bar.style.height = `${Math.max(barHeight, 5)}%`;
     });
-    
+
     animationFrameId = requestAnimationFrame(animateVisualizer);
 }
 
 function unlockAudioContext(audioCtx) {
     if (audioCtx.state === 'suspended') {
-        const unlock = function() {
+        const unlock = function () {
             audioCtx.resume().then(() => {
                 document.body.removeEventListener('touchstart', unlock);
                 document.body.removeEventListener('touchend', unlock);
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupAudioContext().then(() => {
         if (audioContext) {
             unlockAudioContext(audioContext);
-            // Автозапуск плеера
+            // РђРІС‚РѕР·Р°РїСѓСЃРє РїР»РµРµСЂР°
             setTimeout(() => {
                 playButton.click();
             }, 1000);
@@ -161,71 +161,65 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateTrackInfo() {
-    console.log('Fetching track info...');
+    console.log('РќР°С‡РёРЅР°РµРј Р·Р°РіСЂСѓР·РєСѓ XML...');
     fetch('nowonair/nowplaying.xml')
         .then(response => {
-            console.log('Server response status:', response.status);
+            console.log('РџРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚ РѕС‚ СЃРµСЂРІРµСЂР°:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.text();
         })
         .then(data => {
-            console.log('Received XML data');
+            console.log('РџРѕР»СѓС‡РµРЅС‹ РґР°РЅРЅС‹Рµ XML:', data);
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, "text/xml");
-            
-            // Current track
+
+            // РўРµРєСѓС‰РёР№ С‚СЂРµРє
             const currentTrack = xmlDoc.querySelector('TRACK');
             if (currentTrack) {
                 const title = currentTrack.getAttribute('TITLE') || 'Unknown Title';
                 const artist = currentTrack.getAttribute('ARTIST') || 'Unknown Artist';
-                
-                // Update only if track has changed
+
+                // РћР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РµСЃР»Рё С‚СЂРµРє РёР·РјРµРЅРёР»СЃСЏ
                 if (title !== lastTrackTitle || artist !== lastTrackArtist) {
-                    console.log('Track changed, updating info');
+                    console.log('РўСЂРµРє РёР·РјРµРЅРёР»СЃСЏ, РѕР±РЅРѕРІР»СЏРµРј РёРЅС„РѕСЂРјР°С†РёСЋ');
                     lastTrackTitle = title;
                     lastTrackArtist = artist;
-                    
-                    // Update track info immediately
-                    const titleElement = document.querySelector('.track-title');
-                    const artistElement = document.querySelector('.track-artist');
-                    
-                    if (titleElement) titleElement.textContent = title;
-                    if (artistElement) artistElement.textContent = artist;
-                    
-                    // Try to load cover image
+
                     const coverImage = document.querySelector('.track-cover');
                     if (coverImage) {
+                        // РЎРЅР°С‡Р°Р»Р° РѕР±РЅРѕРІР»СЏРµРј РѕР±Р»РѕР¶РєСѓ
                         const timestamp = new Date().getTime();
-                        const imageUrl = `nowonair/images/artwork.png?t=${timestamp}`;
-                        
-                        // Set a placeholder in case image fails to load
-                        coverImage.onerror = () => {
-                            console.log('Failed to load cover art, using placeholder');
-                            coverImage.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMjUwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiIHJ5PSIyIj48L3JlY3Q+PGNpcmNsZSBjeD0iOC41IiBjeT0iOC41IiByPSIxLjUiPjwvY2lyY2xlPjxwb2x5bGluZSBwb2ludHM9IjIxIDE1IDE2IDEwIDUgMjEiPjwvcG9seWxpbmU+PC9zdmc+';
-                            coverImage.style.backgroundColor = '#f0f0f0';
+                        coverImage.src = `nowonair/images/artwork.png?t=${timestamp}`;
+
+                        // Р–РґРµРј Р·Р°РіСЂСѓР·РєРё РѕР±Р»РѕР¶РєРё
+                        coverImage.onload = () => {
+                            // РџРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё РѕР±Р»РѕР¶РєРё РѕР±РЅРѕРІР»СЏРµРј С‚РµРєСЃС‚
+                            const titleElement = document.querySelector('.track-title');
+                            const artistElement = document.querySelector('.track-artist');
+
+                            if (titleElement) titleElement.textContent = title;
+                            if (artistElement) artistElement.textContent = artist;
                         };
-                        
-                        // Set the image source
-                        coverImage.src = imageUrl;
                     }
+                }
             }
 
-            // Следующий трек
+            // РЎР»РµРґСѓСЋС‰РёР№ С‚СЂРµРє
             const nextTrack = xmlDoc.querySelector('NEXTTRACK TRACK');
             if (nextTrack) {
                 const nextTitle = nextTrack.getAttribute('TITLE') || 'Unknown Title';
                 const nextArtist = nextTrack.getAttribute('ARTIST') || 'Unknown Artist';
-                
+
                 const nextTitleElement = document.querySelector('.next-title');
                 const nextArtistElement = document.querySelector('.next-artist');
-                
+
                 if (nextTitleElement) nextTitleElement.textContent = nextTitle;
                 if (nextArtistElement) nextArtistElement.textContent = nextArtist;
             }
         })
         .catch(error => {
-            console.error('Ошибка при обновлении информации о треке:', error);
+            console.error('РћС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚СЂРµРєРµ:', error);
         });
 }

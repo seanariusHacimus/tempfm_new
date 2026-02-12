@@ -170,12 +170,17 @@ export default function RadioPlayer() {
                             <p className="text-[var(--color-accent)] text-[10px] font-semibold uppercase tracking-wider truncate mt-0.5">
                                 {current.artist}
                             </p>
+                            {current.album && (
+                                <p className="text-[10px] text-gray-500 truncate mt-0.5">
+                                    {current.album}
+                                </p>
+                            )}
                         </div>
                     </div>
 
                     {/* CENTER: Playback Controls — always visible */}
                     <div className="flex items-center justify-center gap-4 flex-shrink-0">
-                        {/* Live Indicator */}
+                        {/* Live Indicator + Meta */}
                         <div className="flex items-center gap-2 cursor-default" title="Live">
                             <span className="relative flex h-2.5 w-2.5">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
@@ -184,6 +189,16 @@ export default function RadioPlayer() {
                             <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest whitespace-nowrap">
                                 On Air
                             </span>
+                            {current.duration && (
+                                <span className="text-[10px] text-gray-500 font-medium whitespace-nowrap">
+                                    {current.duration}
+                                </span>
+                            )}
+                            {current.genre && (
+                                <span className="hidden sm:inline text-[9px] text-gray-400 bg-white/5 px-1.5 py-0.5 rounded-full font-medium whitespace-nowrap">
+                                    {current.genre}
+                                </span>
+                            )}
                         </div>
 
                         {/* Play Button */}
@@ -231,9 +246,22 @@ export default function RadioPlayer() {
                                 Up Next
                             </span>
                         </div>
-                        <span className="text-xs text-gray-300 font-medium truncate max-w-[200px]">
-                            {next.artist && next.title ? `${next.artist} — ${next.title}` : "Loading..."}
-                        </span>
+                        <div className="flex items-center gap-2 min-w-0">
+                            {next.cover && (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                    src={next.cover}
+                                    alt="Next track"
+                                    className="w-6 h-6 rounded object-cover border border-white/5 shrink-0"
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).style.display = "none";
+                                    }}
+                                />
+                            )}
+                            <span className="text-xs text-gray-300 font-medium truncate max-w-[200px]">
+                                {next.artist && next.title ? `${next.artist} — ${next.title}` : "Loading..."}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
