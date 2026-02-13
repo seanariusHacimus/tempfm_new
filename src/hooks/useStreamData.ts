@@ -18,7 +18,7 @@ export interface StreamData {
 }
 
 const STREAM_BASE = "https://test.tempfm.uz/nowonair";
-const DEFAULT_COVER = "/images/no_cover.png"; // local fallback (moved to /public/images to avoid proxy)
+const DEFAULT_COVER = ""; // No local fallback, RadioPlayer will show skeleton
 const ARTWORK_CURRENT = `${STREAM_BASE}/images/artwork.png`;
 const ARTWORK_NEXT = `${STREAM_BASE}/images/artwork_next.png`;
 const PRELOAD_TIMEOUT_MS = 3000;
@@ -48,8 +48,8 @@ function preloadImage(src: string, fallback: string): Promise<string> {
 /** Extract a TRACK element's attributes into a partial TrackInfo. */
 function parseTrackNode(node: Element | null): Omit<TrackInfo, "cover"> {
     return {
-        title: node?.getAttribute("TITLE") || "Unknown Title",
-        artist: node?.getAttribute("ARTIST") || "Unknown Artist",
+        title: node?.getAttribute("TITLE") || "TempFM 88.4",
+        artist: node?.getAttribute("ARTIST") || "",
         album: node?.getAttribute("ALBUM") || "",
         duration: node?.getAttribute("DURATION") || "",
         genre: node?.getAttribute("GENRE") || "",
@@ -59,8 +59,8 @@ function parseTrackNode(node: Element | null): Omit<TrackInfo, "cover"> {
 export function useStreamData(pollInterval = 5000) {
     const [data, setData] = useState<StreamData>({
         current: {
-            title: "Loading...",
-            artist: "TempFM",
+            title: "TempFM 88.4",
+            artist: "",
             cover: DEFAULT_COVER,
             album: "",
             duration: "",

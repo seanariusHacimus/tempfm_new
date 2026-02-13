@@ -93,9 +93,9 @@ tempfm_website/
 - **I18nProvider** — React context providing internationalization support. Manages locale state (UZ/RU), persists to localStorage, provides `t()` translation function and `dict` object. All pages and components use `useTranslation()` hook to access translations.
 - **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `streamError`, `audioRef`, `analyserRef`. Destroys and recreates the audio source on every play/pause to ensure fresh live stream (no cached audio). Includes automatic reconnection with exponential backoff (up to 5 retries).
 - **ThreeBackground** — Full-viewport Three.js liquid surface that reacts to audio frequency data (bass/mids). Falls back to simulated animation when no audio is playing.
-- **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts).
+- **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts). Uses a gray skeleton box for missing/loading artwork.
 - **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss. Includes `overflow-x-hidden` to prevent horizontal overflow on mobile. Includes `LanguageSwitcher` for UZ/RU toggle.
-- **useStreamData** — Hook that polls external XML every 5s, parses XML, returns current/next track info with artwork.
+- **useStreamData** — Hook that polls external XML every 5s, parses XML, returns current/next track info. Falls back to "TempFM 88.4" for missing titles and empty string for missing artists.
 
 ---
 

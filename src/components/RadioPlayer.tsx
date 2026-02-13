@@ -92,16 +92,19 @@ export default function RadioPlayer() {
                     </button>
 
                     {/* Album Art */}
-                    <div className="relative shrink-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src={current.cover}
-                            alt={t("player.albumArt")}
-                            className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border border-white/10"
-                            onError={(e) => {
-                                (e.target as HTMLImageElement).src = "/images/no_cover.png";
-                            }}
-                        />
+                    <div className="relative shrink-0 w-11 h-11 sm:w-12 sm:h-12">
+                        {current.cover ? (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img
+                                src={current.cover}
+                                alt={t("player.albumArt")}
+                                className="w-full h-full rounded-xl object-cover border border-white/10"
+                            />
+                        ) : (
+                            <div className="w-full h-full bg-white/5 border border-white/10 rounded-xl animate-pulse flex items-center justify-center">
+                                <span className="text-[10px] text-[var(--color-text-muted)] font-bold">TEMP</span>
+                            </div>
+                        )}
                         {isPlaying && (
                             <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/20">
                                 <div className="flex gap-[3px] items-end h-3">
@@ -190,16 +193,17 @@ export default function RadioPlayer() {
 
                             </p>
                         </div>
-                        {next.cover && (
+                        {next.cover ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={next.cover}
                                 alt={t("player.next")}
                                 className="w-9 h-9 rounded-lg object-cover border border-white/10 shrink-0"
-                                onError={(e) => {
-                                    (e.target as HTMLImageElement).style.display = "none";
-                                }}
                             />
+                        ) : (
+                            <div className="w-9 h-9 bg-white/5 border border-white/10 rounded-lg shrink-0 flex items-center justify-center">
+                                <span className="text-[8px] text-[var(--color-text-muted)] font-bold italic">FM</span>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -212,16 +216,17 @@ export default function RadioPlayer() {
                             {t("player.next")}
                         </span>
 
-                        {next.cover && (
+                        {next.cover ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={next.cover}
                                 alt={t("player.next")}
                                 className="w-6 h-6 rounded object-cover border border-white/10 shrink-0"
-                                onError={(e) => {
-                                    (e.target as HTMLImageElement).style.display = "none";
-                                }}
                             />
+                        ) : (
+                            <div className="w-6 h-6 bg-white/5 border border-white/10 rounded shrink-0 flex items-center justify-center">
+                                <span className="text-[6px] text-[var(--color-text-muted)] font-bold italic">FM</span>
+                            </div>
                         )}
                         <p className="text-[11px] text-[var(--color-text-secondary)] truncate min-w-0">
                             {next.artist && next.title

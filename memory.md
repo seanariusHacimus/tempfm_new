@@ -58,6 +58,11 @@
   - `LanguageSwitcher` component in navigation
 - **Font Configuration:** Fixed font paths to use PetrovSans TTF files from `src/app/fonts/petrov_sans/` directory (weights: 400, 700, 900). Removed Roboto font configuration (using system fonts for body text).
 - **Build Status:** Production build verified ✅ — all 7 pages compile successfully with no errors.
+- **Update Metadata & Artwork Fallbacks (Feb 13, 2026):**
+  - Updated `useStreamData.ts` to use "TempFM 88.4" as fallback for missing titles and empty string for artists.
+  - Implemented gray skeleton box UI in `RadioPlayer.tsx` for missing or loading artwork (1:1 aspect ratio).
+  - Removed dependency on local `no_cover.png` image.
+  - Verified with production build ✅.
 
 ---
 
