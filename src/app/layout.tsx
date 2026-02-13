@@ -39,6 +39,9 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "TempFM 88.4 — Toshkent radiosi",
   description: "TempFM 88.4 — Toshkentning eng yaxshi radiosi. Jonli efir, yangiliklar, va ko'proq.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
