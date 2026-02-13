@@ -131,6 +131,10 @@ tempfm_website/
 3. `RadioPlayer` displays current/next track from the parsed data
 4. `ThreeBackground` reacts to audio frequencies via `AudioProvider`'s analyser node
 
+- Added News slots to Monday-Friday schedule (Uzbek 11:00, Russian 14:00) for both locales.
+- Hidden non-functional "Read More" and "Read Details" elements on the News page.
+- Standardized female team roles in Russian to "Радиоведущая" for consistency.
+
 ---
 
 ## Notes
@@ -139,3 +143,8 @@ tempfm_website/
 - `advertising/page_old.tsx.bak` is a backup of a previous version of the advertising page.
 - The project uses `@/*` path alias mapped to `./src/*`.
 - ESLint is configured to allow `<img>` tags in some places (via inline comments).
+
+---
+
+## Last Updated
+**2026-02-13** (I18n, schedule updates, News page UI cleanup, role standardization)

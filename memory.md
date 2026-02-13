@@ -58,11 +58,14 @@
   - `LanguageSwitcher` component in navigation
 - **Font Configuration:** Fixed font paths to use PetrovSans TTF files from `src/app/fonts/petrov_sans/` directory (weights: 400, 700, 900). Removed Roboto font configuration (using system fonts for body text).
 - **Build Status:** Production build verified ✅ — all 7 pages compile successfully with no errors.
-- **Update Metadata & Artwork Fallbacks (Feb 13, 2026):**
-  - Updated `useStreamData.ts` to use "TempFM 88.4" as fallback for missing titles and empty string for artists.
-  - Implemented gray skeleton box UI in `RadioPlayer.tsx` for missing or loading artwork (1:1 aspect ratio).
-  - Removed dependency on local `no_cover.png` image.
-  - Verified with production build ✅.
+- Verified with production build ✅.
+
+### News Page & Schedule Updates (Feb 13, 2026)
+- **News UI Cleanup:** Commented out "Read More" and "Read Details" spans as they are currently non-functional. Removed `cursor-pointer` from news articles to accurately reflect lack of interactivity.
+- **Weekly Schedule Update:** Added News slots to Mon-Fri schedule for both locales:
+  - **11:00 — 12:00:** Yangiliklar (O'zb) / Новости (Узб)
+  - **14:00 — 15:00:** Yangiliklar (Rus) / Новости (Рус)
+- **Role Standardization (RU):** Updated female host roles to "Радиоведущая" (instead of "Радиоведущий" or "Ведущая") for gender accuracy and consistency.
 
 ---
 
@@ -132,4 +135,4 @@ npm run lint   # ESLint
 ---
 
 ## Last Updated
-**2026-02-13** (I18n system implementation, root layout creation, font configuration fixes, production build verified)
+**2026-02-13** (I18n, schedule updates, News page UI cleanup, role standardization)

@@ -42,7 +42,7 @@ export default function NewsPage() {
           <AnimateIn delay={0.1}>
             <motion.article
               whileHover={{ scale: 1.005 }}
-              className="group relative bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-8 md:p-12 transition-colors cursor-pointer overflow-hidden"
+              className="group relative bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-8 md:p-12 transition-colors overflow-hidden"
             >
               {/* Accent gradient overlay */}
               <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--color-accent)]/5 to-transparent pointer-events-none" />
@@ -68,7 +68,7 @@ export default function NewsPage() {
                   {featuredArticle.excerpt}
                 </p>
 
-                <span className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
+                {/* <span className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
                   {t("news.readMore")}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ export default function NewsPage() {
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />
                   </svg>
-                </span>
+                </span> */}
               </div>
             </motion.article>
           </AnimateIn>
@@ -111,7 +111,7 @@ export default function NewsPage() {
               <AnimateIn key={article.id} delay={i * 0.08}>
                 <motion.article
                   whileHover={{ scale: 1.01 }}
-                  className="group bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-6 md:p-8 transition-colors cursor-pointer h-full flex flex-col"
+                  className="group bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest">
@@ -130,7 +130,7 @@ export default function NewsPage() {
                     {article.excerpt}
                   </p>
 
-                  <span className="inline-flex items-center gap-2 text-[var(--color-text-muted)] font-bold text-xs uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
+                  {/* <span className="inline-flex items-center gap-2 text-[var(--color-text-muted)] font-bold text-xs uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
                     {t("news.readDetails")}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ export default function NewsPage() {
                       <path d="M5 12h14" />
                       <path d="m12 5 7 7-7 7" />
                     </svg>
-                  </span>
+                  </span> */}
                 </motion.article>
               </AnimateIn>
             ))}
