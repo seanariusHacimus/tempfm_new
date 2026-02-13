@@ -11,10 +11,10 @@
   --color-text-muted: #666666;
   --color-border: #222222;
   --color-border-hover: #333333;
-
-  --font-display: var(--font-petrov), "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-body: var(--font-roboto), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+/* Font families use Next.js runtime CSS variables (--font-petrov, --font-roboto)
+   injected on <body> via class. Applied directly to avoid Tailwind v4 variable conflicts. */
 
 html {
   scroll-behavior: smooth;
@@ -24,7 +24,7 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-roboto), "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -37,6 +37,7 @@ h5,
 h6,
 button,
 .font-display {
+  font-family: var(--font-petrov), "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 0.025em;
 }
 

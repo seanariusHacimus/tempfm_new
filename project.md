@@ -35,8 +35,10 @@ tempfm_website/
 ├── src/
 │   ├── app/
 │   │   ├── actions.ts       # Server Actions (XML fetcher to bypass CORS)
+│   │   ├── fonts/           # Font files
+│   │   │   └── petrov_sans/ # PetrovSans TTF files
 │   │   ├── globals.css      # Theme tokens, scrollbar, player styles
-│   │   ├── layout.tsx       # Root layout: Nav, Footer, Player, ThreeBackground
+│   │   ├── layout.tsx       # Root layout: I18nProvider, AudioProvider, Nav, Footer, Player, Background
 │   │   ├── page.tsx         # Home page (hero, shows, stats)
 │   │   ├── about/page.tsx   # About page (team, values, stats)
 │   │   ├── advertising/page.tsx  # Advertising page (pricing, formats)
@@ -46,16 +48,26 @@ tempfm_website/
 │   │   ├── AnimateIn.tsx     # Scroll-triggered animation wrapper
 │   │   ├── AudioProvider.tsx # Audio context provider (play/pause/mute, Web Audio API analyser)
 │   │   ├── Footer.tsx       # Site footer
+│   │   ├── HomeBackground.tsx # Conditionally renders ThreeBackground on home page only
+│   │   ├── LanguageSwitcher.tsx # UZ/RU language toggle
 │   │   ├── Navigation.tsx   # Top nav with full-page mobile overlay, staggered animations, active link indicator
 │   │   ├── PageHeader.tsx   # Standardized page header (title, accent, description)
 │   │   ├── RadioPlayer.tsx  # Floating radio player bar (stream controls, now-playing)
 │   │   └── ThreeBackground.tsx # Three.js animated liquid surface (reacts to audio)
-│   └── hooks/
-│       └── useStreamData.ts # Polls external XML for current/next track
+│   ├── hooks/
+│   │   └── useStreamData.ts # Polls external XML for current/next track
+│   └── i18n/
+│       ├── config.ts        # Locale configuration and storage
+│       ├── context.tsx      # I18nProvider and useTranslation hook
+│       ├── index.ts         # Public exports
+│       └── locales/
+│           ├── uz.ts        # Uzbek translations (source of truth)
+│           └── ru.ts        # Russian translations
 ├── tempfm_stream_data/
 │   └── update_track.js      # Standalone JS: audio player, visualizer, track updater (legacy/external)
 ├── animation.html           # Standalone animation demo page
 ├── content.txt              # Raw content in Uzbek (shows, hosts, schedules)
+├── content_ru.txt           # Raw content in Russian
 ├── package.json
 ├── tsconfig.json
 ├── next.config.ts
@@ -78,10 +90,11 @@ tempfm_website/
 
 ## Key Components
 
+- **I18nProvider** — React context providing internationalization support. Manages locale state (UZ/RU), persists to localStorage, provides `t()` translation function and `dict` object. All pages and components use `useTranslation()` hook to access translations.
 - **AudioProvider** — React context wrapping the `<audio>` element and Web Audio API `AnalyserNode`. Exposes `togglePlay`, `toggleMute`, `isPlaying`, `isMuted`, `streamError`, `audioRef`, `analyserRef`. Destroys and recreates the audio source on every play/pause to ensure fresh live stream (no cached audio). Includes automatic reconnection with exponential backoff (up to 5 retries).
 - **ThreeBackground** — Full-viewport Three.js liquid surface that reacts to audio frequency data (bass/mids). Falls back to simulated animation when no audio is playing.
 - **RadioPlayer** — Floating bottom player bar. Shows current/next track (via `useStreamData`), play/pause, mute, volume controls. Responsive (desktop/mobile layouts).
-- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss. Includes `overflow-x-hidden` to prevent horizontal overflow on mobile.
+- **Navigation** — Fixed top nav with animated active-link indicator (Framer Motion `layoutId`). Features a full-page mobile overlay (`z-40`) with staggered link animations, body scroll lock, and Escape key dismiss. Includes `overflow-x-hidden` to prevent horizontal overflow on mobile. Includes `LanguageSwitcher` for UZ/RU toggle.
 - **useStreamData** — Hook that polls external XML every 5s, parses XML, returns current/next track info with artwork.
 
 ---
@@ -89,10 +102,11 @@ tempfm_website/
 ## Design System
 
 - **Color scheme:** Dark theme (`#0a0a0a` bg) with orange/red accent (`#ff3d00`)
-- **Fonts:** PetrovSans (display), Roboto (body) with custom letter-spacing tags.
+- **Fonts:** PetrovSans TTF (display font, weights: 400/700/900) with custom letter-spacing. Body text uses system fonts via CSS.
 - **Cards:** `#111111` bg with `#222222` borders
 - **Glass effect:** SVG filter-based distortion for liquid glass look
 - **Animations:** Framer Motion for page transitions, scroll reveals, nav highlights
+- **Internationalization:** Full UZ/RU support via custom i18n context system
 
 ---
 

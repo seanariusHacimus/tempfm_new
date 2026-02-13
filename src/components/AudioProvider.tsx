@@ -125,7 +125,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
     // ─── Auto-reconnect logic ───
     const attemptReconnect = useCallback(() => {
         if (retryCountRef.current >= MAX_RETRIES) {
-            setStreamError("Oqim uzildi. Qayta tinglash uchun ▶ tugmasini bosing.");
+            setStreamError("player.streamError");
             setIsPlaying(false);
             setIsBuffering(false);
             isPlayingRef.current = false;
@@ -135,7 +135,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
 
         const delay = BASE_RETRY_DELAY_MS * Math.pow(2, retryCountRef.current);
         retryCountRef.current += 1;
-        setStreamError("Qayta ulanmoqda...");
+        setStreamError("player.reconnecting");
 
         console.warn(
             `[AudioProvider] Reconnect attempt ${retryCountRef.current}/${MAX_RETRIES} in ${delay}ms`
@@ -254,7 +254,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
                     setIsPlaying(false);
                     setIsBuffering(false);
                     isPlayingRef.current = false;
-                    setStreamError("Oqimni boshlashda xatolik yuz berdi.");
+                    setStreamError("player.startError");
                 });
         }
     }, [isPlaying, isBuffering, initAudioContext]);

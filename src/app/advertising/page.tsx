@@ -3,156 +3,35 @@
 import { motion } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
 import PageHeader from "@/components/PageHeader";
-
-const benefits = [
-  {
-    value: "200K+",
-    label: "Oylik Tinglovchilar",
-    description:
-      "Toshkentda va butun dunyo bo'ylab har oy 200,000 dan ortiq faol tinglovchilarga FM va raqamli oqimlar orqali yetib boring.",
-  },
-  {
-    value: "18–30",
-    label: "Asosiy Auditoriya",
-    description:
-      "Bizning auditoriyamiz Toshkentning eng faol qatlami — talabalar, yosh mutaxassislar va ijodkorlardir.",
-  },
-  {
-    value: "4.2M",
-    label: "Oylik Ko'rishlar",
-    description:
-      "FM eshittirish, veb-sayt, ijtimoiy tarmoqlar va striming platformalaridagi umumiy qamrov.",
-  },
-  {
-    value: "12+",
-    label: "Reklama Formatlari",
-    description:
-      "Klassik radio roliklaridan tortib brendlashtirilgan podkastlar, ijtimoiy tarmoqlar va jonli tadbirlargacha.",
-  },
-];
-
-const adFormats = [
-  {
-    title: "Reklama Roliklari",
-    duration: "15 / 30 / 60 soniya",
-    description:
-      "Klassik radio reklama. Sizning xabaringiz eng ko'p tinglanadigan vaqtlarda professional ovoz bilan yetkaziladi. 'Tonggi Puls', 'Tungi Driv' yoki to'liq jadval bo'yicha.",
-    features: [
-      "Professional ishlab chiqarish",
-      "Prime-time va oddiy vaqt",
-      "Tez-tez joylashtirish uchun chegirmalar",
-      "A/B test sinovlari",
-    ],
-  },
-  {
-    title: "Dastur Homiyligi",
-    duration: "Haftalik / Oylik",
-    description:
-      "TempFM ning eng mashhur shoulariga homiylik qiling. Brendingizni Toshkent yoshlari har kuni tinglaydigan dasturlarga integratsiya qiling.",
-    features: [
-      "Brendlashtirilgan intro va outro",
-      "Boshlovchi tomonidan aytiladigan matn",
-      "Eksklyuziv toifa homiyligi",
-      "Ijtimoiy tarmoqlarda reklama",
-    ],
-  },
-  {
-    title: "Raqamli Kampaniyalar",
-    duration: "Moslashuvchan",
-    description:
-      "FM dan tashqariga chiqing. Veb-sayt, mobil ilova va ijtimoiy tarmoqlarda maqsadli reklama kampaniyalari — batafsil statistika bilan.",
-    features: [
-      "Veb-sayt bannerlari va pre-roll",
-      "Ijtimoiy tarmoq integratsiyasi",
-      "Axborotnoma homiyligi",
-      "Real vaqt rejimidagi statistika",
-    ],
-  },
-  {
-    title: "Tadbirlar Hamkorligi",
-    duration: "Tadbir davomida",
-    description:
-      "TempFM yoshlarning eng yirik tadbirlariga mezbonlik qiladi. Minglab yoshlar bilan yuzma-yuz muloqotda brendingizni namoyish eting.",
-    features: [
-      "Tadbir joyida brending",
-      "Sahnani nomlash huquqi",
-      "VIP zona brendingi",
-      "Jonli efirda eslatmalar",
-    ],
-  },
-];
-
-const pricingTiers = [
-  {
-    name: "Boshlang'ich",
-    price: "2 500 000",
-    period: "/ oy",
-    description:
-      "Toshkent yoshlari auditoriyasiga chiqishni istagan mahalliy bizneslar uchun mukammal boshlanish.",
-    features: [
-      "Haftasiga 10 ta rolik (15 soniya)",
-      "Oddiy vaqtda joylashtirish",
-      "Bazaviy ishlab chiqarish",
-      "Oylik hisobot",
-      "1 ta ijtimoiy tarmoq posti",
-    ],
-    highlighted: false,
-  },
-  {
-    name: "Professional",
-    price: "7 000 000",
-    period: "/ oy",
-    description:
-      "Tez o'sayotgan brendlar uchun. Har tomonlama qamrov va yuqori chastotali eshittirishlar.",
-    features: [
-      "Haftasiga 30 ta rolik (30 soniya)",
-      "Prime-time vaqtlar",
-      "Professional audio rolik",
-      "Haftalik hisobotlar",
-      "Ijtimoiy tarmoq + Sayt",
-      "Shou homiyligi (1 ta)",
-    ],
-    highlighted: true,
-  },
-  {
-    name: "Korporativ",
-    price: "Shartnoma asosida",
-    period: "",
-    description:
-      "Yirik kompaniyalar uchun to'liq paket. Radio, dijital va tadbirlarni qamrab oluvchi 360 darajali yechim.",
-    features: [
-      "Cheksiz roliklar",
-      "Barcha vaqtlar prioriteti",
-      "To'liq prodakshn xizmati",
-      "Eksklyuziv homiylik",
-      "Tadbirlar integratsiyasi",
-      "Shaxsiy menejer",
-    ],
-    highlighted: false,
-  },
-];
+import { useTranslation } from "@/i18n";
 
 export default function AdvertisingPage() {
+  const { t, dict } = useTranslation();
+
+  const benefits = dict.advertising.benefits.items;
+  const adFormats = dict.advertising.formats.items;
+  const pricingTiers = dict.advertising.pricing.tiers;
+
   return (
     <>
       <PageHeader
-        label="Kengayishingiz Uchun"
-        title="TEMP FM BILAN"
-        titleAccent="HAMKORLIK."
-        description="O'zbekistonning eng faol va zamonaviy auditoriyasiga o'z brendingizni taniting. Biz shunchaki efir vaqti sotmaymiz — biz madaniyat yaratamiz."
+        label={t("advertising.header.label")}
+        title={t("advertising.header.title")}
+        titleAccent={t("advertising.header.titleAccent")}
+        description={t("advertising.header.description")}
       >
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#pricing"
             className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
           >
-            Paketlarni Ko&apos;rish
+            {t("advertising.header.ctaPackages")}
           </a>
           <a
             href="#contact"
             className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
           >
-            Biz Bilan Bog&apos;lanish
+            {t("advertising.header.ctaContact")}
           </a>
         </div>
       </PageHeader>
@@ -163,22 +42,22 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Nega Aynan TempFM
+                {t("advertising.benefits.label")}
               </p>
-              <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
-                O'sish Raqamlarda
+              <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
+                {t("advertising.benefits.title")}
               </h2>
             </div>
           </AnimateIn>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {benefits.map((benefit, i) => (
+            {benefits.map((benefit: { value: string; label: string; description: string }, i: number) => (
               <AnimateIn key={benefit.label} delay={i * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-6 md:p-8 transition-colors h-full"
                 >
-                  <div className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-black text-[var(--color-accent)] tracking-tight mb-2">
+                  <div className="font-display text-4xl md:text-5xl font-black text-[var(--color-accent)] tracking-tight mb-2">
                     {benefit.value}
                   </div>
                   <div className="text-white text-sm font-display font-bold uppercase tracking-wider mb-3">
@@ -200,19 +79,19 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Reklama Formatlari
+                {t("advertising.formats.label")}
               </p>
-              <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Har Bir Kanalda. Bitta Auditoriya.
+              <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
+                {t("advertising.formats.title")}
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-2xl leading-relaxed">
-                15 soniyalik rolik bo'ladimi yoki to'liq hamkorlikmi, biz brendingizni Toshkentning eng faol auditoriyasi bilan bog'lash uchun to'g'ri formatni yaratamiz.
+                {t("advertising.formats.description")}
               </p>
             </div>
           </AnimateIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {adFormats.map((format, i) => (
+            {adFormats.map((format: { title: string; duration: string; description: string; features: string[] }, i: number) => (
               <AnimateIn key={format.title} delay={i * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.01 }}
@@ -223,7 +102,7 @@ export default function AdvertisingPage() {
                       {format.duration}
                     </span>
                   </div>
-                  <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3 group-hover:text-[var(--color-accent)] transition-colors">
+                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3 group-hover:text-[var(--color-accent)] transition-colors">
                     {format.title}
                   </h3>
                   <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mb-6">
@@ -256,43 +135,43 @@ export default function AdvertisingPage() {
           <AnimateIn>
             <div className="text-center mb-14">
               <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                Narxlar
+                {t("advertising.pricing.label")}
               </p>
-              <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
-                Moslashuvchan Paketlar
+              <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
+                {t("advertising.pricing.title")}
               </h2>
               <p className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                Biznes o'sishining har bir bosqichi uchun shaffof narxlar. Barcha paketlar prodakshn xizmati va shaxsiy menejer yordamini o'z ichiga oladi.
+                {t("advertising.pricing.description")}
               </p>
             </div>
           </AnimateIn>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {pricingTiers.map((tier, i) => (
+            {pricingTiers.map((tier: { name: string; price: string; period: string; description: string; features: string[] }, i: number) => (
               <AnimateIn key={tier.name} delay={i * 0.15}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className={`relative bg-[var(--color-bg-card)] border rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col ${tier.highlighted
+                  className={`relative bg-[var(--color-bg-card)] border rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col ${i === 1
                     ? "border-[var(--color-accent)]"
                     : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
                     }`}
                 >
-                  {tier.highlighted && (
+                  {i === 1 && (
                     <div className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">
-                      Eng Mashhur
+                      {t("advertising.pricing.mostPopular")}
                     </div>
                   )}
 
                   <div className="mb-6">
-                    <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-4">
+                    <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-4">
                       {tier.name}
                     </h3>
                     <div className="flex items-baseline gap-1">
-                      <span className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-black text-white tracking-tight">
+                      <span className="font-display text-4xl md:text-5xl font-black text-white tracking-tight">
                         {tier.price}
                       </span>
                       <span className="text-[var(--color-text-muted)] text-sm uppercase tracking-wider">
-                        UZS {tier.period}
+                        {tier.period}
                       </span>
                     </div>
                     <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mt-3">
@@ -314,12 +193,12 @@ export default function AdvertisingPage() {
                     </ul>
                     <a
                       href="#contact"
-                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-display font-bold uppercase tracking-wider transition-colors ${tier.highlighted
+                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-display font-bold uppercase tracking-wider transition-colors ${i === 1
                         ? "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
                         : "bg-[var(--color-bg-card-hover)] hover:bg-[var(--color-accent)] border border-[var(--color-border)] hover:border-transparent text-white"
                         }`}
                     >
-                      Boshlash
+                      {t("advertising.pricing.getStarted")}
                     </a>
                   </div>
                 </motion.div>
@@ -329,7 +208,7 @@ export default function AdvertisingPage() {
 
           <AnimateIn delay={0.3}>
             <p className="text-center text-[var(--color-text-muted)] text-sm mt-8">
-              Barcha narxlar so'mda (UZS) ko'rsatilgan. Korporativ va uzoq muddatli hamkorlik uchun biz bilan bog'laning.
+              {t("advertising.pricing.priceNote")}
             </p>
           </AnimateIn>
         </div>
@@ -343,16 +222,15 @@ export default function AdvertisingPage() {
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimateIn>
             <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Bog'lanish
+              {t("advertising.cta.label")}
             </p>
-            <h2 className="font-[family-name:var(--font-display)] text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white mb-6">
-              Auditoriyangizni
-              <br />
-              <span className="text-[var(--color-accent)]">Kengaytiring</span>
+            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white mb-6">
+              {t("advertising.cta.titleLine1")}
             </h2>
             <p className="text-[var(--color-text-secondary)] text-lg max-w-lg mx-auto mb-10">
-              Bizning reklama bo'limimiz bilan bog'laning. Biz sizning brendingizni Toshkent yoshlari allaqachon tinglayotgan to'lqinga olib chiqamiz.
+              {t("advertising.cta.description")}
             </p>
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="mailto:info@temp.fm"
@@ -362,16 +240,16 @@ export default function AdvertisingPage() {
               </a>
               <div className="flex flex-col gap-2">
                 <a
-                  href="tel:+998955602222"
+                  href="tel:+998712000884"
                   className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
                 >
-                  +998 95 560 22 22
+                  +998 71 200 08 84
                 </a>
                 <a
-                  href="tel:+998901160075"
+                  href="tel:+998901234567"
                   className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
                 >
-                  +998 90 116 00 75
+                  +998 90 123 45 67
                 </a>
               </div>
             </div>

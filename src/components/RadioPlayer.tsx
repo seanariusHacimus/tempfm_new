@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAudio } from "./AudioProvider";
 import { useStreamData } from "../hooks/useStreamData";
+import { useTranslation } from "@/i18n";
+
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
@@ -61,6 +63,8 @@ const NextTrackIcon = () => (
 export default function RadioPlayer() {
     const { isPlaying, isBuffering, isMuted, streamError, togglePlay, toggleMute } = useAudio();
     const { current, next } = useStreamData(5000);
+    const { t } = useTranslation();
+
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -92,7 +96,7 @@ export default function RadioPlayer() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={current.cover}
-                            alt="Album Art"
+                            alt={t("player.albumArt")}
                             className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border border-white/10"
                             onError={(e) => {
                                 (e.target as HTMLImageElement).src = "/images/no_cover.png";
@@ -119,7 +123,7 @@ export default function RadioPlayer() {
                                         <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
                                     </span>
                                     <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">
-                                        {streamError}
+                                        {t(streamError)}
                                     </span>
                                 </>
                             ) : (
@@ -129,8 +133,9 @@ export default function RadioPlayer() {
                                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
                                     </span>
                                     <span className="text-[10px] text-red-500 font-bold uppercase tracking-widest">
-                                        Efirda
+                                        {t("player.onAir")}
                                     </span>
+
                                     {current.duration && (
                                         <span className="text-[10px] text-[var(--color-text-muted)] tabular-nums">
                                             {current.duration}
@@ -159,7 +164,8 @@ export default function RadioPlayer() {
                             ? "text-red-500 bg-red-500/10"
                             : "text-[var(--color-text-secondary)] hover:text-white hover:bg-white/5"
                             }`}
-                        title={isMuted ? "Ovozni yoqish" : "Ovozni o'chirish"}
+                        title={isMuted ? t("player.unmute") : t("player.mute")}
+
                     >
                         {isMuted ? <MuteIcon /> : <VolumeIcon />}
                     </button>
@@ -173,20 +179,22 @@ export default function RadioPlayer() {
                             <div className="flex items-center gap-1.5 mb-0.5">
                                 <NextTrackIcon />
                                 <span className="text-[10px] text-[var(--color-text-muted)] font-bold uppercase tracking-wider">
-                                    Keyingi tarona
+                                    {t("player.nextTrack")}
                                 </span>
+
                             </div>
                             <p className="text-xs text-[var(--color-text-secondary)] font-medium truncate">
                                 {next.artist && next.title
                                     ? `${next.artist} — ${next.title}`
-                                    : "Yuklanmoqda..."}
+                                    : t("player.loading")}
+
                             </p>
                         </div>
                         {next.cover && (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={next.cover}
-                                alt="Next track"
+                                alt={t("player.next")}
                                 className="w-9 h-9 rounded-lg object-cover border border-white/10 shrink-0"
                                 onError={(e) => {
                                     (e.target as HTMLImageElement).style.display = "none";
@@ -201,13 +209,14 @@ export default function RadioPlayer() {
                     <div className="flex items-center gap-2 min-w-0 flex-1">
                         <NextTrackIcon />
                         <span className="text-[10px] text-[var(--color-text-muted)] font-bold uppercase tracking-wider shrink-0">
-                            Keyingi
+                            {t("player.next")}
                         </span>
+
                         {next.cover && (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={next.cover}
-                                alt="Next"
+                                alt={t("player.next")}
                                 className="w-6 h-6 rounded object-cover border border-white/10 shrink-0"
                                 onError={(e) => {
                                     (e.target as HTMLImageElement).style.display = "none";
@@ -217,7 +226,8 @@ export default function RadioPlayer() {
                         <p className="text-[11px] text-[var(--color-text-secondary)] truncate min-w-0">
                             {next.artist && next.title
                                 ? `${next.artist} — ${next.title}`
-                                : "Loading..."}
+                                : t("player.loading")}
+
                         </p>
                     </div>
 
@@ -233,7 +243,8 @@ export default function RadioPlayer() {
                             ? "text-red-500 bg-red-500/10"
                             : "text-[var(--color-text-secondary)] hover:text-white"
                             }`}
-                        title={isMuted ? "Ovozni yoqish" : "Ovozni o'chirish"}
+                        title={isMuted ? t("player.unmute") : t("player.mute")}
+
                     >
                         {isMuted ? <MuteIcon /> : <VolumeIcon />}
                     </button>

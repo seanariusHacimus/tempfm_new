@@ -4,14 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "@/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-const links = [
-  { href: "/", label: "Bosh sahifa" },
-  { href: "/schedule", label: "Dasturlar" },
-  { href: "/news", label: "Yangiliklar" },
-  { href: "/advertising", label: "Reklama" },
-  { href: "/about", label: "Biz haqimizda" },
-];
+const linkHrefs = ["/", "/schedule", "/news", "/advertising", "/about"] as const;
+const linkKeys = ["home", "schedule", "news", "advertising", "about"] as const;
 
 /* ── Framer Motion variants for staggered link entrance ── */
 const overlayVariants = {
@@ -40,9 +37,15 @@ const ctaVariants = {
 
 export default function Navigation() {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
+
+  const links = linkHrefs.map((href, i) => ({
+    href,
+    label: t(`nav.${linkKeys[i]}`),
+  }));
 
   /* ── Lock body scroll & listen for Escape key ── */
   useEffect(() => {
@@ -77,7 +80,7 @@ export default function Navigation() {
           <Link href="/" className="flex items-center group">
             <div className="relative w-[120px] h-10 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.svg" alt="TempFM Logo" className="w-full h-full object-contain" />
+              <img src="/logo.svg" alt={t("common.logoAlt")} className="w-full h-full object-contain" />
             </div>
           </Link>
 
@@ -104,41 +107,46 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* CTA – Call to Air (desktop) */}
-          <a
-            href="tel:+998555158840"
-            className="hidden md:flex items-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-5 py-2.5 rounded-[10px] text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:shadow-[0_0_16px_rgba(255,61,0,0.4)] hover:scale-[1.03]"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-              <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.958 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
-            </svg>
-            Efirga qo'ng'iroq
-          </a>
+          {/* Right side: Language Switcher + CTA + Mobile Toggle */}
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center"
-            aria-label="Menyuni ochish va yopish"
-          >
-            <div className="w-6 h-4 relative">
-              <motion.span
-                animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-0 left-0 w-full h-0.5 bg-white origin-center"
-              />
-              <motion.span
-                animate={mobileOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-[7px] left-0 w-full h-0.5 bg-white"
-              />
-              <motion.span
-                animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute bottom-0 left-0 w-full h-0.5 bg-white origin-center"
-              />
-            </div>
-          </button>
+            {/* CTA – Call to Air (desktop) */}
+            <a
+              href="tel:+998555158840"
+              className="hidden md:flex items-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-5 py-2.5 rounded-[10px] text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:shadow-[0_0_16px_rgba(255,61,0,0.4)] hover:scale-[1.03]"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.958 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
+              </svg>
+              {t("nav.cta")}
+            </a>
+
+            {/* Mobile Toggle */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center"
+              aria-label={t("nav.menuToggle")}
+            >
+              <div className="w-6 h-4 relative">
+                <motion.span
+                  animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute top-0 left-0 w-full h-0.5 bg-white origin-center"
+                />
+                <motion.span
+                  animate={mobileOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-[7px] left-0 w-full h-0.5 bg-white"
+                />
+                <motion.span
+                  animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-white origin-center"
+                />
+              </div>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -215,7 +223,7 @@ export default function Navigation() {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.958 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
                   </svg>
-                  Efirga qo'ng'iroq
+                  {t("nav.cta")}
                 </a>
               </motion.div>
             </div>

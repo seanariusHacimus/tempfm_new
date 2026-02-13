@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import { motion } from "framer-motion";
 import AnimateIn from "@/components/AnimateIn";
 import PageHeader from "@/components/PageHeader";
+import { useTranslation } from "@/i18n";
 
 interface NewsArticle {
   id: number;
@@ -13,75 +16,24 @@ interface NewsArticle {
   featured?: boolean;
 }
 
-const featuredArticle: NewsArticle = {
-  id: 0,
-  category: "Yangiliklar",
-  date: "Har kuni",
-  title: "O‘zbekistonda va butun dunyoda sodir bo‘lgan eng so‘nggi voqealar TempFM da!",
-  excerpt:
-    "Siyosat, iqtisodiyot, madaniyat, sport va boshqa jabhalardagi eng muhim xabarlarni bizning yangiliklar dasturimizda kuzatib boring. Har kuni 5 daqiqa ichida dunyo nigohingizda! Bizning boshlovchilarimiz Go‘zal Karimova va Anna Axperjan'yans sizni eng so'nggi voqealar bilan tanishtirib borishadi.",
-  featured: true,
-};
-
-const articles: NewsArticle[] = [
-  {
-    id: 1,
-    category: "Maxsus format",
-    date: "Oyda bir marotaba",
-    title: "Live - konsertlar: Sevimli yulduzlaringiz bilan jonli muloqot",
-    excerpt:
-      "Temp fm radiosining jonli efirida o‘zbek estrada yulduzlari, xonanda va sozandalar ishtirokida mo‘jaz sahnamizdagi eksklyuziv konsertdan bahramand bo‘ling. Yangi qo‘shiqlar taqdimoti va xit taronalar — hammasi jonli va shaffof!",
-  },
-  {
-    id: 2,
-    category: "Loyiha",
-    date: "Har shanba, 16:30",
-    title: "Afisha – Madaniy xordiq chiqarish uchun eng yaxshi tanlov",
-    excerpt:
-      "Ko'ngilochar dasturlar, ko'rgazmalar va shahrimizdagi eng qiziqarli tadbirlar haqida har shanba “Afisha” loyihasi orqali bilib olishingiz mumkin. Madaniy xordiq uchun tanlov o'zingizga havola!",
-  },
-  {
-    id: 3,
-    category: "Intervyu",
-    date: "Haftalik",
-    title: "Danata Davronova bilan “Korotkiye vstrechi”",
-    excerpt:
-      "Shifokorlar, olimlar, artistlar va jamoat arboblari bilan iliq va samimiy suhbatlar. Hayotiy voqealar, salomatlik, ta'lim va qadriyatlar haqida kutilmagan kashfiyotlar.",
-  },
-  {
-    id: 4,
-    category: "Tahlil",
-    date: "Shanba, 12:00",
-    title: "Hafta yangiliklari: Muhim voqealar sharhi",
-    excerpt:
-      "Hafta davomida sodir bo‘lgan eng muhim voqealarning yakuniy soni va tahliliy mushoxada. Dunyoda va O'zbekistonda ro'y bergan yangiliklarning tahlili va sharhi.",
-  },
-  {
-    id: 5,
-    category: "Loyiha",
-    date: "Haftalik",
-    title: "Kamilla Mo‘minova bilan “Prosto o vajnom”",
-    excerpt:
-      "Mablag‘, kasb, oila, shaxsiy rivojlanish va texnologiyalar haqida hayotiy misollar va manfaatli tavsiyalar. Mutaxassislar bilan dolzarb savollarga javob topamiz.",
-  },
-  {
-    id: 6,
-    category: "Efir pallasida",
-    date: "Dushanba - Juma",
-    title: "Kunduzgi ritm – Kuningizni yuqori kayfiyatda o'tkazing",
-    excerpt:
-      "Tabriklar, o‘yinlar, hikoyalar va dilga yaqin taronalar. Jasmin Isroilova bilan ishdagi murakkab topshiriqlar oson yechim topadi, yo‘ldagi vaqt esa maroqli o‘tadi.",
-  },
-];
-
 export default function NewsPage() {
+  const { t, dict } = useTranslation();
+
+  const featuredArticle = dict.news.featuredArticle as NewsArticle;
+  const allArticles = (dict.news.articles as Omit<NewsArticle, "id">[]).map((a, i) => ({ ...a, id: i + 1 }));
+
+  const ARTICLES_PER_PAGE = 3;
+  const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE);
+  const articles = allArticles.slice(0, visibleCount);
+  const hasMore = visibleCount < allArticles.length;
+
   return (
     <>
       <PageHeader
-        label="Kuzatib Boring"
-        title="YANGILIKLAR &"
-        titleAccent="O'ZGARISHLAR"
-        description="TempFM 88.4 da sodir bo'layotgan barcha voqealar — yangi shoular, tadbirlar, san'atkorlar va stansiya yangiliklari to'g'ridan-to'g'ri Toshkentdan."
+        label={t("news.header.label")}
+        title={t("news.header.title")}
+        titleAccent={t("news.header.titleAccent")}
+        description={t("news.header.description")}
       />
 
       {/* Featured Article */}
@@ -98,7 +50,7 @@ export default function NewsPage() {
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span className="bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-[12px]">
-                    Asosiy
+                    {t("news.featured")}
                   </span>
                   <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest">
                     {featuredArticle.category}
@@ -108,7 +60,7 @@ export default function NewsPage() {
                   </span>
                 </div>
 
-                <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-[0.95] mb-6 group-hover:text-[var(--color-accent)] transition-colors max-w-4xl">
+                <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-[0.95] mb-6 group-hover:text-[var(--color-accent)] transition-colors max-w-4xl">
                   {featuredArticle.title}
                 </h2>
 
@@ -117,7 +69,7 @@ export default function NewsPage() {
                 </p>
 
                 <span className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
-                  To'liq o'qish
+                  {t("news.readMore")}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -145,11 +97,11 @@ export default function NewsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimateIn>
             <div className="flex items-end justify-between mb-12">
-              <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
-                So'nggi Yangiliklar
+              <h2 className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
+                {t("news.latestNews")}
               </h2>
               <span className="hidden md:inline-flex text-[var(--color-text-muted)] text-sm uppercase tracking-wider">
-                {articles.length} Maqolalar
+                {allArticles.length} {t("news.articlesCount")}
               </span>
             </div>
           </AnimateIn>
@@ -170,7 +122,7 @@ export default function NewsPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-[family-name:var(--font-display)] text-xl md:text-2xl font-black uppercase tracking-tight text-white leading-[0.95] mb-3 group-hover:text-[var(--color-accent)] transition-colors">
+                  <h3 className="font-display text-xl md:text-2xl font-black uppercase tracking-tight text-white leading-[0.95] mb-3 group-hover:text-[var(--color-accent)] transition-colors">
                     {article.title}
                   </h3>
 
@@ -179,7 +131,7 @@ export default function NewsPage() {
                   </p>
 
                   <span className="inline-flex items-center gap-2 text-[var(--color-text-muted)] font-bold text-xs uppercase tracking-wider group-hover:text-[var(--color-accent)] transition-colors">
-                    Batafsil
+                    {t("news.readDetails")}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -204,33 +156,36 @@ export default function NewsPage() {
       </section>
 
       {/* Load More */}
-      <section className="pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <AnimateIn>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] text-white px-10 py-4 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors"
-            >
-              Ko'proq yuklash
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+      {hasMore && (
+        <section className="pb-24 md:pb-32">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <AnimateIn>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setVisibleCount((c) => c + ARTICLES_PER_PAGE)}
+                className="inline-flex items-center justify-center gap-2 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] text-white px-10 py-4 rounded-[12px] text-sm font-bold uppercase tracking-wider transition-colors"
               >
-                <path d="M12 5v14" />
-                <path d="m19 12-7 7-7-7" />
-              </svg>
-            </motion.button>
-          </AnimateIn>
-        </div>
-      </section>
+                {t("news.loadMore")}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </motion.button>
+            </AnimateIn>
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -5,71 +5,26 @@ import AnimateIn from "@/components/AnimateIn";
 import Link from "next/link";
 import { useAudio } from "@/components/AudioProvider";
 
-const shows = [
-  {
-    title: "Wake up shou",
-    time: "08:00 — 10:00",
-    host: "Otabek Tojiboyev",
-    description:
-      "Uyg'onishga va tongni yuqori kayfiyatda boshlashga yordam beradi: foydali ma'lumotlar, samimiy suhbat va sevimli musiqalar.",
-    tag: "Dushanba - Juma",
-  },
-  {
-    title: "Kunduzgi ritm",
-    time: "12:00 — 14:00",
-    host: "Jasmin Isroilova",
-    description:
-      "Kun davomida yuqori kayfiyat! Tabriklar, o'yinlar, hikoyalar va dilga yaqin taronalar yangraydi.",
-    tag: "Dushanba - Juma",
-  },
-  {
-    title: "Oqshom tempida",
-    time: "18:00 — 20:00",
-    host: "Roksana Abidova",
-    description:
-      "Ish kunining yakunida hordiq. Yo'ldagi vaziyatlar, foydali ma'lumotlar va dil tortar qo'shiqlar.",
-    tag: "Dushanba - Juma",
-  },
-  {
-    title: "Oqshom jo'shqin ritmda",
-    time: "20:00 — 21:00",
-    host: "Toni Lorenso",
-    description:
-      "Kundalik tashvishlarni unutib, yoqimli, samimiy va hayotga muhabbat uyg'otuvchi iliq muhit.",
-    tag: "Dushanba - Juma",
-  },
-  {
-    title: "Korotkiye vstrechi",
-    time: "Hafta davomida",
-    host: "Danata Davronova",
-    description:
-      "Turli soha vakillari bilan samimiy suhbatlar: shifokorlar, olimlar, artistlar va jamoat arboblari.",
-    tag: "Maxsus Loyiha",
-  },
-  {
-    title: "Prosto o vajnom",
-    time: "Hafta davomida",
-    host: "Kamilla Mo'minova",
-    description:
-      "Hayotga ijobiy ta'sir etuvchi samimiy suhbatlar: mablag', kasb, oila va shaxsiy rivojlanish.",
-    tag: "Marketing / Hayot",
-  },
-];
-
-const stats = [
-  { value: "88.4", label: "FM Chastota" },
-  { value: "200K+", label: "Oylik Tinglovchilar" },
-  { value: "24/7", label: "Jonli Efir" },
-  { value: "50+", label: "Haftalik Dasturlar" },
-];
+import { useTranslation, Dictionary } from "@/i18n";
 
 export default function HomePage() {
   const { isPlaying } = useAudio();
+  const { t, dict } = useTranslation();
+
+  const shows = dict.home.shows.items;
+
+  const stats = [
+    { value: "88.4", label: t("home.stats.frequency") },
+    { value: "200K+", label: t("home.stats.listeners") },
+    { value: "24/7", label: t("home.stats.liveAir") },
+    { value: "50+", label: t("home.stats.weeklyShows") },
+  ];
+
 
   return (
     <>
       {/* Hero — transparent to reveal Three.js background */}
-      <section className="relative h-screen flex items-center overflow-hidden">
+      <section className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
         <AnimatePresence mode="wait">
           {isPlaying ? (
             /* ── Playing: centered swinging logo ── */
@@ -115,24 +70,27 @@ export default function HomePage() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-accent)]" />
                   </span>
                   <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-wider">
-                    Jonli Efirda
+                    {t("home.hero.badge")}
                   </span>
+
                 </div>
               </AnimateIn>
 
               <AnimateIn delay={0.2}>
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-wide mb-8 font-display">
-                  TOSHKENT <br />
+                  {t("home.hero.titleLine1")} <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-orange-400">
-                    OVOZI.
+                    {t("home.hero.titleLine2")}
                   </span>
+
                 </h1>
               </AnimateIn>
 
               <AnimateIn delay={0.3}>
                 <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl leading-relaxed mb-10">
-                  Temp FM 88.4 — jonli musiqa ruhini targ‘ib qiluvchi birinchi audiovizual radioto‘lqin. Jonli videotasvirlar orqali radio, video va muloqotni birgina platformada uyg‘unlashtiramiz.
+                  {t("home.hero.description")}
                 </p>
+
               </AnimateIn>
 
               <AnimateIn delay={0.4}>
@@ -153,14 +111,16 @@ export default function HomePage() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Jonli Efir
+                    {t("home.hero.ctaLive")}
                   </a>
+
                   <Link
                     href="/schedule"
                     className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-bold uppercase tracking-wider hover:bg-white/10 transition-colors"
                   >
-                    Dasturlar
+                    {t("home.hero.ctaSchedule")}
                   </Link>
+
                 </div>
               </AnimateIn>
             </motion.div>
@@ -210,27 +170,29 @@ export default function HomePage() {
             <div className="flex items-end justify-between mb-14">
               <div>
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                  Efirda
+                  {t("home.shows.sectionLabel")}
                 </p>
                 <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-wide text-white">
-                  Mashhur Dasturlar
+                  {t("home.shows.sectionTitle")}
                 </h2>
+
               </div>
               <Link
                 href="/schedule"
                 className="hidden md:inline-flex text-[var(--color-text-secondary)] hover:text-white text-sm font-medium uppercase tracking-wider transition-colors"
               >
-                To&apos;liq Jadval →
+                {t("home.shows.fullSchedule")}
               </Link>
+
             </div>
           </AnimateIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {shows.map((show, i) => (
+            {shows.map((show: { title: string; time: string; host: string; description: string; tag: string }, i: number) => (
               <AnimateIn key={show.title} delay={i * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.01 }}
-                  className="group bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-6 md:p-8 transition-colors cursor-pointer"
+                  className="group bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] rounded-[12px] p-6 md:p-8 transition-colors cursor-pointer h-full flex flex-col"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest">
@@ -243,12 +205,13 @@ export default function HomePage() {
                   <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-wide text-white mb-2 group-hover:text-[var(--color-accent)] transition-colors">
                     {show.title}
                   </h3>
-                  <p className="text-[var(--color-text-secondary)] text-sm mb-4">
+                  <p className="text-[var(--color-text-secondary)] text-sm mb-4 flex-1">
                     {show.description}
                   </p>
-                  <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-wider">
-                    Boshlovchi: {show.host}
+                  <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-wider mt-auto">
+                    {t("home.shows.hostLabel")} {show.host}
                   </p>
+
                 </motion.div>
               </AnimateIn>
             ))}
@@ -259,8 +222,9 @@ export default function HomePage() {
               href="/schedule"
               className="text-[var(--color-text-secondary)] hover:text-white text-sm font-medium uppercase tracking-wider transition-colors"
             >
-              To&apos;liq Jadval →
+              {t("home.shows.fullSchedule")}
             </Link>
+
           </div>
         </div>
       </section>
@@ -272,26 +236,24 @@ export default function HomePage() {
             <AnimateIn direction="left">
               <div>
                 <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-                  Biz Haqimizda
+                  {t("home.about.label")}
                 </p>
+
                 <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-wide text-white mb-6">
-                  Jonli Musiqa
+                  {t("home.about.titleLine1")}
                   <br />
-                  <span className="text-[var(--color-accent)]">Ruhi</span>
+                  <span className="text-[var(--color-accent)]">{t("home.about.titleAccent")}</span>
                 </h2>
                 <p className="text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed mb-8 max-w-md">
-                  Jonli videotasvirlarni tadbiq etish orqali biz endi faqatgina
-                  ovoz bilan cheklanib qolmaymiz! Bu esa tomoshabin va
-                  tinglovchida ishtirok hissini kuchaytiradi, auditoriya
-                  qamrovini sezilarli darajada oshirib, radio, video va jonli
-                  muloqotni birgina platformada uyg&apos;unlashtiradi.
+                  {t("home.about.description")}
                 </p>
                 <Link
                   href="/about"
                   className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider hover:text-[var(--color-accent)] transition-colors"
                 >
-                  Ko&apos;proq Bilish →
+                  {t("home.about.learnMore")}
                 </Link>
+
               </div>
             </AnimateIn>
 
@@ -302,8 +264,9 @@ export default function HomePage() {
                     88.4
                   </div>
                   <div className="text-[var(--color-text-muted)] text-sm uppercase tracking-[0.3em] mt-4">
-                    FM Toshkent
+                    {t("home.about.fmLabel")}
                   </div>
+
                 </div>
               </div>
             </AnimateIn>
@@ -316,19 +279,19 @@ export default function HomePage() {
         id="listen"
         className="py-24 md:py-32 border-t border-[var(--color-border)] overflow-hidden"
       >
+
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimateIn>
             <p className="text-[var(--color-accent)] text-sm font-bold uppercase tracking-widest mb-3">
-              Hoziroq Tinglang
+              {t("home.cta.label")}
             </p>
             <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wide text-white mb-6">
-              Shunchaki varaqlamang.
+              {t("home.cta.titleLine1")}
               <br />
-              <span className="text-[var(--color-accent)]">Tinglang.</span>
+              <span className="text-[var(--color-accent)]">{t("home.cta.titleAccent")}</span>
             </h2>
             <p className="text-[var(--color-text-secondary)] text-lg max-w-md mx-auto mb-10">
-              TempFM 88.4 jonli efirda. Yangiliklar, shoular, musiqa — Sizning
-              kuningiz uchun hamroh.
+              {t("home.cta.description")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
@@ -339,12 +302,14 @@ export default function HomePage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
                 </span>
-                Jonli Efir — 88.4 FM
+                {t("home.cta.button")}
               </a>
+
             </div>
           </AnimateIn>
         </div>
       </section>
+
     </>
   );
 }

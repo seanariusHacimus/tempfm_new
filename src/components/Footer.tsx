@@ -1,24 +1,29 @@
-import Link from "next/link";
+"use client";
 
-const footerLinks = {
-  Stansiya: [
-    { href: "/schedule", label: "Dasturlar" },
-    { href: "/news", label: "Yangiliklar" },
-    { href: "/about", label: "Biz haqimizda" },
-    { href: "/advertising", label: "Reklama" },
-  ],
-  "Bog'lanish": [
-    { href: "https://instagram.com/radiotempfm", label: "Instagram" },
-    { href: "https://t.me/radiotempfm", label: "Telegram" },
-  ],
-  Qoidalar: [
-    { href: "#", label: "Maxfiylik siyosati" },
-    { href: "#", label: "Foydalanish shartlari" },
-    { href: "#", label: "Cookie siyosati" },
-  ],
-};
+import Link from "next/link";
+import { useTranslation } from "@/i18n";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
+  const footerLinks = {
+    [t("footer.groups.station")]: [
+      { href: "/schedule", label: t("footer.links.schedule") },
+      { href: "/news", label: t("footer.links.news") },
+      { href: "/about", label: t("footer.links.about") },
+      { href: "/advertising", label: t("footer.links.advertising") },
+    ],
+    [t("footer.groups.contact")]: [
+      { href: "https://instagram.com/radiotempfm", label: "Instagram" },
+      { href: "https://t.me/radiotempfm", label: "Telegram" },
+    ],
+    [t("footer.groups.legal")]: [
+      { href: "#", label: t("footer.links.privacy") },
+      { href: "#", label: t("footer.links.terms") },
+      { href: "#", label: t("footer.links.cookies") },
+    ],
+  };
+
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -30,13 +35,13 @@ export default function Footer() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/logo.svg"
-                  alt="TempFM Logo"
+                  alt={t("common.logoAlt")}
                   className="w-full h-full object-contain"
                 />
               </div>
             </Link>
             <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed max-w-xs">
-              Toshkentning ovozi. Shahar ritmiga mos podkastlar, shoular va musiqa.
+              {t("footer.tagline")}
             </p>
           </div>
 
@@ -65,10 +70,10 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-[var(--color-border)] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[var(--color-text-muted)] text-xs">
-            &copy; {new Date().getFullYear()} TempFM 88.4. Barcha huquqlar himoyalangan.
+            &copy; {new Date().getFullYear()} TempFM 88.4. {t("footer.copyright")}
           </p>
           <p className="text-[var(--color-text-muted)] text-xs">
-            Sariksuv Street, BHH Tower, Tashkent, Uzbekistan
+            {t("footer.address")}
           </p>
         </div>
       </div>

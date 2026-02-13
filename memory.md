@@ -48,6 +48,17 @@
   - **Section Containment:** Added `overflow-hidden` to multiple sections across `page.tsx`, `about/page.tsx`, and `advertising/page.tsx` that use directional animations (`AnimateIn`) or oversized text.
   - **Navigation Fix:** Added `overflow-x-hidden` to the `<nav>` element in `Navigation.tsx` to prevent header content from causing overflow on mobile.
 
+### Internationalization System (Feb 13, 2026)
+- **Root Layout Created:** Created `src/app/layout.tsx` to wrap the entire application with `I18nProvider` and `AudioProvider` contexts. This was missing and causing runtime errors.
+- **I18n System:** Implemented custom internationalization system with:
+  - `I18nProvider` context for managing locale state (UZ/RU)
+  - `useTranslation()` hook for accessing translations in components
+  - Locale persistence to localStorage
+  - Translation dictionaries in `src/i18n/locales/` (uz.ts, ru.ts)
+  - `LanguageSwitcher` component in navigation
+- **Font Configuration:** Fixed font paths to use PetrovSans TTF files from `src/app/fonts/petrov_sans/` directory (weights: 400, 700, 900). Removed Roboto font configuration (using system fonts for body text).
+- **Build Status:** Production build verified ✅ — all 7 pages compile successfully with no errors.
+
 ---
 
 ## Architecture Decisions
@@ -64,16 +75,20 @@
 ## File Locations to Remember
 
 | What                        | Path                                           |
-|-----------------------------|-------------------------------------------------|
-| Theme / CSS variables       | `src/app/globals.css`                           |
-| Root layout                 | `src/app/layout.tsx`                            |
-| Audio context (stream)      | `src/components/AudioProvider.tsx`               |
-| Radio player UI             | `src/components/RadioPlayer.tsx`                 |
-| 3D background               | `src/components/ThreeBackground.tsx`             |
-| Stream data hook            | `src/hooks/useStreamData.ts`                     |
+|-----------------------------|------------------------------------------------|
+| Theme / CSS variables       | `src/app/globals.css`                          |
+| Root layout                 | `src/app/layout.tsx`                           |
+| I18n context provider       | `src/i18n/context.tsx`                         |
+| Uzbek translations          | `src/i18n/locales/uz.ts`                       |
+| Russian translations        | `src/i18n/locales/ru.ts`                       |
+| Audio context (stream)      | `src/components/AudioProvider.tsx`             |
+| Radio player UI             | `src/components/RadioPlayer.tsx`               |
+| 3D background               | `src/components/ThreeBackground.tsx`           |
+| Stream data hook            | `src/hooks/useStreamData.ts`                   |
 | Now-playing XML             | `https://test.tempfm.uz/nowonair/nowplaying.xml` |
-| Legacy standalone player    | `tempfm_stream_data/update_track.js`             |
-| Raw content (Uzbek)         | `content.txt`                                    |
+| Legacy standalone player    | `tempfm_stream_data/update_track.js`           |
+| Raw content (Uzbek)         | `content.txt`                                  |
+| Raw content (Russian)       | `content_ru.txt`                               |
 
 ---
 
@@ -112,4 +127,4 @@ npm run lint   # ESLint
 ---
 
 ## Last Updated
-**2026-02-13** (full-page mobile menu implementation, horizontal scroll fixes & header padding adjustment)
+**2026-02-13** (I18n system implementation, root layout creation, font configuration fixes, production build verified)
