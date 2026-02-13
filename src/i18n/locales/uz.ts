@@ -353,7 +353,7 @@ const uz: Dictionary = {
                         "Toshkentda va butun dunyo bo'ylab har oy 200,000 dan ortiq faol tinglovchilarga FM va raqamli oqimlar orqali yetib boring.",
                 },
                 {
-                    value: "18–30",
+                    value: "18-54",
                     label: "Asosiy Auditoriya",
                     description:
                         "Bizning auditoriyamiz Toshkentning eng faol qatlami — talabalar, yosh mutaxassislar va ijodkorlardir.",
@@ -433,6 +433,8 @@ const uz: Dictionary = {
             title: "Moslashuvchan Paketlar",
             description:
                 "Biznes o'sishining har bir bosqichi uchun shaffof narxlar. Barcha paketlar prodakshn xizmati va shaxsiy menejer yordamini o'z ichiga oladi.",
+            negotiable: "Narxlar kelishilgan holda",
+            contactButton: "Biz Bilan Bog'lanish",
             mostPopular: "Eng Mashhur",
             getStarted: "Boshlash",
             priceNote:
@@ -660,6 +662,21 @@ const uz: Dictionary = {
     },
     common: {
         logoAlt: "TempFM Logotipi",
+    },
+
+    /* ─── Contacts Modal ─── */
+    contacts: {
+        modalTitle: "Biz Bilan Bog'lanish",
+        live: {
+            label: "Jonli Efir",
+            phone: "+998 55 515 88 40",
+            desc: "Qo'ng'iroq qiling va efirga chiqing",
+        },
+        ad: {
+            label: "Reklama Bo'limi",
+            desc: "Hamkorlik va tijorat masalalari",
+            phone1: "+998 95 560 22 22",
+        },
     },
 };
 

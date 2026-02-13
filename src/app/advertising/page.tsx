@@ -146,64 +146,23 @@ export default function AdvertisingPage() {
             </div>
           </AnimateIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {pricingTiers.map((tier: { name: string; price: string; period: string; description: string; features: string[] }, i: number) => (
-              <AnimateIn key={tier.name} delay={i * 0.15}>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className={`relative bg-[var(--color-bg-card)] border rounded-[12px] p-6 md:p-8 transition-colors h-full flex flex-col ${i === 1
-                    ? "border-[var(--color-accent)]"
-                    : "border-[var(--color-border)] hover:border-[var(--color-border-hover)]"
-                    }`}
+          <div className="flex flex-col items-center justify-center py-12">
+            <AnimateIn delay={0.1}>
+              <div className="bg-[var(--color-bg-card)] border border-[var(--color-accent)]/20 rounded-[20px] p-8 md:p-12 text-center max-w-3xl mx-auto shadow-[0_0_50px_-12px_rgba(255,61,0,0.1)]">
+                <h3 className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-white mb-6">
+                  {t("advertising.pricing.negotiable")}
+                </h3>
+                <p className="text-[var(--color-text-secondary)] text-lg mb-8 max-w-xl mx-auto">
+                  {t("advertising.pricing.description")}
+                </p>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,61,0,0.3)]"
                 >
-                  {i === 1 && (
-                    <div className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">
-                      {t("advertising.pricing.mostPopular")}
-                    </div>
-                  )}
-
-                  <div className="mb-6">
-                    <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-4">
-                      {tier.name}
-                    </h3>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-display text-4xl md:text-5xl font-black text-white tracking-tight">
-                        {tier.price}
-                      </span>
-                      <span className="text-[var(--color-text-muted)] text-sm uppercase tracking-wider">
-                        {tier.period}
-                      </span>
-                    </div>
-                    <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mt-3">
-                      {tier.description}
-                    </p>
-                  </div>
-
-                  <div className="border-t border-[var(--color-border)] pt-6 mt-auto">
-                    <ul className="space-y-3 mb-8">
-                      {tier.features.map((feature) => (
-                        <li
-                          key={feature}
-                          className="flex items-start gap-3 text-[var(--color-text-secondary)] text-sm"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] mt-1.5 shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href="#contact"
-                      className={`block w-full text-center px-6 py-3.5 rounded-[12px] text-sm font-display font-bold uppercase tracking-wider transition-colors ${i === 1
-                        ? "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
-                        : "bg-[var(--color-bg-card-hover)] hover:bg-[var(--color-accent)] border border-[var(--color-border)] hover:border-transparent text-white"
-                        }`}
-                    >
-                      {t("advertising.pricing.getStarted")}
-                    </a>
-                  </div>
-                </motion.div>
-              </AnimateIn>
-            ))}
+                  {t("advertising.pricing.contactButton")}
+                </a>
+              </div>
+            </AnimateIn>
           </div>
 
           <AnimateIn delay={0.3}>
@@ -240,16 +199,10 @@ export default function AdvertisingPage() {
               </a>
               <div className="flex flex-col gap-2">
                 <a
-                  href="tel:+998712000884"
+                  href="tel:+998955602222"
                   className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
                 >
-                  +998 71 200 08 84
-                </a>
-                <a
-                  href="tel:+998901234567"
-                  className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
-                >
-                  +998 90 123 45 67
+                  +998 95 560 22 22
                 </a>
               </div>
             </div>
