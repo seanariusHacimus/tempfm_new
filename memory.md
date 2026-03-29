@@ -129,7 +129,7 @@ npm run lint   # ESLint
 ## Important URLs
 
 - Live stream: `https://tempradio-live.uz/live`
-- AAC stream (Apple): `https://tempradio-live.uz/streamaac`
+- AAC stream (Apple): `https://tempradio-live.uz/streamaactest`
 - Now playing XML: `https://test.tempfm.uz/nowonair/nowplaying.xml`
 
 ---

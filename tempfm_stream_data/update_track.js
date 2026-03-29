@@ -11,7 +11,7 @@ let lastTrackTitle = '';
 let lastTrackArtist = '';
 
 const nonAppleStreamUrl = 'https://tempradio-live.uz/live';
-const appleStreamUrl = 'https://tempradio-live.uz/streamaac';
+const appleStreamUrl = 'https://tempradio-live.uz/streamaactest';
 
 function isAppleDevice() {
     const userAgent = navigator.userAgent.toLowerCase();

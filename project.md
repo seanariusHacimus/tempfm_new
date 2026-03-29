@@ -4,7 +4,7 @@
 Official website for **Temp FM 88.4**, a live audiovisual radio station based in Toshkent, Uzbekistan. The station streams live music, news, shows, and interactive programs targeting Uzbekistan's youth audience. Content is fully in **Uzbek** (latin script), populated from `content.txt`.
 
 **Live stream URL:** `https://tempradio-live.uz/live`  
-**AAC stream (Apple):** `https://tempradio-live.uz/streamaac`
+**AAC stream (Apple):** `https://tempradio-live.uz/streamaactest`
 
 ---
 
