@@ -18,6 +18,8 @@ interface AudioContextValue {
     isMuted: boolean;
     streamError: string | null;
     togglePlay: () => void;
+    /** Starts the stream; no-op when it is already playing or buffering. */
+    play: () => void;
     toggleMute: () => void;
 }
 
@@ -211,53 +213,77 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
     }, []);
 
     // ─── Play / Pause ───
-    const togglePlay = useCallback(() => {
-        const audio = audioRef.current;
-        if (!audio) return;
-
-        // Ignore taps while buffering
-        if (isBuffering) return;
-
-        // Cancel any pending retry
+    const clearPendingRetry = useCallback(() => {
         if (retryTimerRef.current) {
             clearTimeout(retryTimerRef.current);
             retryTimerRef.current = null;
         }
+    }, []);
+
+    // ── PLAY: assign a fresh URL to force a new HTTP connection ──
+    const startPlayback = useCallback(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        clearPendingRetry();
+
+        if (isAppleRef.current) setIsBuffering(true);
+
+        audio.src = streamUrlRef.current + "?t=" + Date.now();
+        initAudioContext();
+        audio
+            .play()
+            .then(() => {
+                setIsPlaying(true);
+                setIsBuffering(false);
+                isPlayingRef.current = true;
+                setStreamError(null);
+                retryCountRef.current = 0;
+            })
+            .catch((err) => {
+                console.error("Stream play error:", err);
+                setIsPlaying(false);
+                setIsBuffering(false);
+                isPlayingRef.current = false;
+                setStreamError("player.startError");
+            });
+    }, [initAudioContext, clearPendingRetry]);
+
+    // ── PAUSE: destroy the source so no stale buffer remains ──
+    const stopPlayback = useCallback(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        clearPendingRetry();
+
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load(); // resets internal state
+        setIsPlaying(false);
+        setIsBuffering(false);
+        isPlayingRef.current = false;
+        setStreamError(null);
+        retryCountRef.current = 0;
+    }, [clearPendingRetry]);
+
+    const togglePlay = useCallback(() => {
+        if (!audioRef.current) return;
+
+        // Ignore taps while buffering
+        if (isBuffering) return;
 
         if (isPlaying) {
-            // ── PAUSE: destroy the source so no stale buffer remains ──
-            audio.pause();
-            audio.removeAttribute("src");
-            audio.load(); // resets internal state
-            setIsPlaying(false);
-            setIsBuffering(false);
-            isPlayingRef.current = false;
-            setStreamError(null);
-            retryCountRef.current = 0;
+            stopPlayback();
         } else {
-            // ── PLAY: assign a fresh URL to force a new HTTP connection ──
-            if (isAppleRef.current) setIsBuffering(true);
-
-            audio.src = streamUrlRef.current + "?t=" + Date.now();
-            initAudioContext();
-            audio
-                .play()
-                .then(() => {
-                    setIsPlaying(true);
-                    setIsBuffering(false);
-                    isPlayingRef.current = true;
-                    setStreamError(null);
-                    retryCountRef.current = 0;
-                })
-                .catch((err) => {
-                    console.error("Stream play error:", err);
-                    setIsPlaying(false);
-                    setIsBuffering(false);
-                    isPlayingRef.current = false;
-                    setStreamError("player.startError");
-                });
+            startPlayback();
         }
-    }, [isPlaying, isBuffering, initAudioContext]);
+    }, [isPlaying, isBuffering, startPlayback, stopPlayback]);
+
+    // Used by the "live" CTAs — always starts, never pauses.
+    const play = useCallback(() => {
+        if (isBuffering || isPlayingRef.current) return;
+        startPlayback();
+    }, [isBuffering, startPlayback]);
 
     // ─── Mute / Unmute ───
     const toggleMute = useCallback(() => {
@@ -284,6 +310,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
                 isMuted,
                 streamError,
                 togglePlay,
+                play,
                 toggleMute,
             }}
         >

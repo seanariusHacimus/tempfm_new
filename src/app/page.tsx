@@ -8,7 +8,7 @@ import { useAudio } from "@/components/AudioProvider";
 import { useTranslation, Dictionary } from "@/i18n";
 
 export default function HomePage() {
-  const { isPlaying } = useAudio();
+  const { isPlaying, play } = useAudio();
   const { t, dict } = useTranslation();
 
   const shows = dict.home.shows.items;
@@ -95,9 +95,10 @@ export default function HomePage() {
 
               <AnimateIn delay={0.4}>
                 <div className="flex flex-wrap items-center gap-4">
-                  <a
-                    href="#listen"
-                    className="flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
+                  <button
+                    type="button"
+                    onClick={play}
+                    className="flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +113,7 @@ export default function HomePage() {
                       />
                     </svg>
                     {t("home.hero.ctaLive")}
-                  </a>
+                  </button>
 
                   <Link
                     href="/schedule"
@@ -294,16 +295,17 @@ export default function HomePage() {
               {t("home.cta.description")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="#listen"
-                className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-10 py-5 rounded-[12px] text-lg font-bold uppercase tracking-wider transition-colors"
+              <button
+                type="button"
+                onClick={play}
+                className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-10 py-5 rounded-[12px] text-lg font-bold uppercase tracking-wider transition-colors cursor-pointer"
               >
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
                 </span>
                 {t("home.cta.button")}
-              </a>
+              </button>
 
             </div>
           </AnimateIn>

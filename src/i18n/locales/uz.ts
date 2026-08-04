@@ -137,7 +137,7 @@ const uz: Dictionary = {
                 {
                     title: "Oqshom jo'shqin ritmda",
                     time: "20:00 — 21:00",
-                    host: "Toni Lorenso",
+                    host: "Tony Lozenzo",
                     description:
                         "Kundalik tashvishlarni unutib, yoqimli, samimiy va hayotga muhabbat uyg'otuvchi iliq muhit.",
                     tag: "Dushanba - Juma",
@@ -289,7 +289,7 @@ const uz: Dictionary = {
                     bio: "'Oqshom tempida' kechki shousi boshlovchisi. Ish kunining yakunida hordiq onlarini va yo'l harakati haqidagi ma'lumotlarni ulashadi.",
                 },
                 {
-                    name: "Toni Lorenso",
+                    name: "Tony Lozenzo",
                     role: "Radio Boshlovchi",
                     bio: "'Oqshom jo'shqin ritmda' dasturi boshlovchisi. Kundalik tashvishlarni unutishga yordam beruvchi samimiy muhit yaratadi.",
                 },
@@ -602,7 +602,7 @@ const uz: Dictionary = {
                 { time: "15:00 — 18:00", title: "Musiqiy Non-stop", host: "Auto Mix", description: "Eng sar sara taronalar ketma-ketligi va rus tilidagi yangiliklar bloklari.", genre: "Musiqa" },
                 { time: "18:00 — 19:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "'Yo'lda nima gap?' — Toshkent ko'chalaridagi tirbandliklar, yopilgan yo'llar va YHQ yangiliklari.", genre: "Kechki Shou" },
                 { time: "19:00 — 20:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "'Yurakdan gapiramiz' — tabriklar, salomlar va musiqa buyurtmalari. Dushanba kuni 'IQ athlet' sport interaktivi.", genre: "Kechki Shou" },
-                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Toni Lorenso", description: "Kundalik tashvishlarni unutib, yoqimli va samimiy muhitga sho'ng'ing. Salom va tabriklar vaqti.", genre: "Lounge" },
+                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Tony Lozenzo", description: "Kundalik tashvishlarni unutib, yoqimli va samimiy muhitga sho'ng'ing. Salom va tabriklar vaqti.", genre: "Lounge" },
                 { time: "21:00 — 08:00", title: "Tungi Temp", host: "Auto Mix", description: "Sokin musiqalar va kechki yangiliklar sadosi ostida hordiq chiqaring.", genre: "Ambient" },
             ],
             tue: [
@@ -613,7 +613,7 @@ const uz: Dictionary = {
                 { time: "14:00 — 15:00", title: "Yangiliklar (Rus)", host: "Anna Axperjan'yans", description: "Kunning eng muhim voqealari rus tilida.", genre: "Yangiliklar" },
                 { time: "15:00 — 18:00", title: "Musiqiy Non-stop", host: "Auto Mix", description: "Eng sar sara taronalar ketma-ketligi va rus tilidagi yangiliklar bloklari.", genre: "Musiqa" },
                 { time: "18:00 — 20:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "Roksana kechki tirbandliklardagi vaqtni yuqori kayfiyatda o'tishiga yordam beradi.", genre: "Kechki Shou" },
-                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Toni Lorenso", description: "Yoqimli, samimiy va hayotga muhabbat uyg'otuvchi iliq muhit.", genre: "Lounge" },
+                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Tony Lozenzo", description: "Yoqimli, samimiy va hayotga muhabbat uyg'otuvchi iliq muhit.", genre: "Lounge" },
             ],
             wed: [
                 { time: "08:00 — 10:00", title: "Wake up shou", host: "Otabek Tojiboyev", description: "Tonggi interaktiv muloqot va yo'ldagi vaziyatlar tahlili.", genre: "Tonggi Shou" },
@@ -624,7 +624,7 @@ const uz: Dictionary = {
                 { time: "15:00 — 17:00", title: "Musiqiy Non-stop", host: "Auto Mix", description: "Eng sar sara taronalar ketma-ketligi va rus tilidagi yangiliklar bloklari.", genre: "Musiqa" },
                 { time: "17:00 — 18:00", title: "Siz yolg'iz emassiz", host: "Go'zal Karimova", description: "Ijtimoiy ahamiyatga ega loyiha. Gender tenglik va ayollar huquqlari haqida keng ko'lamli ma'lumotlar.", genre: "Ijtimoiy" },
                 { time: "18:00 — 20:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "Kechki tirbandliklar va yo'l harakati qoidalaridagi yangiliklar yoritiladi.", genre: "Kechki Shou" },
-                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Toni Lorenso", description: "Toni Lorenso bilan kundalik tashvishlarni unuting.", genre: "Lounge" },
+                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Tony Lozenzo", description: "Tony Lozenzo bilan kundalik tashvishlarni unuting.", genre: "Lounge" },
             ],
             thu: [
                 { time: "08:00 — 10:00", title: "Wake up shou", host: "Otabek Tojiboyev", description: "Yangi kunga yuzda kulgu va labda tabassum bilan birga qadam qo'yamiz!", genre: "Tonggi Shou" },
@@ -634,7 +634,7 @@ const uz: Dictionary = {
                 { time: "14:00 — 15:00", title: "Yangiliklar (Rus)", host: "Anna Axperjan'yans", description: "Kunning eng muhim voqealari rus tilida.", genre: "Yangiliklar" },
                 { time: "15:00 — 18:00", title: "Musiqiy Non-stop", host: "Auto Mix", description: "Eng sar sara taronalar ketma-ketligi va rus tilidagi yangiliklar bloklari.", genre: "Musiqa" },
                 { time: "18:00 — 20:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "Oqshom pallasida ikki soatlik efir tinglovchilarga hordiq onlarini bag'ishlaydi.", genre: "Kechki Shou" },
-                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Toni Lorenso", description: "Yoqimli va samimiy musiqa orqali hayotga bo'lgan muhabbatni his qiling.", genre: "Lounge" },
+                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Tony Lozenzo", description: "Yoqimli va samimiy musiqa orqali hayotga bo'lgan muhabbatni his qiling.", genre: "Lounge" },
             ],
             fri: [
                 { time: "08:00 — 10:00", title: "Wake up shou", host: "Otabek Tojiboyev", description: "Hafta yakunini yuqori kayfiyatda qarshi oling.", genre: "Tonggi Shou" },
@@ -644,7 +644,7 @@ const uz: Dictionary = {
                 { time: "14:00 — 15:00", title: "Yangiliklar (Rus)", host: "Anna Axperjan'yans", description: "Kunning eng muhim voqealari rus tilida.", genre: "Yangiliklar" },
                 { time: "15:00 — 18:00", title: "Musiqiy Non-stop", host: "Auto Mix", description: "Eng sar sara taronalar ketma-ketligi va rus tilidagi yangiliklar bloklari.", genre: "Musiqa" },
                 { time: "18:00 — 20:00", title: "Oqshom tempida", host: "Roksana Abidova", description: "Dam olish kunlari oldidan yo'ldagi vaziyatlar va dil tortar qo'shiqlar.", genre: "Kechki Shou" },
-                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Toni Lorenso", description: "Hafta yakunini samimiy suhbat va musiqa bilan yakunlang.", genre: "Lounge" },
+                { time: "20:00 — 21:00", title: "Oqshom jo'shqin ritmda", host: "Tony Lozenzo", description: "Hafta yakunini samimiy suhbat va musiqa bilan yakunlang.", genre: "Lounge" },
             ],
             sat: [
                 { time: "06:00 — 12:00", title: "Muzika Non-stop", host: "Auto Mix", description: "Dam olish kunlari uchun maxsus tayyorlangan musiqiy to'plamlar.", genre: "Musiqa" },
