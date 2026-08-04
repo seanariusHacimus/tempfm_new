@@ -65,7 +65,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const isApple = /iphone|ipad|ipod|mac/i.test(navigator.userAgent);
         streamUrlRef.current = isApple
-            ? "https://tempradio-live.uz/streamaactest"
+            ? "https://tempradio-live.uz/streammp3"
             : "https://tempradio-live.uz/live";
     }, []);
 

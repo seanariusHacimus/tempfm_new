@@ -11,7 +11,7 @@
 
 ### Stream Data Integration (Feb 12, 2026)
 - **Rewrote `useStreamData.ts`** — fixed stale closure bug (now uses `useRef` for change detection), added cover image preloading with 3s timeout, extracted ALBUM/DURATION/GENRE from XML, added next-track artwork via `artwork_next.png`.
-- **Updated `AudioProvider.tsx`** — added Apple device detection (`/streamaac` for Apple, `/live` for others), ported from legacy `update_track.js`.
+- **Updated `AudioProvider.tsx`** — added Apple device detection (`/streammp3` for Apple, `/live` for others), ported from legacy `update_track.js`.
 - **Enriched `RadioPlayer.tsx`** — now shows album name, track duration, genre badge, and next-track cover thumbnail.
 - Build verified ✅.
 - Switched to `https://test.tempfm.uz` for XML and artwork.
@@ -74,7 +74,7 @@
 1. **Audio via Web Audio API** — `AudioProvider` creates a single `AudioContext` with `AnalyserNode` connected to the live stream `<audio>` element. On pause the source is destroyed; on play a fresh URL with cache-busting param is assigned to force a new connection. Auto-reconnects with exponential backoff on stream errors.
 2. **Three.js background** — A full-viewport animated liquid surface uses the audio analyser data for bass/mid reactive animation. Falls back to gentle simulated motion when idle.
 3. **Stream data polling** — `useStreamData` hook polls via Server Action (`fetchStreamDataXml`) to bypass CORS for XML. Images are fetched directly from external URL.
-4. **Apple device detection** — `AudioProvider` detects Apple devices via user-agent and uses AAC stream (`/streamaac`), others get `/live`.
+4. **Apple device detection** — `AudioProvider` detects Apple devices via user-agent and uses MP3 stream (`/streammp3`), others get `/live`.
 5. **Tailwind CSS v4** — Uses `@theme` directive for CSS custom properties. No `tailwind.config.js` file.
 6. **SVG distortion filter** — Defined in `layout.tsx` for liquid glass visual effect.
 
@@ -129,7 +129,7 @@ npm run lint   # ESLint
 ## Important URLs
 
 - Live stream: `https://tempradio-live.uz/live`
-- AAC stream (Apple): `https://tempradio-live.uz/streamaactest`
+- MP3 stream (Apple — iOS/macOS): `https://tempradio-live.uz/streammp3`
 - Now playing XML: `https://test.tempfm.uz/nowonair/nowplaying.xml`
 
 ---
