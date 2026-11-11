@@ -83,6 +83,8 @@ const ru: Dictionary = {
         nextTrack: "Следующий трек",
         next: "Далее",
         loading: "Загрузка...",
+        fallbackTitle: "TempFM 88.4",
+        fallbackArtist: "Прямой эфир",
         unmute: "Включить звук",
         mute: "Выключить звук",
     },

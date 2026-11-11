@@ -64,6 +64,9 @@ export default function RadioPlayer() {
     const { isPlaying, isBuffering, isMuted, streamError, togglePlay, toggleMute } = useAudio();
     const { current, next } = useStreamData(5000);
     const { t } = useTranslation();
+    const hasNowPlaying = current.title.trim() !== "" && current.artist.trim() !== "";
+    const nowPlayingTitle = hasNowPlaying ? current.title : t("player.fallbackTitle");
+    const nowPlayingArtist = hasNowPlaying ? current.artist : t("player.fallbackArtist");
 
     const [mounted, setMounted] = useState(false);
 
@@ -153,10 +156,10 @@ export default function RadioPlayer() {
                             )}
                         </div>
                         <h2 className="font-display text-sm sm:text-[15px] font-bold text-white truncate leading-tight tracking-wide">
-                            {current.title}
+                            {nowPlayingTitle}
                         </h2>
                         <p className="font-display text-xs text-[var(--color-accent)] font-bold uppercase tracking-wide truncate">
-                            {current.artist}
+                            {nowPlayingArtist}
                         </p>
                     </div>
 

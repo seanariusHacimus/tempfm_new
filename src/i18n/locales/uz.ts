@@ -83,6 +83,8 @@ const uz: Dictionary = {
         nextTrack: "Keyingi tarona",
         next: "Keyingi",
         loading: "Yuklanmoqda...",
+        fallbackTitle: "TempFM 88.4",
+        fallbackArtist: "Jonli efir",
         unmute: "Ovozni yoqish",
         mute: "Ovozni o'chirish",
     },
