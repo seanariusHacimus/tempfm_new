@@ -105,7 +105,7 @@
 - **Otabek Tojiboyev** — "Wake up shou" (Mon-Fri 8:00-10:00)
 - **Jasmin Isroilova** — "Kunduzgi ritm" (Mon-Fri 12:00-14:00)
 - **Roksana Abidova** — "Oqshom tempida" (Mon-Fri 18:00-20:00)
-- **Toni Lorenso** — "Oqshom jo'shqin ritmda" (Mon-Fri 20:00-21:00)
+- **TONY LORENZO** — "Oqshom jo'shqin ritmda" (Mon-Fri 20:00-21:00)
 - **Danata Davronova** — "Korotkiye vstrechi" (interviews)
 - **Kamilla Mo'minova** — "Prosto o vajnom" (marketing/life topics)
 - **Mixail Subeyev** — Morning show (Tue/Thu 10:00-12:00)
