@@ -62,8 +62,11 @@ const NextTrackIcon = () => (
 
 export default function RadioPlayer() {
     const { isPlaying, isBuffering, isMuted, streamError, togglePlay, toggleMute } = useAudio();
-    const { current, next } = useStreamData(5000);
+    const { current, next, mode } = useStreamData(10_000);
     const { t } = useTranslation();
+    const nextLine = next.artist && next.title
+        ? `${next.artist} — ${next.title}`
+        : next.title || t("player.stationFallback");
 
     const [mounted, setMounted] = useState(false);
 
@@ -101,7 +104,7 @@ export default function RadioPlayer() {
                                 className="w-full h-full rounded-xl object-cover border border-white/10"
                             />
                         ) : (
-                            <div className="w-full h-full bg-white/5 border border-white/10 rounded-xl animate-pulse flex items-center justify-center">
+                            <div className="w-full h-full bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
                                 <span className="text-[10px] text-[var(--color-text-muted)] font-bold">TEMP</span>
                             </div>
                         )}
@@ -152,12 +155,17 @@ export default function RadioPlayer() {
                                 </span>
                             )}
                         </div>
-                        <h2 className="font-display text-sm sm:text-[15px] font-bold text-white truncate leading-tight tracking-wide">
+                        <h2
+                            data-now-mode={mode}
+                            className="font-display text-sm sm:text-[15px] font-bold text-white truncate leading-tight tracking-wide"
+                        >
                             {current.title}
                         </h2>
-                        <p className="font-display text-xs text-[var(--color-accent)] font-bold uppercase tracking-wide truncate">
-                            {current.artist}
-                        </p>
+                        {current.artist ? (
+                            <p className="font-display text-xs text-[var(--color-accent)] font-bold uppercase tracking-wide truncate">
+                                {current.artist}
+                            </p>
+                        ) : null}
                     </div>
 
                     {/* Volume — hidden on very small, shown sm+ */}
@@ -182,15 +190,12 @@ export default function RadioPlayer() {
                             <div className="flex items-center gap-1.5 mb-0.5">
                                 <NextTrackIcon />
                                 <span className="text-[10px] text-[var(--color-text-muted)] font-bold uppercase tracking-wider">
-                                    {t("player.nextTrack")}
+                                    {t("player.nextShow")}
                                 </span>
 
                             </div>
                             <p className="text-xs text-[var(--color-text-secondary)] font-medium truncate">
-                                {next.artist && next.title
-                                    ? `${next.artist} — ${next.title}`
-                                    : t("player.loading")}
-
+                                {nextLine}
                             </p>
                         </div>
                         {next.cover ? (
@@ -229,10 +234,7 @@ export default function RadioPlayer() {
                             </div>
                         )}
                         <p className="text-[11px] text-[var(--color-text-secondary)] truncate min-w-0">
-                            {next.artist && next.title
-                                ? `${next.artist} — ${next.title}`
-                                : t("player.loading")}
-
+                            {nextLine}
                         </p>
                     </div>
 
