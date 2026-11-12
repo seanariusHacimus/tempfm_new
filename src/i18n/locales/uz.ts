@@ -383,11 +383,6 @@ const uz: Dictionary = {
                     bio: "Anonslarni tayyorlaydi, yangiliklar ovozini qayta ishlaydi va ularni efirga chiqaradi.",
                 },
                 {
-                    name: "Anna Shester",
-                    role: "SMM mutaxassisi",
-                    bio: "SMM bilan shug'ullanadi.",
-                },
-                {
                     name: "Umid",
                     role: "SMM mutaxassisi",
                     bio: "SMM mutaxassisi sifatida ishlaydi.",
