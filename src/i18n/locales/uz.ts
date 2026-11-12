@@ -383,24 +383,14 @@ const uz: Dictionary = {
                     bio: "Anonslarni tayyorlaydi, yangiliklar ovozini qayta ishlaydi va ularni efirga chiqaradi.",
                 },
                 {
-                    name: "Saule",
-                    role: "SMM guruhi rahbari",
-                    bio: "SMM guruhiga rahbarlik qiladi.",
-                },
-                {
-                    name: "Anna",
-                    role: "SMM va video kontent",
-                    bio: "SMM va video kontent bilan shug'ullanadi.",
+                    name: "Anna Shester",
+                    role: "SMM mutaxassisi",
+                    bio: "SMM bilan shug'ullanadi.",
                 },
                 {
                     name: "Umid",
                     role: "SMM mutaxassisi",
                     bio: "SMM mutaxassisi sifatida ishlaydi.",
-                },
-                {
-                    name: "Bahrom",
-                    role: "Videooperator",
-                    bio: "Videooperator sifatida ishlaydi.",
                 },
                 {
                     name: "Alisher Dadaxodjayev",
