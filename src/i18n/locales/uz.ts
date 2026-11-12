@@ -325,7 +325,7 @@ const uz: Dictionary = {
             addressLabel: "Manzil",
             address: "Sariksuv Street, BHH Tower, Tashkent, Uzbekistan",
             emailLabel: "Email",
-            phoneLabel: "Telefon",
+            phoneLabel: "Reklama bo'yicha",
             followUs: "Bizni Kuzating",
             followDescription:
                 "TempFM bilan barcha platformalarda aloqada bo'ling. Efir ortidagi jarayonlar, jonli yangiliklar, pleylistlar va boshqalar.",
@@ -677,7 +677,7 @@ const uz: Dictionary = {
         ad: {
             label: "Reklama Bo'limi",
             desc: "Hamkorlik va tijorat masalalari",
-            phone1: "+998 95 560 22 22",
+            phone1: "+998 70 505 88 40",
         },
     },
 };

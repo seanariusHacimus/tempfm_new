@@ -225,7 +225,7 @@ export default function Navigation() {
               {/* CTA Button (Mobile - Direct Call) */}
               <motion.div variants={ctaVariants} className="mt-8">
                 <a
-                  href="tel:+998555158840"
+                  href={`tel:${t("contacts.live.phone").replace(/\s/g, "")}`}
                   className="flex items-center justify-center gap-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-6 py-4 rounded-2xl text-base font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_24px_rgba(255,61,0,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">

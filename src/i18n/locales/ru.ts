@@ -325,7 +325,7 @@ const ru: Dictionary = {
             addressLabel: "Адрес",
             address: "Улица Сариксув, Башня BHH, Ташкент, Узбекистан",
             emailLabel: "Email",
-            phoneLabel: "Телефон",
+            phoneLabel: "По вопросам рекламы",
             followUs: "Следите за нами",
             followDescription:
                 "Оставайтесь на связи с TempFM на всех платформах. Закулисье, живые новости, плейлисты и многое другое.",
@@ -678,7 +678,7 @@ const ru: Dictionary = {
         ad: {
             label: "Отдел Рекламы",
             desc: "Сотрудничество и коммерческие вопросы",
-            phone1: "+998 95 560 22 22",
+            phone1: "+998 70 505 88 40",
         },
     },
 };
