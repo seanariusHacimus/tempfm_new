@@ -254,10 +254,10 @@ export default function AboutPage() {
                     </p>
 
                     <a
-                      href="tel:+998555158840"
+                      href={`tel:${t("contacts.ad.phone1").replace(/\s/g, "")}`}
                       className="text-white text-base hover:text-[var(--color-accent)] transition-colors"
                     >
-                      +998 55 515 88 40
+                      {t("contacts.ad.phone1")}
                     </a>
                   </div>
                 </div>

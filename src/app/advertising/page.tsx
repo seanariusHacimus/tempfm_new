@@ -197,12 +197,15 @@ export default function AdvertisingPage() {
               >
                 info@temp.fm
               </a>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-[var(--color-text-muted)] text-xs font-bold uppercase tracking-widest">
+                  {t("contacts.ad.label")}
+                </p>
                 <a
-                  href="tel:+998955602222"
+                  href={`tel:${t("contacts.ad.phone1").replace(/\s/g, "")}`}
                   className="inline-flex items-center gap-3 bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-card-hover)] border border-[var(--color-border)] text-white px-8 py-4 rounded-[12px] text-base font-display font-bold uppercase tracking-wider transition-colors"
                 >
-                  +998 95 560 22 22
+                  {t("contacts.ad.phone1")}
                 </a>
               </div>
             </div>
