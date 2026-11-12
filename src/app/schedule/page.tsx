@@ -91,7 +91,7 @@ export default function SchedulePage() {
             >
               {activeShows.map((show, index) => (
                 <motion.div
-                  key={`${activeDay}-${show.time}`}
+                  key={`${activeDay}-${index}-${show.title}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -148,16 +148,20 @@ export default function SchedulePage() {
                           </span>
                         </div>
 
-                        <p className="text-[var(--color-text-secondary)] text-sm md:text-base leading-relaxed mb-3">
-                          {show.description}
-                        </p>
+                        {show.description ? (
+                          <p className="text-[var(--color-text-secondary)] text-sm md:text-base leading-relaxed mb-3">
+                            {show.description}
+                          </p>
+                        ) : null}
 
-                        <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-wider">
-                          {t("schedule.hostLabel")}{" "}
-                          <span className="text-[var(--color-text-secondary)]">
-                            {show.host}
-                          </span>
-                        </p>
+                        {show.host ? (
+                          <p className="text-[var(--color-text-muted)] text-xs uppercase tracking-wider">
+                            {t("schedule.hostLabel")}{" "}
+                            <span className="text-[var(--color-text-secondary)]">
+                              {show.host}
+                            </span>
+                          </p>
+                        ) : null}
                       </div>
                     </div>
                   </div>
