@@ -313,6 +313,11 @@ const uz: Dictionary = {
                 "TempFM 88.4 ortidagi ovozlar, g'oyalar va insonlar. Toshkent madaniyati bilan yashaydigan ijodkorlar jamoasi.",
             members: [
                 {
+                    name: "Saidolimxon Turdiboyev",
+                    role: "Radio direktori",
+                    bio: "Radiostansiyani boshqaradi.",
+                },
+                {
                     name: "Otabek Tadjibayev",
                     role: "«Wake up» tonggi shousining muallifi va boshlovchisi",
                     bio: "O'zbek tilidagi «Wake up» tonggi shousining muallifi va boshlovchisi. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.",
@@ -348,7 +353,7 @@ const uz: Dictionary = {
                     bio: "Juma tonggi shousi (10:00–12:00) va «Smart kommentarii s TONY» dasturi boshlovchisi, didjey. Efir tili: ruscha. «Smart kommentarii s TONY» seshanba kunlari chiqadi, takror esa shanba kuni: texnologiyalar, fan va innovatsiyalardan uchta yangilik — oddiy tilda va hazil bilan.",
                 },
                 {
-                    name: "Kamilla",
+                    name: "Kamilla Muminova",
                     role: "«Prosto o vajnom» dasturi boshlovchisi",
                     bio: "'Prosto o vajnom' loyihasi boshlovchisi. Shaxsiy rivojlanish, mablag' va texnologiyalar haqida hayotiy tavsiyalar beradi.",
                 },
@@ -376,6 +381,31 @@ const uz: Dictionary = {
                     name: "Ziyodulla Pulatovich",
                     role: "Ovoz rejissyori",
                     bio: "Anonslarni tayyorlaydi, yangiliklar ovozini qayta ishlaydi va ularni efirga chiqaradi.",
+                },
+                {
+                    name: "Saule",
+                    role: "SMM guruhi rahbari",
+                    bio: "SMM guruhiga rahbarlik qiladi.",
+                },
+                {
+                    name: "Anna",
+                    role: "SMM va video kontent",
+                    bio: "SMM va video kontent bilan shug'ullanadi.",
+                },
+                {
+                    name: "Umid",
+                    role: "SMM mutaxassisi",
+                    bio: "SMM mutaxassisi sifatida ishlaydi.",
+                },
+                {
+                    name: "Bahrom",
+                    role: "Videooperator",
+                    bio: "Videooperator sifatida ishlaydi.",
+                },
+                {
+                    name: "Alisher Dadaxodjayev",
+                    role: "Efir texnik mutaxassisi",
+                    bio: "Efirning texnik tomonini ta'minlaydi.",
                 },
             ],
         },
