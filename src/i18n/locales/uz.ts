@@ -115,9 +115,9 @@ const uz: Dictionary = {
                 {
                     title: "Wake up",
                     time: "08:10 — 10:00",
-                    host: "Otabek Tajibayev",
+                    host: "Otabek Tadjibayev",
                     description:
-                        "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.",
+                        "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.",
                     tag: "Dushanba — juma",
                 },
                 {
@@ -313,9 +313,9 @@ const uz: Dictionary = {
                 "TempFM 88.4 ortidagi ovozlar, g'oyalar va insonlar. Toshkent madaniyati bilan yashaydigan ijodkorlar jamoasi.",
             members: [
                 {
-                    name: "Otabek Tajibayev",
-                    role: "«Wake up» tonggi shousi va mualliflik dasturlari boshlovchisi",
-                    bio: "O'zbek tilida tonggi «Wake up» shousini olib boradi: mualliflik ruknlari va «Zumrasha» loyihasi. Boshqa dasturlar: «Zumrasha», «Tojim onam», bolalar dasturlari, ona va ota haqidagi dasturlar.",
+                    name: "Otabek Tadjibayev",
+                    role: "«Wake up» tonggi shousining muallifi va boshlovchisi",
+                    bio: "O'zbek tilidagi «Wake up» tonggi shousining muallifi va boshlovchisi. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.",
                 },
                 {
                     name: "Roksana Abidova",
@@ -656,7 +656,7 @@ const uz: Dictionary = {
         shows: {
             mon: [
                 { time: "08:00", title: "O'zbekiston yangiliklari", host: "Go'zal Karimova", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tajibayev", description: "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.", genre: "Tonggi shou · o'zbek" },
+                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tadjibayev", description: "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.", genre: "Tonggi shou · o'zbek" },
                 { time: "09:00", title: "Xorijiy yangiliklar, valyuta kursi, ob-havo", host: "Go'zal Karimova", description: "Jahon yangiliklari va kun uchun foydali ma'lumot.", genre: "Yangiliklar · o'zbek" },
                 { time: "10:00", title: "O'zbekiston yangiliklari", host: "Anna Axperjan'yans", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · rus" },
                 { time: "10:00 — 12:00", title: "Vsem privety!", host: "Viktor Nefyodov", description: "Axborot ruknlari bilan ko'ngilochar tong: Toshkent yo'llari, qiziqarli va musiqiy faktlar, kun bayrami, jonli efirda salom va tabriklar.", genre: "Tonggi shou · rus" },
@@ -677,7 +677,7 @@ const uz: Dictionary = {
             ],
             tue: [
                 { time: "08:00", title: "O'zbekiston yangiliklari", host: "Go'zal Karimova", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tajibayev", description: "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.", genre: "Tonggi shou · o'zbek" },
+                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tadjibayev", description: "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.", genre: "Tonggi shou · o'zbek" },
                 { time: "09:00", title: "Xorijiy yangiliklar, valyuta kursi, ob-havo", host: "Go'zal Karimova", description: "Jahon yangiliklari va kun uchun foydali ma'lumot.", genre: "Yangiliklar · o'zbek" },
                 { time: "10:00", title: "O'zbekiston yangiliklari", host: "Anna Axperjan'yans", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · rus" },
                 { time: "10:00 — 12:00", title: "Mixail Subeyev tonggi shousi", host: "Mixail Subeyev", description: "Tarix, fan, madaniyat va noodatiy faktlar haqida axborot-ko'ngilochar shou. «Pravda ili feyk?» ruknida tinglovchilar qaysi fikr haqiqat ekanini topishadi.", genre: "Tonggi shou · rus" },
@@ -697,7 +697,7 @@ const uz: Dictionary = {
             ],
             wed: [
                 { time: "08:00", title: "O'zbekiston yangiliklari", host: "Go'zal Karimova", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tajibayev", description: "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.", genre: "Tonggi shou · o'zbek" },
+                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tadjibayev", description: "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.", genre: "Tonggi shou · o'zbek" },
                 { time: "09:00", title: "Xorijiy yangiliklar, valyuta kursi, ob-havo", host: "Go'zal Karimova", description: "Jahon yangiliklari va kun uchun foydali ma'lumot.", genre: "Yangiliklar · o'zbek" },
                 { time: "10:00", title: "O'zbekiston yangiliklari", host: "Anna Axperjan'yans", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · rus" },
                 { time: "10:00 — 12:00", title: "Utro v tempe", host: "Violetta Tadjibayeva", description: "Madaniyat, tarix va kundalik narsalarning ma'nosi haqida qiziqarli faktlar. Dasturda goroskop va «V peredacha».", genre: "Tonggi shou · rus" },
@@ -717,7 +717,7 @@ const uz: Dictionary = {
             ],
             thu: [
                 { time: "08:00", title: "O'zbekiston yangiliklari", host: "Go'zal Karimova", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tajibayev", description: "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.", genre: "Tonggi shou · o'zbek" },
+                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tadjibayev", description: "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.", genre: "Tonggi shou · o'zbek" },
                 { time: "09:00", title: "Xorijiy yangiliklar, valyuta kursi, ob-havo", host: "Go'zal Karimova", description: "Jahon yangiliklari va kun uchun foydali ma'lumot.", genre: "Yangiliklar · o'zbek" },
                 { time: "10:00", title: "O'zbekiston yangiliklari", host: "Anna Axperjan'yans", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · rus" },
                 { time: "10:00 — 12:00", title: "Mixail Subeyev tonggi shousi", host: "Mixail Subeyev", description: "Tarix, fan, madaniyat va noodatiy faktlar haqida axborot-ko'ngilochar shou. «Pravda ili feyk?» ruknida tinglovchilar qaysi fikr haqiqat ekanini topishadi.", genre: "Tonggi shou · rus" },
@@ -736,7 +736,7 @@ const uz: Dictionary = {
             ],
             fri: [
                 { time: "08:00", title: "O'zbekiston yangiliklari", host: "Go'zal Karimova", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tajibayev", description: "Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.", genre: "Tonggi shou · o'zbek" },
+                { time: "08:10 — 10:00", title: "Wake up", host: "Otabek Tadjibayev", description: "Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.", genre: "Tonggi shou · o'zbek" },
                 { time: "09:00", title: "Xorijiy yangiliklar, valyuta kursi, ob-havo", host: "Go'zal Karimova", description: "Jahon yangiliklari va kun uchun foydali ma'lumot.", genre: "Yangiliklar · o'zbek" },
                 { time: "10:00", title: "O'zbekiston yangiliklari", host: "Anna Axperjan'yans", description: "Qisqa yangiliklar sonlari.", genre: "Yangiliklar · rus" },
                 { time: "10:00 — 12:00", title: "TONY LORENZO tonggi shousi", host: "TONY LORENZO", description: "Tonggi ko'ngilochar shou: kunning tarixiy voqealari va mashhur qo'shiqlarning yaratilish tarixi.", genre: "Tonggi shou · rus" },
@@ -757,7 +757,7 @@ const uz: Dictionary = {
             sat: [
                 { time: "11:00", title: "Korotkiye vstrechi", host: "Danata Davronova", description: "Mutaxassislar bilan intervyu.", genre: "Intervyu · rus" },
                 { time: "12:00 — 13:00", title: "Hafta yangiliklari", host: "Go'zal Karimova", description: "Hafta yakunlari.", genre: "Yangiliklar · o'zbek" },
-                { time: "12:00 — 14:00", title: "Yo'l-yo'lakay", host: "Jasmin Isroilova, Otabek Tajibayev", description: "Mashhur aktyorlar, musiqachilar, sportchilar va taniqli shaxslar bilan suhbatlar.", genre: "Intervyu" },
+                { time: "12:00 — 14:00", title: "Yo'l-yo'lakay", host: "Jasmin Isroilova, Otabek Tadjibayev", description: "Mashhur aktyorlar, musiqachilar, sportchilar va taniqli shaxslar bilan suhbatlar.", genre: "Intervyu" },
                 { time: "13:00 — 14:00", title: "Afisha", host: "Boshlovchi", description: "Tadbirlar anonslari.", genre: "Afisha" },
                 { time: "14:00", title: "Hafta yangiliklari", host: "Anna Axperjan'yans", description: "Hafta yakunlari.", genre: "Yangiliklar · rus" },
                 { time: "15:00 — 16:00", title: "Prosto o vajnom", host: "Kamilla", description: "Takror. Hayotga ijobiy ta'sir etuvchi samimiy suhbatlar: mablag', kasb, oila va shaxsiy rivojlanish.", genre: "Loyiha" },

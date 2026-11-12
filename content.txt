@@ -9,7 +9,7 @@ Reklama beruvchilar uchun: +998 70 505 88 40
 Jonli efirga qo'ng'iroqlar: +998 55 515 88 40
 
 Boshlovchilar
-Otabek Tajibayev — «Wake up» tonggi shousi va mualliflik dasturlari boshlovchisi. Til: o'zbekcha.
+Otabek Tadjibayev — «Wake up» tonggi shousining muallifi va boshlovchisi. Til: o'zbekcha.
 Roksana Abidova — «Oqshom tempida» kechki shousi boshlovchisi, podkast boshlovchisi. Shou tili: o'zbekcha.
 Jasmin Isroilova — efir muharriri, «FM Pazl» va «Chempion» boshlovchisi. Til: o'zbek va rus.
 Viktor Nefyodov — «Vsem privety!» tonggi shousi boshlovchisi. Til: ruscha.
@@ -29,7 +29,7 @@ Ziyodulla Pulatovich — ovoz rejissyori. Anonslarni tayyorlaydi, yangiliklar ov
 
 Ish kunlari (dushanba–juma)
 08:00, 12:00, 18:00 — O'zbekiston yangiliklari — Go'zal Karimova — o'zbek. Qisqa yangiliklar sonlari. Soat 18:00 da, shuningdek, valyuta kursi va ob-havo ma'lumoti beriladi.
-08:10–10:00 — «Wake up» — Otabek Tajibayev — o'zbek. Mualliflik ruknlari va «Zumrasha» loyihasi bilan tonggi shou.
+08:10–10:00 — «Wake up» — Otabek Tadjibayev — o'zbek. Tonggi shou. Muallif va boshlovchi — Otabek Tadjibayev. Shou ruknlari: «Zumrasha», «Onam Tojam», bolalar ruknlari, ona va ota haqidagi ruknlar.
 09:00 — Xorijiy yangiliklar, valyuta kursi, ob-havo — Go'zal Karimova — o'zbek. Jahon yangiliklari va kun uchun foydali ma'lumot.
 10:00, 14:00 — O'zbekiston yangiliklari — Anna Axperjan'yans — rus. Qisqa yangiliklar sonlari.
 Dushanba 10:00–12:00 — «Vsem privety!» — Viktor Nefyodov — rus. Axborot ruknlari bilan ko'ngilochar tong: Toshkent yo'llari, qiziqarli va musiqiy faktlar, kun bayrami, jonli efirda salom va tabriklar.
@@ -54,7 +54,7 @@ Juma 20:00–21:00 — «Vecher s Violettoy» — Violetta Tadjibayeva — rus.
 
 Dam olish kunlari
 Shanba 11:00 — «Korotkiye vstrechi» — Danata Davronova — rus. Mutaxassislar bilan intervyu.
-Shanba 12:00–14:00 — «Yo'l-yo'lakay» — Jasmin Isroilova, Otabek Tajibayev. Mashhur aktyorlar, musiqachilar, sportchilar va taniqli shaxslar bilan suhbatlar.
+Shanba 12:00–14:00 — «Yo'l-yo'lakay» — Jasmin Isroilova, Otabek Tadjibayev. Mashhur aktyorlar, musiqachilar, sportchilar va taniqli shaxslar bilan suhbatlar.
 Shanba 12:00–13:00 — Hafta yangiliklari — Go'zal Karimova — o'zbek. Hafta yakunlari.
 Shanba 13:00–14:00 — Afisha. Tadbirlar anonslari.
 Shanba 14:00 — Hafta yangiliklari — Anna Axperjan'yans — rus. Hafta yakunlari.
@@ -62,6 +62,3 @@ Shanba 15:00–16:00 — «Prosto o vajnom» takrori — Kamilla.
 Shanba — «Smart kommentarii s TONY» takrori.
 Shanba 16:00–17:00 — Roksana Abidova bilan podkast. Homiylik podkasti.
 Yakshanba — Non-Stop. Kun davomining katta qismida boshlovchisiz musiqa yangraydi.
-
-Otabek Tajibayevning boshqa dasturlari (vaqt va tavsifsiz)
-«Zumrasha»; «Tojim onam»; bolalar dasturlari; ona va ota haqidagi dasturlar.
