@@ -48,8 +48,9 @@ uniform float uBass;    // low end, 0..1
 uniform float uBeat;    // kick impulse, 0..1, decays
 uniform float uMid;     // mids, slowly smoothed, 0..1
 uniform float uSwell;   // springy bass envelope: the figure swells and settles
-uniform float uSway;    // radians: the figure rocks from side to side on the beat
+uniform float uSway;    // radians: a slight rock from side to side on the beat
 uniform float uRipple;  // how strongly the figure ripples, as if lying on water
+uniform vec4 uGroup;    // springy levels of four parts of the spectrum (bass … treble); they reshape the figure
 uniform float uWave;    // ribbon vibration amount (0 = reduced motion)
 uniform float uGlow;    // exposure: dim while paused, full on air
 uniform float uPx;      // line-width unit in scene units: ~0.9 CSS px, never under one rendered pixel
@@ -148,12 +149,14 @@ float ribbons(float x, float band, float lag, float v, float gx, float key, floa
 
 float scene(vec2 q, float aspect, out float open) {
   // The X aims at the corners and scissors open and shut with the mids.
-  float k = clamp(aspect * 0.78, 0.6, 1.45) * (1.0 + 0.2 * (uMid - 0.2));
+  float k = clamp(aspect * 0.78, 0.6, 1.45) * (1.0 + 0.4 * (uMid - 0.2));
   vec2 p = abs(vec2(q.x / k, q.y));
   float u = p.x * p.x - p.y * p.y;
   float wing = step(0.0, u);                  // 1 in the left/right lobes, 0 above and below
   float d = sqrt(abs(u)) + 1e-4;              // how far from the centre this ribbon turns
-  float R = mix(0.98, 0.98 * max(aspect / k, 0.7), wing);
+  // The side lobes inflate with the bass, the upper and lower ones with the low mids.
+  float R = mix(0.98 * (1.0 + 0.45 * (uGroup.y - 0.2)),
+                0.98 * max(aspect / k, 0.7) * (1.0 + 0.45 * (uGroup.x - 0.2)), wing);
   float s = d / R;
   float x = min(s, 1.6) * (N - 1.0);
   float v = min(p.x, p.y) / max(max(p.x, p.y), 1e-4);
@@ -171,8 +174,13 @@ float scene(vec2 q, float aspect, out float open) {
   const float PETALS = 6.0;
   float r = length(q) + 1e-4;
   float th = atan(q.y, q.x) + uFlow * 0.02;
-  // Petals breathe in turn: every other one reaches out while its neighbours draw in.
-  float a = 0.9 * min(1.0, aspect * 1.25) * (1.0 + 0.1 * uMid * cos(3.0 * th + uFlow * 0.25));
+  // Every petal follows its own band and stretches as far as that band is loud.
+  float reachOut = 0.0;
+  for (int i = 0; i < 6; i++) {
+    float fi = float(i);
+    reachOut += spec(1.0 + 2.6 * fi, 0.0) * pow(max(cos(th - fi * PI / 3.0), 0.0), 6.0);
+  }
+  float a = 0.9 * min(1.0, aspect * 1.25) * (0.86 + 0.5 * reachOut * uWave);
   float rn = pow(r / a, PETALS);
   float re = 1.0 - rn * cos(PETALS * th);
   float im = -rn * sin(PETALS * th);
@@ -206,7 +214,7 @@ float scene(vec2 q, float aspect, out float open) {
   // The rim wobbles like jelly, and the bass pushes the inner rings outwards like a cone.
   float rho = length(e) * (1.0 + 0.07 * uMid * cos(2.0 * atan(e.y, e.x) - uFlow * 0.5)) + 1e-4;
   float span = log(length(vec2(aspect / k, 1.0)) / 0.045);
-  float s = log(rho / 0.045) / span - 0.08 * uSwell * exp(-rho * 1.6);  // 0 at the core … 1 in the corners
+  float s = log(rho / 0.045) / span - 0.14 * uSwell * exp(-rho * 1.6);  // 0 at the core … 1 in the corners
   float x = s * (N - 1.0);
   float v = atan(abs(e.y), abs(e.x)) / (0.5 * PI);
   float grad = length(vec2(e.x / k, e.y)) / (rho * rho);
@@ -226,7 +234,7 @@ float scene(vec2 q, float aspect, out float open) {
   float span = log(length(vec2(aspect, 1.0)) / 0.045);
   float s = log(rho / 0.045) / span;
   // The bass winds the spiral tighter; it unwinds as the note fades.
-  float radial = (N - 1.0) * 0.5 * (1.0 + 0.22 * (uSwell - 0.25));
+  float radial = (N - 1.0) * 0.5 * (1.0 + 0.5 * (uSwell - 0.25));
   // +64 keeps x positive; it is a whole number of turns for every layer.
   float x = 64.0 + TURN * th / (2.0 * PI) + radial * s;
   float grad = sqrt(TURN * TURN / (4.0 * PI * PI) + radial * radial / (span * span)) / rho;
@@ -241,8 +249,11 @@ float scene(vec2 q, float aspect, out float open) {
 
 float scene(vec2 q, float aspect, out float open) {
   float ax = abs(q.x) / aspect;  // 0 in the middle … 1 at the side edges
-  // The horn opens wider on the bass and its swell grows with the mids.
-  float horn = 0.9 * (1.0 + 0.3 * uSwell) * (0.045 + 0.955 * pow(ax, 1.25));
+  // The horn's outline is the spectrum itself, bass in the middle and treble at
+  // the edges, rolling outwards; the whole horn opens wider on the bass.
+  float outline = 0.7 + 1.1 * uWave * spec(ax * (N - 1.0), 0.6 * ax);
+  float horn = 0.9 * (1.0 + 0.3 * uSwell) * mix(1.0, outline, smoothstep(0.03, 0.3, ax))
+             * (0.045 + 0.955 * pow(ax, 1.25));
   float y = q.y - 0.11 * (0.5 + 1.6 * uMid) * ax * sin(ax * 7.0 - uFlow * 0.9);
   float s = abs(y) / horn;
   float x = min(s, 1.6) * (N - 1.0);
@@ -257,7 +268,7 @@ float scene(vec2 q, float aspect, out float open) {
 
 float scene(vec2 q, float aspect, out float open) {
   // The fan turns slowly; the bass curls the rays near the core like a pinwheel.
-  float rot = uFlow * 0.012 + 0.4 * uSwell * exp(-length(q) * 1.3);
+  float rot = uFlow * 0.012 + 0.7 * uSwell * exp(-length(q) * 1.3);
   vec2 p = abs(vec2(q.x * cos(rot) - q.y * sin(rot), q.x * sin(rot) + q.y * cos(rot)));
   float rho = length(p) + 1e-4;
   float far = length(vec2(aspect, 1.0));
@@ -284,12 +295,28 @@ void main() {
   float aspect = uRes.x / uRes.y;
   vec2 screen = (gl_FragCoord.xy - 0.5 * uRes) / (0.5 * uRes.y);
 
-  // The figure floats: it rocks on the beat, swells with the bass, drifts a
-  // little and ripples as if it were lying on water.
-  float tilt = uSway + 0.025 * uWave * sin(uTime * 0.31);
+  // The figure floats and changes shape with the music.
+  float tilt = uSway + 0.02 * uWave * sin(uTime * 0.31);
   vec2 q = vec2(screen.x * cos(tilt) - screen.y * sin(tilt), screen.x * sin(tilt) + screen.y * cos(tilt));
   q *= 1.0 - 0.1 * uSwell + 0.012 * sin(uTime * 0.23);
   q += uWave * vec2(0.015 * sin(uTime * 0.37), 0.02 * sin(uTime * 0.29 + 1.0));
+
+  // Curl: the low mids bend the figure one way near the core and the other
+  // way further out, and the bend travels outwards.
+  float curl = 0.55 * (uGroup.y - 0.12) * sin(length(q) * 2.4 - uFlow * 0.5);
+  q = vec2(q.x * cos(curl) - q.y * sin(curl), q.x * sin(curl) + q.y * cos(curl));
+
+  // Morph: the outline is pulled out and pushed in around the circle. Two
+  // bulges for the bass, three for the low mids, four for the mids, five for
+  // the treble; each set slowly turns at its own pace.
+  float around = atan(q.y, q.x);
+  float pull = 0.26 * uGroup.x * cos(2.0 * around + uFlow * 0.21)
+             + 0.18 * uGroup.y * cos(3.0 * around - uFlow * 0.33 + 1.0)
+             + 0.13 * uGroup.z * cos(4.0 * around + uFlow * 0.27 + 2.0)
+             + 0.09 * uGroup.w * cos(5.0 * around - uFlow * 0.41 + 0.5);
+  q /= 1.0 + clamp(pull, -0.45, 0.6);
+
+  // Ripple, as if the figure were lying on water.
   q += uRipple * vec2(sin(q.y * 2.3 + uFlow * 0.7) + 0.5 * sin(q.y * 4.3 - uFlow * 0.45 + 1.7),
                       sin(q.x * 1.9 - uFlow * 0.6 + 0.8) + 0.5 * sin(q.x * 3.7 + uFlow * 0.5 + 2.9));
 

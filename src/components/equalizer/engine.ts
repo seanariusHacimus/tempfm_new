@@ -19,8 +19,10 @@ export interface EqualizerHandle {
     setMode(mode: SignalMode): void;
     /** Switch form: an index into SHAPES. */
     setShape(shape: number): void;
-    /** How much the figure itself floats with the music: 0 = still, 1 = default. */
+    /** How much the figure itself floats and changes shape with the music: 0 = still, 1 = default. */
     setFloat(amount: number): void;
+    /** What the music is doing to the figure right now; the 3D logo moves with it. */
+    getMotion(): { swell: number; sway: number; beat: number };
     /** The site's shared analyser; a private high-resolution tap is attached to it. */
     setAnalyser(analyser: AnalyserNode | null): void;
     resize(): void;
@@ -38,7 +40,7 @@ const MAX_PIXELS = 2.2e6;
 const SILENCE_STEPS = 90; // 1.5 s of all-zero FFT data => stream is not analysable
 const UNIFORMS = [
     "uRes", "uTime", "uFlow", "uSpec", "uFrac", "uEnergy", "uBass", "uMid", "uBeat",
-    "uSwell", "uSway", "uRipple", "uWave", "uGlow", "uPx",
+    "uSwell", "uSway", "uRipple", "uGroup", "uWave", "uGlow", "uPx",
 ];
 
 const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
@@ -210,6 +212,10 @@ export function createEqualizer(
     let swaySpeed = 0;
     let swaySide = 1;
     let ripple = 0;
+    // Four parts of the spectrum, each on its own spring; they reshape the figure.
+    const GROUPS = [0, 3, 7, 11, BANDS];
+    const group = new Float32Array(4);
+    const groupSpeed = new Float32Array(4);
 
     function detachTap() {
         if (source && tap && tap !== source) {
@@ -336,6 +342,16 @@ export function createEqualizer(
         sway += swaySpeed * STEP;
         ripple += (0.014 + 0.05 * energy - ripple) * 0.03;
 
+        // Shape: each part of the spectrum drives a spring, so the outline is
+        // pushed out by a hit and wobbles back like jelly.
+        for (let g = 0; g < 4; g++) {
+            let total = 0;
+            for (let i = GROUPS[g]; i < GROUPS[g + 1]; i++) total += levels[i];
+            const level = total / (GROUPS[g + 1] - GROUPS[g]);
+            groupSpeed[g] += (60 * (level - group[g]) - 6 * groupSpeed[g]) * STEP;
+            group[g] += groupSpeed[g] * STEP;
+        }
+
         history.copyWithin(BANDS, 0, BANDS * (HISTORY - 1));
         for (let i = 0; i < BANDS; i++) history[i] = Math.round(levels[i] * 255);
     }
@@ -408,8 +424,9 @@ export function createEqualizer(
         gl!.uniform1f(uniforms.uMid, mid);
         gl!.uniform1f(uniforms.uBeat, reducedMotion ? 0 : beat);
         gl!.uniform1f(uniforms.uSwell, Math.min(Math.max(swell, 0), 1.3) * drift);
-        gl!.uniform1f(uniforms.uSway, 0.2 * sway * drift);
+        gl!.uniform1f(uniforms.uSway, 0.07 * sway * drift);
         gl!.uniform1f(uniforms.uRipple, ripple * drift);
+        gl!.uniform4f(uniforms.uGroup, group[0] * drift, group[1] * drift, group[2] * drift, group[3] * drift);
         gl!.uniform1f(uniforms.uWave, reducedMotion ? 0 : 1);
         gl!.uniform1f(uniforms.uGlow, glow * (1 - 0.42 * energy)); // ease exposure when everything is loud
         // Lines are ~0.9 CSS px wide, but never thinner than one rendered pixel.
@@ -467,6 +484,9 @@ export function createEqualizer(
         },
         setFloat(amount) {
             floatAmount = Math.min(Math.max(amount, 0), 2);
+        },
+        getMotion() {
+            return { swell: Math.min(Math.max(swell, 0), 1.3), sway, beat };
         },
         setShape(next) {
             const index = Math.min(Math.max(Math.round(next) || 0, 0), SHAPES.length - 1);
