@@ -46,6 +46,10 @@ uniform float uFrac;    // progress towards the next history row, 0..1
 uniform float uEnergy;  // overall loudness, 0..1
 uniform float uBass;    // low end, 0..1
 uniform float uBeat;    // kick impulse, 0..1, decays
+uniform float uMid;     // mids, slowly smoothed, 0..1
+uniform float uSwell;   // springy bass envelope: the figure swells and settles
+uniform float uSway;    // radians: the figure rocks from side to side on the beat
+uniform float uRipple;  // how strongly the figure ripples, as if lying on water
 uniform float uWave;    // ribbon vibration amount (0 = reduced motion)
 uniform float uGlow;    // exposure: dim while paused, full on air
 uniform float uPx;      // line-width unit in scene units: ~0.9 CSS px, never under one rendered pixel
@@ -143,7 +147,8 @@ float ribbons(float x, float band, float lag, float v, float gx, float key, floa
 // ── Крест: hyperbolic ribbons — four lobes meeting in an X that runs to the corners ──
 
 float scene(vec2 q, float aspect, out float open) {
-  float k = clamp(aspect * 0.78, 0.6, 1.45);  // the X always aims at the corners
+  // The X aims at the corners and scissors open and shut with the mids.
+  float k = clamp(aspect * 0.78, 0.6, 1.45) * (1.0 + 0.2 * (uMid - 0.2));
   vec2 p = abs(vec2(q.x / k, q.y));
   float u = p.x * p.x - p.y * p.y;
   float wing = step(0.0, u);                  // 1 in the left/right lobes, 0 above and below
@@ -164,9 +169,10 @@ float scene(vec2 q, float aspect, out float open) {
 
 float scene(vec2 q, float aspect, out float open) {
   const float PETALS = 6.0;
-  float a = 0.9 * min(1.0, aspect * 1.25);
   float r = length(q) + 1e-4;
   float th = atan(q.y, q.x) + uFlow * 0.02;
+  // Petals breathe in turn: every other one reaches out while its neighbours draw in.
+  float a = 0.9 * min(1.0, aspect * 1.25) * (1.0 + 0.1 * uMid * cos(3.0 * th + uFlow * 0.25));
   float rn = pow(r / a, PETALS);
   float re = 1.0 - rn * cos(PETALS * th);
   float im = -rn * sin(PETALS * th);
@@ -197,9 +203,10 @@ float scene(vec2 q, float aspect, out float open) {
 float scene(vec2 q, float aspect, out float open) {
   float k = clamp(aspect * 0.8, 0.75, 1.5);
   vec2 e = vec2(q.x / k, q.y);
-  float rho = length(e) + 1e-4;
+  // The rim wobbles like jelly, and the bass pushes the inner rings outwards like a cone.
+  float rho = length(e) * (1.0 + 0.07 * uMid * cos(2.0 * atan(e.y, e.x) - uFlow * 0.5)) + 1e-4;
   float span = log(length(vec2(aspect / k, 1.0)) / 0.045);
-  float s = log(rho / 0.045) / span;  // 0 at the core … 1 in the corners
+  float s = log(rho / 0.045) / span - 0.08 * uSwell * exp(-rho * 1.6);  // 0 at the core … 1 in the corners
   float x = s * (N - 1.0);
   float v = atan(abs(e.y), abs(e.x)) / (0.5 * PI);
   float grad = length(vec2(e.x / k, e.y)) / (rho * rho);
@@ -218,7 +225,8 @@ float scene(vec2 q, float aspect, out float open) {
   float th = atan(q.y, q.x);
   float span = log(length(vec2(aspect, 1.0)) / 0.045);
   float s = log(rho / 0.045) / span;
-  float radial = (N - 1.0) * 0.5;
+  // The bass winds the spiral tighter; it unwinds as the note fades.
+  float radial = (N - 1.0) * 0.5 * (1.0 + 0.22 * (uSwell - 0.25));
   // +64 keeps x positive; it is a whole number of turns for every layer.
   float x = 64.0 + TURN * th / (2.0 * PI) + radial * s;
   float grad = sqrt(TURN * TURN / (4.0 * PI * PI) + radial * radial / (span * span)) / rho;
@@ -233,8 +241,9 @@ float scene(vec2 q, float aspect, out float open) {
 
 float scene(vec2 q, float aspect, out float open) {
   float ax = abs(q.x) / aspect;  // 0 in the middle … 1 at the side edges
-  float horn = 0.9 * (0.045 + 0.955 * pow(ax, 1.25));
-  float y = q.y - 0.11 * ax * sin(ax * 7.0 - uFlow * 0.9);
+  // The horn opens wider on the bass and its swell grows with the mids.
+  float horn = 0.9 * (1.0 + 0.3 * uSwell) * (0.045 + 0.955 * pow(ax, 1.25));
+  float y = q.y - 0.11 * (0.5 + 1.6 * uMid) * ax * sin(ax * 7.0 - uFlow * 0.9);
   float s = abs(y) / horn;
   float x = min(s, 1.6) * (N - 1.0);
   float L;
@@ -247,7 +256,8 @@ float scene(vec2 q, float aspect, out float open) {
 // ── Лучи: a fan of rays, each as long as its band is loud ──
 
 float scene(vec2 q, float aspect, out float open) {
-  float rot = uFlow * 0.012;
+  // The fan turns slowly; the bass curls the rays near the core like a pinwheel.
+  float rot = uFlow * 0.012 + 0.4 * uSwell * exp(-length(q) * 1.3);
   vec2 p = abs(vec2(q.x * cos(rot) - q.y * sin(rot), q.x * sin(rot) + q.y * cos(rot)));
   float rho = length(p) + 1e-4;
   float far = length(vec2(aspect, 1.0));
@@ -272,8 +282,16 @@ vec3 ramp(float t) {
 
 void main() {
   float aspect = uRes.x / uRes.y;
-  vec2 q = (gl_FragCoord.xy - 0.5 * uRes) / (0.5 * uRes.y);
-  q *= 1.0 - 0.02 * uBeat + 0.012 * sin(uTime * 0.23);
+  vec2 screen = (gl_FragCoord.xy - 0.5 * uRes) / (0.5 * uRes.y);
+
+  // The figure floats: it rocks on the beat, swells with the bass, drifts a
+  // little and ripples as if it were lying on water.
+  float tilt = uSway + 0.025 * uWave * sin(uTime * 0.31);
+  vec2 q = vec2(screen.x * cos(tilt) - screen.y * sin(tilt), screen.x * sin(tilt) + screen.y * cos(tilt));
+  q *= 1.0 - 0.1 * uSwell + 0.012 * sin(uTime * 0.23);
+  q += uWave * vec2(0.015 * sin(uTime * 0.37), 0.02 * sin(uTime * 0.29 + 1.0));
+  q += uRipple * vec2(sin(q.y * 2.3 + uFlow * 0.7) + 0.5 * sin(q.y * 4.3 - uFlow * 0.45 + 1.7),
+                      sin(q.x * 1.9 - uFlow * 0.6 + 0.8) + 0.5 * sin(q.x * 3.7 + uFlow * 0.5 + 2.9));
 
   float open;
   float I = scene(q, aspect, open);
@@ -306,8 +324,8 @@ void main() {
   vec3 col = ramp(1.0 - exp(-I * uGlow));
 
   // Settle into the page background (#0a0a0a) at the very bottom.
-  float vig = 1.0 - 0.22 * smoothstep(0.8, 2.3, length(q * vec2(0.62, 1.0)));
-  vig *= smoothstep(-1.02, -0.62, q.y);
+  float vig = 1.0 - 0.22 * smoothstep(0.8, 2.3, length(screen * vec2(0.62, 1.0)));
+  vig *= smoothstep(-1.02, -0.62, screen.y);
   col = mix(vec3(0.039), col, vig);
 
   float dither = (hash(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) - 0.5) / 255.0;

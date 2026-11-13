@@ -19,6 +19,8 @@ export interface EqualizerHandle {
     setMode(mode: SignalMode): void;
     /** Switch form: an index into SHAPES. */
     setShape(shape: number): void;
+    /** How much the figure itself floats with the music: 0 = still, 1 = default. */
+    setFloat(amount: number): void;
     /** The site's shared analyser; a private high-resolution tap is attached to it. */
     setAnalyser(analyser: AnalyserNode | null): void;
     resize(): void;
@@ -34,7 +36,10 @@ const F_LO = 45;
 const F_HI = 13000;
 const MAX_PIXELS = 2.2e6;
 const SILENCE_STEPS = 90; // 1.5 s of all-zero FFT data => stream is not analysable
-const UNIFORMS = ["uRes", "uTime", "uFlow", "uSpec", "uFrac", "uEnergy", "uBass", "uBeat", "uWave", "uGlow", "uPx"];
+const UNIFORMS = [
+    "uRes", "uTime", "uFlow", "uSpec", "uFrac", "uEnergy", "uBass", "uMid", "uBeat",
+    "uSwell", "uSway", "uRipple", "uWave", "uGlow", "uPx",
+];
 
 const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
 
@@ -196,6 +201,15 @@ export function createEqualizer(
     let bassAvg = 0;
     let prevBass = 0;
     let sinceBeat = 1;
+    // Floating: the figure is a weight on springs that the music pushes around.
+    let floatAmount = 1;
+    let mid = 0;
+    let swell = 0;
+    let swellSpeed = 0;
+    let sway = 0;
+    let swaySpeed = 0;
+    let swaySide = 1;
+    let ripple = 0;
 
     function detachTap() {
         if (source && tap && tap !== source) {
@@ -305,8 +319,22 @@ export function createEqualizer(
             beat = 1;
             sinceBeat = 0;
         }
+        const kicked = sinceBeat === 0;
         prevBass = b;
         beat *= 0.92;
+
+        // Swell: a soft spring chasing the bass, with a little overshoot.
+        mid += ((levels[5] + levels[6] + levels[7] + levels[8] + levels[9] + levels[10]) / 6 - mid) * 0.05;
+        swellSpeed += (42 * (bass + 0.6 * beat - swell) - 6.5 * swellSpeed) * STEP;
+        swell += swellSpeed * STEP;
+        // Sway: every kick nudges a slow pendulum the other way, like a boat on a swell.
+        if (kicked) {
+            swaySpeed += swaySide * (0.5 + 0.9 * b);
+            swaySide = -swaySide;
+        }
+        swaySpeed += (-9 * sway - 2.2 * swaySpeed) * STEP;
+        sway += swaySpeed * STEP;
+        ripple += (0.014 + 0.05 * energy - ripple) * 0.03;
 
         history.copyWithin(BANDS, 0, BANDS * (HISTORY - 1));
         for (let i = 0; i < BANDS; i++) history[i] = Math.round(levels[i] * 255);
@@ -376,7 +404,12 @@ export function createEqualizer(
         gl!.uniform1f(uniforms.uFrac, acc / STEP);
         gl!.uniform1f(uniforms.uEnergy, energy);
         gl!.uniform1f(uniforms.uBass, bass);
+        const drift = reducedMotion ? 0 : floatAmount;
+        gl!.uniform1f(uniforms.uMid, mid);
         gl!.uniform1f(uniforms.uBeat, reducedMotion ? 0 : beat);
+        gl!.uniform1f(uniforms.uSwell, Math.min(Math.max(swell, 0), 1.3) * drift);
+        gl!.uniform1f(uniforms.uSway, 0.2 * sway * drift);
+        gl!.uniform1f(uniforms.uRipple, ripple * drift);
         gl!.uniform1f(uniforms.uWave, reducedMotion ? 0 : 1);
         gl!.uniform1f(uniforms.uGlow, glow * (1 - 0.42 * energy)); // ease exposure when everything is loud
         // Lines are ~0.9 CSS px wide, but never thinner than one rendered pixel.
@@ -431,6 +464,9 @@ export function createEqualizer(
         setMode(next) {
             mode = next;
             silentSteps = 0;
+        },
+        setFloat(amount) {
+            floatAmount = Math.min(Math.max(amount, 0), 2);
         },
         setShape(next) {
             const index = Math.min(Math.max(Math.round(next) || 0, 0), SHAPES.length - 1);

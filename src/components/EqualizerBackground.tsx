@@ -9,6 +9,8 @@ interface EqualizerBackgroundProps {
     style?: React.CSSProperties;
     /** Which form to draw: an index into SHAPES (default 0, "Крест"). */
     shape?: number;
+    /** How much the figure itself floats with the music: 0 = still, 1 = default. */
+    float?: number;
     /** Preview only: run the built-in demo beat instead of waiting for the stream. */
     demo?: boolean;
 }
@@ -17,7 +19,13 @@ interface EqualizerBackgroundProps {
  * Light equalizer background. Drop-in replacement for ThreeBackground:
  * an ember glow while the radio is paused, driven by the live stream while it plays.
  */
-export default function EqualizerBackground({ className, style, shape = 0, demo = false }: EqualizerBackgroundProps) {
+export default function EqualizerBackground({
+    className,
+    style,
+    shape = 0,
+    float = 1,
+    demo = false,
+}: EqualizerBackgroundProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const handleRef = useRef<EqualizerHandle | null>(null);
@@ -67,9 +75,10 @@ export default function EqualizerBackground({ className, style, shape = 0, demo 
         const handle = handleRef.current;
         if (!handle) return;
         handle.setShape(shape);
+        handle.setFloat(float);
         handle.setAnalyser(analyserRef.current);
         handle.setMode(demo ? "demo" : isPlaying ? "live" : "idle");
-    }, [analyserRef, isPlaying, demo, shape, unsupported]);
+    }, [analyserRef, isPlaying, demo, shape, float, unsupported]);
 
     return (
         <div

@@ -7,10 +7,18 @@ import { SHAPES } from "@/components/equalizer/shader";
 
 /**
  * Hidden preview of the home page with the light equalizer as its background.
- * Pick a form with the buttons; press play in the player to see it follow the live stream.
+ * Pick a form and how much it floats with the buttons; press play in the player to see it follow the live stream.
  */
+/** How strongly the figure floats with the music; the button cycles through these. */
+const FLOAT_LEVELS = [
+    { name: "слабо", amount: 0.5 },
+    { name: "средне", amount: 1 },
+    { name: "сильно", amount: 1.7 },
+];
+
 export default function EqualizerLabPage() {
     const [shape, setShape] = useState(0);
+    const [float, setFloat] = useState(1);
     const [demo, setDemo] = useState(false);
 
     const pill =
@@ -26,6 +34,7 @@ export default function EqualizerLabPage() {
             <EqualizerBackground
                 style={{ top: "4rem", height: "calc(100vh - 4rem)" }}
                 shape={shape}
+                float={FLOAT_LEVELS[float].amount}
                 demo={demo}
             />
 
@@ -54,6 +63,13 @@ export default function EqualizerLabPage() {
                         </button>
                     ))}
                     <span className="mx-1 h-5 w-px shrink-0 bg-white/15" aria-hidden="true" />
+                    <button
+                        type="button"
+                        onClick={() => setFloat((level) => (level + 1) % FLOAT_LEVELS.length)}
+                        className={`${pill} text-white/70 hover:bg-white/10 hover:text-white`}
+                    >
+                        Плавание: {FLOAT_LEVELS[float].name}
+                    </button>
                     <button
                         type="button"
                         onClick={() => setDemo((on) => !on)}
