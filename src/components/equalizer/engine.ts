@@ -15,12 +15,32 @@ export interface EqualizerOptions {
     reducedMotion?: boolean;
 }
 
+export interface EqualizerTuning {
+    /** Exposure of the whole picture. */
+    brightness: number;
+    /** How fast the light drifts and the figure turns. */
+    speed: number;
+    /** How strongly the light follows the music. */
+    react: number;
+    /** Brightness of the core. */
+    core: number;
+    /** Motes of dust: 1 on, 0 off. */
+    dust: number;
+}
+
+/** The default colour scheme: ember, TempFM red-orange, amber, white-hot. */
+const FIRE_RAMP = [0.045, 0.012, 0.008, 0.36, 0.045, 0.008, 0.93, 0.21, 0.02, 1, 0.45, 0.07, 1, 0.8, 0.4, 1, 0.98, 0.93];
+
 export interface EqualizerHandle {
     setMode(mode: SignalMode): void;
     /** Switch form: an index into SHAPES. */
     setShape(shape: number): void;
     /** How much the figure itself floats and changes shape with the music: 0 = still, 1 = default. */
     setFloat(amount: number): void;
+    /** Colour scheme: six RGB stops (18 numbers, 0..1) from the darkest tone to white-hot. */
+    setRamp(ramp: ArrayLike<number>): void;
+    /** Fine tuning; every value is a multiplier where 1 is the default. */
+    tune(values: Partial<EqualizerTuning>): void;
     /** What the music is doing to the figure right now; the 3D logo moves with it. */
     getMotion(): { swell: number; sway: number; beat: number };
     /** The site's shared analyser; a private high-resolution tap is attached to it. */
@@ -40,7 +60,7 @@ const MAX_PIXELS = 2.2e6;
 const SILENCE_STEPS = 90; // 1.5 s of all-zero FFT data => stream is not analysable
 const UNIFORMS = [
     "uRes", "uTime", "uFlow", "uSpec", "uFrac", "uEnergy", "uBass", "uMid", "uBeat",
-    "uSwell", "uSway", "uRipple", "uGroup", "uWave", "uGlow", "uPx",
+    "uSwell", "uSway", "uRipple", "uGroup", "uWave", "uGlow", "uCore", "uDust", "uRamp", "uPx",
 ];
 
 const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
@@ -203,6 +223,8 @@ export function createEqualizer(
     let bassAvg = 0;
     let prevBass = 0;
     let sinceBeat = 1;
+    const tuning: EqualizerTuning = { brightness: 1, speed: 1, react: 1, core: 1, dust: 1 };
+    const ramp = new Float32Array(FIRE_RAMP);
     // Floating: the figure is a weight on springs that the music pushes around.
     let floatAmount = 1;
     let mid = 0;
@@ -308,7 +330,7 @@ export function createEqualizer(
         for (let i = 0; i < BANDS; i++) {
             // A touch of blur across neighbouring bands keeps the light continuous.
             const right = target[Math.min(i + 1, BANDS - 1)];
-            const x = 0.2 * left + 0.6 * target[i] + 0.2 * right;
+            const x = clamp01((0.2 * left + 0.6 * target[i] + 0.2 * right) * tuning.react);
             left = target[i];
             const cur = levels[i];
             levels[i] = cur + (x - cur) * (x > cur ? 0.26 : 0.09); // quick attack, slow release
@@ -386,7 +408,7 @@ export function createEqualizer(
     }
 
     function advance(dt: number) {
-        const pace = reducedMotion ? 0.25 : 1;
+        const pace = (reducedMotion ? 0.25 : 1) * tuning.speed;
         time += dt * pace;
         flow += dt * pace * (0.35 + 1.3 * energy); // drift speeds up with the music
         // Paused: an ember glow that leaves the hero text readable. On air: full light.
@@ -428,7 +450,10 @@ export function createEqualizer(
         gl!.uniform1f(uniforms.uRipple, ripple * drift);
         gl!.uniform4f(uniforms.uGroup, group[0] * drift, group[1] * drift, group[2] * drift, group[3] * drift);
         gl!.uniform1f(uniforms.uWave, reducedMotion ? 0 : 1);
-        gl!.uniform1f(uniforms.uGlow, glow * (1 - 0.42 * energy)); // ease exposure when everything is loud
+        gl!.uniform1f(uniforms.uGlow, tuning.brightness * glow * (1 - 0.42 * energy)); // ease exposure when everything is loud
+        gl!.uniform1f(uniforms.uCore, tuning.core);
+        gl!.uniform1f(uniforms.uDust, tuning.dust);
+        gl!.uniform3fv(uniforms.uRamp, ramp);
         // Lines are ~0.9 CSS px wide, but never thinner than one rendered pixel.
         const density = h / (canvas.clientHeight || h);
         gl!.uniform1f(uniforms.uPx, (2 / h) * Math.max(1, 0.9 * density));
@@ -484,6 +509,12 @@ export function createEqualizer(
         },
         setFloat(amount) {
             floatAmount = Math.min(Math.max(amount, 0), 2);
+        },
+        setRamp(next) {
+            for (let i = 0; i < ramp.length; i++) ramp[i] = next[i] ?? ramp[i];
+        },
+        tune(values) {
+            Object.assign(tuning, values);
         },
         getMotion() {
             return { swell: Math.min(Math.max(swell, 0), 1.3), sway, beat };

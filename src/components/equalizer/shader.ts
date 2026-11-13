@@ -53,6 +53,9 @@ uniform float uRipple;  // how strongly the figure ripples, as if lying on water
 uniform vec4 uGroup;    // springy levels of four parts of the spectrum (bass … treble); they reshape the figure
 uniform float uWave;    // ribbon vibration amount (0 = reduced motion)
 uniform float uGlow;    // exposure: dim while paused, full on air
+uniform float uCore;    // brightness of the core, 1 = default
+uniform float uDust;    // 1 with motes of dust in the light, 0 without
+uniform vec3 uRamp[6];  // colour scheme: six stops from the darkest tone to white-hot
 uniform float uPx;      // line-width unit in scene units: ~0.9 CSS px, never under one rendered pixel
 
 const float PI = 3.14159265;
@@ -282,13 +285,14 @@ float scene(vec2 q, float aspect, out float open) {
 }
 #endif
 
-// Intensity to colour: ember, TempFM red-orange, amber, white-hot.
+// Intensity to colour through the palette. With the default one: ember,
+// TempFM red-orange, amber, white-hot.
 vec3 ramp(float t) {
-  vec3 c = mix(vec3(0.045, 0.012, 0.008), vec3(0.36, 0.045, 0.008), smoothstep(0.0, 0.24, t));
-  c = mix(c, vec3(0.93, 0.21, 0.02), smoothstep(0.24, 0.50, t));
-  c = mix(c, vec3(1.0, 0.45, 0.07), smoothstep(0.50, 0.70, t));
-  c = mix(c, vec3(1.0, 0.80, 0.40), smoothstep(0.70, 0.87, t));
-  return mix(c, vec3(1.0, 0.98, 0.93), smoothstep(0.87, 1.0, t));
+  vec3 c = mix(uRamp[0], uRamp[1], smoothstep(0.0, 0.24, t));
+  c = mix(c, uRamp[2], smoothstep(0.24, 0.50, t));
+  c = mix(c, uRamp[3], smoothstep(0.50, 0.70, t));
+  c = mix(c, uRamp[4], smoothstep(0.70, 0.87, t));
+  return mix(c, uRamp[5], smoothstep(0.87, 1.0, t));
 }
 
 void main() {
@@ -331,7 +335,7 @@ void main() {
   // On a narrow (portrait) screen the core shrinks so it does not flood the width.
   float narrow = clamp(aspect * 1.2, 0.6, 1.0);
   float rc2 = dot(q * vec2(0.7, 1.0), q * vec2(0.7, 1.0)) / (narrow * narrow);
-  float drive = 0.45 + 0.9 * uBass + 0.9 * uBeat;
+  float drive = uCore * (0.45 + 0.9 * uBass + 0.9 * uBeat);
   float core = drive * (1.5 / (1.0 + rc2 / 0.009) + 0.4 / (1.0 + rc2 / 0.09));
   // Anamorphic streak and a faint starburst around the core.
   core += drive * 0.2 * exp(-abs(q.y) / 0.02) / (1.0 + 9.0 * q.x * q.x);
@@ -346,7 +350,7 @@ void main() {
   float dh = hash(dc.x * 37.0 + dc.y * 113.0);
   vec2 dp = dq - dc - 0.2 - 0.6 * vec2(dh, fract(dh * 57.3));
   float mote = exp(-dot(dp, dp) * 2600.0) * step(0.55, dh);
-  I += mote * (0.5 + 0.5 * sin(uTime * (0.6 + dh * 2.0) + dh * 60.0)) * (0.6 + 1.5 * uEnergy);
+  I += uDust * mote * (0.5 + 0.5 * sin(uTime * (0.6 + dh * 2.0) + dh * 60.0)) * (0.6 + 1.5 * uEnergy);
 
   vec3 col = ramp(1.0 - exp(-I * uGlow));
 

@@ -1,21 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAudio } from "./AudioProvider";
 import { createEqualizer, type EqualizerHandle } from "./equalizer/engine";
 import type { Logo3DHandle } from "./equalizer/logo3d";
+import { DEFAULT_SETTINGS, paletteColors, type EqualizerSettings } from "./equalizer/settings";
 
 interface EqualizerBackgroundProps {
     className?: string;
     style?: React.CSSProperties;
-    /** Which form to draw: an index into SHAPES (default 0, "Крест"). */
-    shape?: number;
-    /** How much the figure itself floats and changes shape with the music: 0 = still, 1 = default. */
-    float?: number;
-    /** Show the 3D TempFM logo in the middle. */
+    /** Form, colours, logo and fine tuning; anything left out takes its default. */
+    settings?: Partial<EqualizerSettings>;
+    /** Whether the logo may be on screen right now (the home page shows it only on air). */
     logo?: boolean;
-    /** Which look the 3D logo takes: an index into LOGO_STYLES (default 0, "Хром"). */
-    logoStyle?: number;
     /** Preview only: run the built-in demo beat instead of waiting for the stream. */
     demo?: boolean;
 }
@@ -24,16 +21,7 @@ interface EqualizerBackgroundProps {
  * Light equalizer background. Drop-in replacement for ThreeBackground:
  * an ember glow while the radio is paused, driven by the live stream while it plays.
  */
-export default function EqualizerBackground({
-    className,
-    style,
-    shape = 0,
-    float = 1,
-    logo = false,
-    logoStyle = 0,
-    demo = false,
-}: EqualizerBackgroundProps) {
-    const logoStyleRef = useRef(logoStyle);
+export default function EqualizerBackground({ className, style, settings, logo = false, demo = false }: EqualizerBackgroundProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const logoCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -43,6 +31,12 @@ export default function EqualizerBackground({
     const [unsupported, setUnsupported] = useState(false);
     const [logoReady, setLogoReady] = useState(false);
     const { analyserRef, isPlaying } = useAudio();
+
+    // A stable object while the values stay the same, whatever object the page passes in.
+    const key = JSON.stringify(settings ?? {});
+    const s = useMemo<EqualizerSettings>(() => ({ ...DEFAULT_SETTINGS, ...JSON.parse(key) }), [key]);
+    const showLogo = logo && s.logo >= 0 && !unsupported;
+    const settingsRef = useRef(s);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -92,31 +86,40 @@ export default function EqualizerBackground({
         };
     }, []);
 
+    // Where the light comes from: paused, the demo beat, or the live stream.
     useEffect(() => {
         const handle = handleRef.current;
         if (!handle) return;
-        handle.setShape(shape);
-        handle.setFloat(float);
         handle.setAnalyser(analyserRef.current);
         handle.setMode(demo ? "demo" : isPlaying ? "live" : "idle");
-    }, [analyserRef, isPlaying, demo, shape, float, unsupported]);
+    }, [analyserRef, isPlaying, demo, unsupported]);
 
-    // The 3D logo: loaded only when asked for, so three.js stays out of the way otherwise.
+    // Settings → background.
+    useEffect(() => {
+        settingsRef.current = s;
+        const handle = handleRef.current;
+        if (!handle) return;
+        handle.setShape(s.shape);
+        handle.setFloat(s.float);
+        handle.setRamp(paletteColors(s).ramp);
+        handle.tune({ brightness: s.brightness, speed: s.speed, react: s.react, core: s.core, dust: s.dust ? 1 : 0 });
+    }, [s, unsupported]);
+
+    // The logo: its module (and three.js with it) is loaded only when a logo is shown.
     useEffect(() => {
         const canvas = logoCanvasRef.current;
-        if (!logo || unsupported || !canvas) return;
+        if (!showLogo || !canvas) return;
         let cancelled = false;
 
         import("./equalizer/logo3d").then(({ createLogo3D }) => {
             if (cancelled) return;
             const handle = createLogo3D(canvas, {
-                style: logoStyleRef.current,
+                style: settingsRef.current.logo,
                 motion: () => handleRef.current?.getMotion() ?? { swell: 0, sway: 0, beat: 0 },
                 reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
             });
             if (!handle) return;
             logoRef.current = handle;
-            canvas.style.filter = handle.filter();
             if (visibleRef.current) handle.start();
             setLogoReady(true);
         });
@@ -127,17 +130,21 @@ export default function EqualizerBackground({
             logoRef.current = null;
             setLogoReady(false);
         };
-    }, [logo, unsupported]);
+    }, [showLogo]);
 
-    // Each look brings its own halo or glow, worn by the canvas as a CSS filter.
+    // Settings → logo. Each look brings its own halo or glow, worn by the canvas as a CSS filter.
     useEffect(() => {
-        logoStyleRef.current = logoStyle;
         const handle = logoRef.current;
         const canvas = logoCanvasRef.current;
-        if (!handle || !canvas) return;
-        handle.setStyle(logoStyle);
+        if (!handle || !canvas || s.logo < 0) return;
+        const [r, g, b] = paletteColors(s).accent;
+        handle.setAccent(r, g, b);
+        handle.setTint(s.logoTint);
+        handle.setStyle(s.logo);
+        handle.setMotion(s.logoMotion);
+        handle.resize(); // the canvas may have just changed size
         canvas.style.filter = handle.filter();
-    }, [logoStyle, logoReady]);
+    }, [s, logoReady]);
 
     return (
         <div
@@ -163,14 +170,15 @@ export default function EqualizerBackground({
             {!unsupported && (
                 <canvas ref={canvasRef} style={{ display: "block", width: "100%", height: "100%" }} />
             )}
-            {!unsupported && logo && (
+            {showLogo && (
                 <canvas
                     ref={logoCanvasRef}
                     style={{
                         position: "absolute",
                         left: "50%",
                         top: "50%",
-                        width: "min(92%, 720px)",
+                        // Never wider than the screen, however large the logo is set.
+                        width: `min(100%, calc(min(92%, 720px) * ${s.logoSize}))`,
                         aspectRatio: "2.4 / 1",
                         transform: "translate(-50%, -50%)",
                         opacity: logoReady ? 1 : 0,
