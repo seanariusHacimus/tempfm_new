@@ -7,15 +7,17 @@ import { createEqualizer, type EqualizerHandle } from "./equalizer/engine";
 interface EqualizerBackgroundProps {
     className?: string;
     style?: React.CSSProperties;
+    /** Which form to draw: an index into SHAPES (default 0, "Крест"). */
+    shape?: number;
     /** Preview only: run the built-in demo beat instead of waiting for the stream. */
     demo?: boolean;
 }
 
 /**
- * Light-ribbon equalizer background. Drop-in replacement for ThreeBackground:
- * calm while the radio is paused, driven by the live stream while it plays.
+ * Light equalizer background. Drop-in replacement for ThreeBackground:
+ * an ember glow while the radio is paused, driven by the live stream while it plays.
  */
-export default function EqualizerBackground({ className, style, demo = false }: EqualizerBackgroundProps) {
+export default function EqualizerBackground({ className, style, shape = 0, demo = false }: EqualizerBackgroundProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const handleRef = useRef<EqualizerHandle | null>(null);
@@ -64,9 +66,10 @@ export default function EqualizerBackground({ className, style, demo = false }: 
     useEffect(() => {
         const handle = handleRef.current;
         if (!handle) return;
+        handle.setShape(shape);
         handle.setAnalyser(analyserRef.current);
         handle.setMode(demo ? "demo" : isPlaying ? "live" : "idle");
-    }, [analyserRef, isPlaying, demo, unsupported]);
+    }, [analyserRef, isPlaying, demo, shape, unsupported]);
 
     return (
         <div

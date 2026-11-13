@@ -1,4 +1,4 @@
-import { BANDS, HISTORY, FRAGMENT_SHADER, VERTEX_SHADER } from "./shader";
+import { BANDS, HISTORY, SHAPES, VERTEX_SHADER, fragmentShader } from "./shader";
 
 /**
  * Framework-free renderer for the ribbon equalizer.
@@ -17,6 +17,8 @@ export interface EqualizerOptions {
 
 export interface EqualizerHandle {
     setMode(mode: SignalMode): void;
+    /** Switch form: an index into SHAPES. */
+    setShape(shape: number): void;
     /** The site's shared analyser; a private high-resolution tap is attached to it. */
     setAnalyser(analyser: AnalyserNode | null): void;
     resize(): void;
@@ -32,6 +34,7 @@ const F_LO = 45;
 const F_HI = 13000;
 const MAX_PIXELS = 2.2e6;
 const SILENCE_STEPS = 90; // 1.5 s of all-zero FFT data => stream is not analysable
+const UNIFORMS = ["uRes", "uTime", "uFlow", "uSpec", "uFrac", "uEnergy", "uBass", "uBeat", "uWave", "uGlow", "uPx"];
 
 const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
 
@@ -108,36 +111,57 @@ export function createEqualizer(
     if (!gl) return null;
 
     // ── GL resources ──
-    let program: WebGLProgram | null = null;
+    // One program per form, compiled the first time that form is shown.
+    interface Pipeline {
+        program: WebGLProgram;
+        uniforms: Record<string, WebGLUniformLocation | null>;
+    }
+    const pipelines = new Map<number, Pipeline>();
+    let pipeline: Pipeline | null = null;
+    let shape = 0;
     let texture: WebGLTexture | null = null;
     let buffer: WebGLBuffer | null = null;
-    const uniforms: Record<string, WebGLUniformLocation | null> = {};
+
+    function usePipeline(index: number): boolean {
+        let next = pipelines.get(index);
+        if (!next) {
+            const vs = compile(gl!, gl!.VERTEX_SHADER, VERTEX_SHADER);
+            const fs = compile(gl!, gl!.FRAGMENT_SHADER, fragmentShader(index));
+            if (!vs || !fs) return false;
+
+            const program = gl!.createProgram();
+            if (!program) return false;
+            gl!.attachShader(program, vs);
+            gl!.attachShader(program, fs);
+            gl!.bindAttribLocation(program, 0, "aPos"); // same slot in every program
+            gl!.linkProgram(program);
+            gl!.deleteShader(vs);
+            gl!.deleteShader(fs);
+            if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
+                console.error("[Equalizer] link error:", gl!.getProgramInfoLog(program));
+                return false;
+            }
+            const uniforms: Pipeline["uniforms"] = {};
+            for (const name of UNIFORMS) uniforms[name] = gl!.getUniformLocation(program, name);
+            next = { program, uniforms };
+            pipelines.set(index, next);
+        }
+        pipeline = next;
+        gl!.useProgram(next.program);
+        gl!.uniform1i(next.uniforms.uSpec, 0);
+        return true;
+    }
 
     function initGL(): boolean {
-        const vs = compile(gl!, gl!.VERTEX_SHADER, VERTEX_SHADER);
-        const fs = compile(gl!, gl!.FRAGMENT_SHADER, FRAGMENT_SHADER);
-        if (!vs || !fs) return false;
-
-        program = gl!.createProgram();
-        if (!program) return false;
-        gl!.attachShader(program, vs);
-        gl!.attachShader(program, fs);
-        gl!.linkProgram(program);
-        gl!.deleteShader(vs);
-        gl!.deleteShader(fs);
-        if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
-            console.error("[Equalizer] link error:", gl!.getProgramInfoLog(program));
-            return false;
-        }
-        gl!.useProgram(program);
+        pipelines.clear();
+        pipeline = null;
 
         // One oversized triangle covers the viewport.
         buffer = gl!.createBuffer();
         gl!.bindBuffer(gl!.ARRAY_BUFFER, buffer);
         gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl!.STATIC_DRAW);
-        const aPos = gl!.getAttribLocation(program, "aPos");
-        gl!.enableVertexAttribArray(aPos);
-        gl!.vertexAttribPointer(aPos, 2, gl!.FLOAT, false, 0, 0);
+        gl!.enableVertexAttribArray(0);
+        gl!.vertexAttribPointer(0, 2, gl!.FLOAT, false, 0, 0);
 
         texture = gl!.createTexture();
         gl!.activeTexture(gl!.TEXTURE0);
@@ -152,11 +176,7 @@ export function createEqualizer(
             gl!.LUMINANCE, gl!.UNSIGNED_BYTE, history
         );
 
-        for (const name of ["uRes", "uTime", "uSpec", "uFrac", "uEnergy", "uBass", "uBeat", "uWave", "uGain", "uFocus", "uPx"]) {
-            uniforms[name] = gl!.getUniformLocation(program, name);
-        }
-        gl!.uniform1i(uniforms.uSpec, 0);
-        return true;
+        return usePipeline(shape);
     }
 
     // ── Signal state ──
@@ -294,6 +314,8 @@ export function createEqualizer(
 
     // ── Rendering ──
     let time = 0;
+    let flow = 0;
+    let glow = 0.42;
     let acc = 0;
     let scale = 1;
     let slowFrames = 0;
@@ -320,7 +342,11 @@ export function createEqualizer(
     }
 
     function advance(dt: number) {
-        time += dt * (reducedMotion ? 0.25 : 1);
+        const pace = reducedMotion ? 0.25 : 1;
+        time += dt * pace;
+        flow += dt * pace * (0.35 + 1.3 * energy); // drift speeds up with the music
+        // Paused: an ember glow that leaves the hero text readable. On air: full light.
+        glow += ((mode === "idle" ? 0.42 : 1) - glow) * Math.min(1, dt * 2.5);
         acc += dt;
         let steps = 0;
         while (acc >= STEP && steps < 6) {
@@ -333,7 +359,8 @@ export function createEqualizer(
     }
 
     function draw(upload: boolean) {
-        if (lost || !program) return;
+        if (lost || !pipeline) return;
+        const uniforms = pipeline.uniforms;
         const w = canvas.width;
         const h = canvas.height;
         gl!.viewport(0, 0, w, h);
@@ -343,16 +370,15 @@ export function createEqualizer(
                 gl!.LUMINANCE, gl!.UNSIGNED_BYTE, history
             );
         }
-        const aspect = w / h;
         gl!.uniform2f(uniforms.uRes, w, h);
         gl!.uniform1f(uniforms.uTime, time);
+        gl!.uniform1f(uniforms.uFlow, flow);
         gl!.uniform1f(uniforms.uFrac, acc / STEP);
         gl!.uniform1f(uniforms.uEnergy, energy);
         gl!.uniform1f(uniforms.uBass, bass);
         gl!.uniform1f(uniforms.uBeat, reducedMotion ? 0 : beat);
         gl!.uniform1f(uniforms.uWave, reducedMotion ? 0 : 1);
-        gl!.uniform1f(uniforms.uGain, 1.25 * (1 - 0.35 * energy)); // ease exposure when everything is loud
-        gl!.uniform2f(uniforms.uFocus, aspect * 0.97, 1.08);
+        gl!.uniform1f(uniforms.uGlow, glow * (1 - 0.42 * energy)); // ease exposure when everything is loud
         // Lines are ~0.9 CSS px wide, but never thinner than one rendered pixel.
         const density = h / (canvas.clientHeight || h);
         gl!.uniform1f(uniforms.uPx, (2 / h) * Math.max(1, 0.9 * density));
@@ -406,6 +432,17 @@ export function createEqualizer(
             mode = next;
             silentSteps = 0;
         },
+        setShape(next) {
+            const index = Math.min(Math.max(Math.round(next) || 0, 0), SHAPES.length - 1);
+            if (index === shape) return;
+            const previous = shape;
+            shape = index;
+            if (!lost && !usePipeline(index)) {
+                // Keep showing the previous form if this one fails to compile.
+                shape = previous;
+                usePipeline(previous);
+            }
+        },
         setAnalyser(node) {
             if (node === source) return;
             detachTap();
@@ -436,8 +473,10 @@ export function createEqualizer(
             if (!lost) {
                 gl.deleteTexture(texture);
                 gl.deleteBuffer(buffer);
-                gl.deleteProgram(program);
+                pipelines.forEach((p) => gl.deleteProgram(p.program));
             }
+            pipelines.clear();
+            pipeline = null;
         },
     };
 }
